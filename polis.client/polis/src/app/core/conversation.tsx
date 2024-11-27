@@ -99,7 +99,13 @@ const ConversationPage = () => {
                   marker: { color: "indigo", size: 10 },
                 },
               ]}
-              layout={{ width: 600, height: 600 }}
+              layout={{
+                width: 600,
+                height: 600,
+                paper_bgcolor: "transparent",
+                plot_bgcolor: "transparent",
+              }}
+              config={{ displayModeBar: false, staticPlot: true }}
             />
           )}
         </div>
