@@ -26,8 +26,8 @@ const LoginPage = () => {
         <h1 className="ml-2 text-white text-xl font-bold">Polis</h1>
       </div>
       <div className="flex flex-col justify-center items-center h-full w-1/3">
-        <h2 className="text-2xl font-bold mb-8">Sign in</h2>
-        <div className="flex flex-col w-full shadow-xl p-8 mb-8 rounded-xl">
+        <h2 className="text-4xl font-bold mb-8">Sign in</h2>
+        <div className="flex flex-col w-full border p-8 mb-8 rounded-xl">
           <Input
             className="mb-4 p-2 pl-3 bg-gray-100 rounded-md"
             placeholder="Email"

@@ -14,6 +14,7 @@ class Conversation(Base):
 
     author = relationship("User")
     comments = relationship("Comment", backref="conversation")
+    pcas = relationship("UserPca", backref="conversation")
 
 
 class Comment(Base):
@@ -35,5 +36,17 @@ class Vote(Base):
     comment_id: Mapped[UUID] = mapped_column(ForeignKey("comments.id"))
     user_id: Mapped[UUID] = mapped_column(ForeignKey("users.id"))
     value: Mapped[int] = mapped_column()
+
+    user = relationship("User")
+
+
+class UserPca(Base):
+    __tablename__ = "user_pca"
+
+    id: Mapped[UUID] = mapped_column(primary_key=True, default=uuid4)
+    user_id: Mapped[UUID] = mapped_column(ForeignKey("users.id"))
+    conversation_id: Mapped[UUID] = mapped_column(ForeignKey("conversations.id"))
+    x: Mapped[float] = mapped_column()
+    y: Mapped[float] = mapped_column()
 
     user = relationship("User")

@@ -4,6 +4,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from polis import models
 from polis.auth.user import CurrentUser
+from polis.core.routines import update_conversation_pca
 from polis.database import Database
 from pydantic import BaseModel
 
@@ -36,9 +37,10 @@ class ConversationDetail(BaseModel):
     description: str = None
     author_id: UUID
     comments: list[CommentDetail]
+    graph: Optional[list] = None
 
 
-@router.get("/conversation/{conversation_id}")
+@router.get("/conversations/{conversation_id}")
 async def read_conversation(
     conversation_id: UUID, db: Database, current_user: CurrentUser
 ):
@@ -61,18 +63,21 @@ async def read_conversation(
             )
         )
 
+    graph = list([{"x": pca.x, "y": pca.y} for pca in conversation_db.pcas])
+
     detail = ConversationDetail(
         id=conversation_db.id,
         name=conversation_db.name,
         description=conversation_db.description,
         author_id=conversation_db.author_id,
         comments=comments,
+        graph=graph,
     )
 
     return detail
 
 
-@router.post("/conversation")
+@router.post("/conversations")
 async def create_conversation(
     conversation: Conversation, db: Database, current_user: CurrentUser
 ):
@@ -85,7 +90,7 @@ async def create_conversation(
     return {"id": db_conversation.id}
 
 
-@router.post("/conversation/{conversation_id}/comment")
+@router.post("/conversations/{conversation_id}/comments")
 async def create_comment(
     conversation_id: UUID, comment: Comment, db: Database, current_user: CurrentUser
 ):
@@ -102,7 +107,7 @@ async def create_comment(
     return {"id": db_comment.id}
 
 
-@router.post("/comment/{comment_id}/vote")
+@router.post("/comments/{comment_id}/vote")
 async def vote_on_comment(
     comment_id: UUID, vote: Vote, db: Database, current_user: CurrentUser
 ):
@@ -122,5 +127,7 @@ async def vote_on_comment(
         db_vote = models.Vote(**vote.model_dump(), comment=comment, user=current_user)
         db.add(db_vote)
     db.commit()
+
+    update_conversation_pca(comment.conversation, db)
 
     return {"id": db_vote.id}

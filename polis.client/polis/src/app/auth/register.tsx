@@ -2,22 +2,18 @@ import { useState } from "react";
 import { register } from "../../components/api/auth";
 import Logo from "../../components/ui/logo";
 import { Input } from "@headlessui/react";
+import { useNavigate } from "react-router-dom";
 
 const RegisterPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const navigate = useNavigate();
+
   const handleRegister = async (email: string, password: string) => {
     try {
-      const response = await register(email, password);
-
-      if (response.status === 200) {
-        // Redirect to login
-        window.location.href = "/login";
-      } else {
-        // Handle error
-        console.error("Error registering");
-      }
+      await register(email, password);
+      navigate("/login");
     } catch (error) {
       console.error("Error registering");
     }
@@ -30,8 +26,8 @@ const RegisterPage = () => {
         <h1 className="ml-2 text-white text-xl font-bold">Polis</h1>
       </div>
       <div className="flex flex-col justify-center items-center h-full w-1/3">
-        <h2 className="text-2xl font-bold mb-8">Create an account</h2>
-        <div className="flex flex-col w-full shadow-xl p-8 mb-8 rounded-xl">
+        <h2 className="text-4xl font-bold mb-8">Create an account</h2>
+        <div className="flex flex-col w-full border p-8 mb-8 rounded-xl">
           <Input
             className="mb-4 p-2 pl-3 bg-gray-100 rounded-md"
             placeholder="Email"
