@@ -30,7 +30,14 @@ def get_vote_matrix(conversation: models.Conversation):
 
 def get_pca(vote_matrix: np.ndarray):
     pca = PCA(n_components=2)
-    return pca.fit_transform(vote_matrix)
+
+    transformed = pca.fit_transform(vote_matrix)
+
+    total_votes = np.sum(np.abs(vote_matrix))
+    vote_scale = np.sum(np.abs(vote_matrix), axis=1)
+    vote_scale = np.sqrt(total_votes / vote_scale)
+
+    return transformed * vote_scale[:, None]
 
 
 def update_conversation_pca(conversation: models.Conversation, db: Session):
