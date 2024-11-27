@@ -113,7 +113,7 @@ const ConversationPage = () => {
             <div className="flex flex-col mt-12 h-48 w-full">
               {comment ? (
                 <>
-                  <div className="flex flex-col border-l-4 border-teal-500 p-4">
+                  <div className="flex flex-col border-l-4 border-sky-500 p-4">
                     <p>{comment.content}</p>
                   </div>
                   <div className="flex mt-4">
@@ -150,7 +150,7 @@ const ConversationPage = () => {
                     onChange={(e) => setContent(e.target.value)}
                   />
                   <Button
-                    className="bg-teal-600 text-white p-2 rounded"
+                    className="bg-sky-500 text-white p-2 rounded"
                     onClick={handleAddComment}
                   >
                     Add comment

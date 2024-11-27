@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { register } from "../../components/api/auth";
 import Logo from "../../components/ui/logo";
+import FullLogo from "../../assets/pol.is_.webp";
 import { Button, Input } from "@headlessui/react";
 import { useNavigate } from "react-router-dom";
 
@@ -21,11 +22,12 @@ const RegisterPage = () => {
 
   return (
     <div className="h-screen w-screen flex flex-col justify-center items-center">
-      <div className="w-full p-3 bg-teal-600 flex pl-5">
+      <div className="w-full p-3 bg-sky-500 flex pl-5">
         <Logo fill="white" />
         <h1 className="ml-2 text-white text-xl font-bold">Polis</h1>
       </div>
-      <div className="flex flex-col justify-center items-center h-full w-1/3">
+      <div className="flex flex-col items-center h-full w-1/3">
+        <img src={FullLogo} alt="Polis Logo" className="h-32 w-32 mb-8 mt-14" />
         <h2 className="text-4xl font-bold mb-8">Create an account</h2>
         <div className="flex flex-col w-full border p-8 mb-8 rounded-xl">
           <Input
@@ -42,7 +44,7 @@ const RegisterPage = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <Button
-            className="bg-teal-600 text-white p-2 rounded"
+            className="bg-sky-500 text-white p-2 rounded"
             onClick={() => handleRegister(email, password)}
           >
             Register
@@ -50,7 +52,7 @@ const RegisterPage = () => {
         </div>
         <p>
           Already have an account?{" "}
-          <a href="/login" className="text-blue-500">
+          <a href="/login" className="text-sky-500">
             Sign in here.
           </a>
         </p>
