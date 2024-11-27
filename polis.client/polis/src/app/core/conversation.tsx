@@ -105,12 +105,12 @@ const ConversationPage = () => {
         </div>
         <div className="flex flex-col ml-8 w-1/2 h-full">
           <div className="flex flex-col items-start h-full">
-            <div className="mt-12">
+            <div className="mt-12 h-48">
               <h3 className="text-xl font-bold">Conversation</h3>
               <h1 className="text-4xl font-bold">{conversation?.name}</h1>
               <p className="mt-4">{conversation?.description}</p>
             </div>
-            <div className="flex flex-col mt-12 h-48 w-full">
+            <div className="flex flex-col mt-12 h-36 w-full mt-12">
               {comment ? (
                 <>
                   <div className="flex flex-col border-l-4 border-sky-500 p-4">
