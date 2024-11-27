@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { baseApiUrl } from "../../components/api/base";
 import CoreBase from "./base";
 import {
+  addComment,
   getConversation,
   voteComment,
 } from "../../components/api/conversation";
@@ -12,6 +13,7 @@ import {
   XCircleIcon,
 } from "@heroicons/react/16/solid";
 import Plot from "react-plotly.js";
+import { Button, Textarea } from "@headlessui/react";
 
 interface Comment {
   id: string;
@@ -32,6 +34,7 @@ const ConversationPage = () => {
 
   const [conversation, setConversation] = useState<Conversation | null>(null);
   const [comment, setComment] = useState<Comment | null>(null);
+  const [content, setContent] = useState("");
 
   const fetchConversation = async () => {
     if (!id) {
@@ -52,6 +55,18 @@ const ConversationPage = () => {
       await fetchConversation();
     } catch (error) {
       console.error("Error voting on comment");
+    }
+  };
+
+  const handleAddComment = async () => {
+    if (!id || !content) {
+      return;
+    }
+
+    try {
+      await addComment(id, content);
+    } catch (error) {
+      console.error("Error adding comment");
     }
   };
 
@@ -89,16 +104,18 @@ const ConversationPage = () => {
           )}
         </div>
         <div className="flex flex-col ml-8 w-1/2 h-full">
-          <div className="flex flex-col justify-around items-start h-full">
-            <div>
+          <div className="flex flex-col items-start h-full">
+            <div className="mt-12">
               <h3 className="text-xl font-bold">Conversation</h3>
               <h1 className="text-4xl font-bold">{conversation?.name}</h1>
               <p className="mt-4">{conversation?.description}</p>
             </div>
-            <div className="flex flex-col mt-8 h-48">
+            <div className="flex flex-col mt-12 h-48 w-full">
               {comment ? (
-                <div className="flex flex-col border-l-2 border-teal-500 p-4">
-                  <p>{comment.content}</p>
+                <>
+                  <div className="flex flex-col border-l-4 border-teal-500 p-4">
+                    <p>{comment.content}</p>
+                  </div>
                   <div className="flex mt-4">
                     <button
                       className="bg-green-500 text-white p-1 pl-3 pr-3 rounded mr-2 flex items-center"
@@ -122,18 +139,24 @@ const ConversationPage = () => {
                       Pass
                     </button>
                   </div>
-                </div>
+                </>
               ) : (
-                <div>
+                <div className="w-full flex flex-col items-start">
                   <p className="font-semibold mb-2">You are all caught up!</p>
-                  <p>Check back later for more comments.</p>
+                  <p className="mb-2">Check back later for more comments.</p>
+                  <Textarea
+                    className="w-4/5 h-24 mt-4 mb-6 p-2 rounded bg-gray-100"
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
+                  />
+                  <Button
+                    className="bg-teal-600 text-white p-2 rounded"
+                    onClick={handleAddComment}
+                  >
+                    Add comment
+                  </Button>
                 </div>
               )}
-            </div>
-            <div>
-              <button className="bg-teal-600 text-white p-2 rounded">
-                Add comment
-              </button>
             </div>
           </div>
         </div>

@@ -5,3 +5,6 @@ export const getConversation = async (conversationId: string) =>
 
 export const voteComment = async (commentId: string, value: number) =>
   postApi(`/comments/${commentId}/vote`, { value });
+
+export const addComment = async (conversationId: string, content: string) =>
+  postApi(`/conversations/${conversationId}/comments`, { content });

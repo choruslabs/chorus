@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { register } from "../../components/api/auth";
 import Logo from "../../components/ui/logo";
-import { Input } from "@headlessui/react";
+import { Button, Input } from "@headlessui/react";
 import { useNavigate } from "react-router-dom";
 
 const RegisterPage = () => {
@@ -41,12 +41,12 @@ const RegisterPage = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button
+          <Button
             className="bg-teal-600 text-white p-2 rounded"
             onClick={() => handleRegister(email, password)}
           >
             Register
-          </button>
+          </Button>
         </div>
         <p>
           Already have an account?{" "}

@@ -50,6 +50,8 @@ async def read_conversation(
 
     comments = []
     for comment in conversation_db.comments:
+        if comment.user == current_user:
+            continue
         vote = (
             db.query(models.Vote)
             .filter(models.Vote.comment == comment, models.Vote.user == current_user)
