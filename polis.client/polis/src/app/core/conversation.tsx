@@ -22,6 +22,16 @@ import {
 } from "recharts";
 import { Button, Textarea } from "@headlessui/react";
 
+const clusterColors = [
+  "red",
+  "blue",
+  "green",
+  "yellow",
+  "purple",
+  "orange",
+  "pink",
+];
+
 interface Comment {
   id: string;
   content: string;
@@ -33,11 +43,20 @@ interface Conversation {
   name: string;
   description: string;
   comments: Comment[];
-  graph: { x: number; y: number }[];
+  graph: { x: number; y: number; cluster: number }[];
 }
 
-const TooltipContent = (props) => {
-  console.log(props);
+interface Point {
+  x: number;
+  y: number;
+}
+
+interface Cluster {
+  points: Point[];
+  cluster: number;
+}
+
+const TooltipContent = (props: any) => {
   return (
     <div className="bg-white p-4 rounded-lg shadow-md">
       <p className="text-lg">
@@ -56,6 +75,7 @@ const ConversationPage = () => {
   const [comment, setComment] = useState<Comment | null>(null);
   const [content, setContent] = useState("");
   const [commentAdded, setCommentAdded] = useState(false);
+  const [clusters, setClusters] = useState<Cluster[]>([]);
 
   const fetchConversation = async () => {
     if (!id) {
@@ -65,6 +85,29 @@ const ConversationPage = () => {
     try {
       const data = await getConversation(id);
       setConversation(data);
+
+      const clusterPoints: Point[][] = Object.values(
+        data.graph.reduce(
+          (
+            acc: { [key: number]: Point[] },
+            point: { x: number; y: number; cluster: number }
+          ) => {
+            if (!acc[point.cluster]) {
+              acc[point.cluster] = [];
+            }
+            acc[point.cluster].push(point);
+            return acc;
+          },
+          {}
+        )
+      );
+      const clusters: Cluster[] = clusterPoints.map(
+        (points: Point[], index: number) => ({
+          points,
+          cluster: index,
+        })
+      );
+      setClusters(clusters);
     } catch (error) {
       console.error("Error fetching conversation");
     }
@@ -161,10 +204,15 @@ const ConversationPage = () => {
                 <Button
                   className="bg-sky-500 text-white"
                   onClick={handleAddComment}
+                  disabled={!content}
                 >
                   Add Comment
                 </Button>
-                {commentAdded && <p className="text-green-500 mt-3">Comment added successfully!</p>}
+                {commentAdded && (
+                  <p className="text-green-500 mt-3">
+                    Comment added successfully!
+                  </p>
+                )}
               </>
             )}
           </div>
@@ -180,7 +228,13 @@ const ConversationPage = () => {
                   <Tooltip
                     content={(props: any) => <TooltipContent {...props} />}
                   />
-                  <Scatter type="monotone" dataKey="y" stroke="#8884d8" />
+                  {clusters.map((cluster) => (
+                    <Scatter
+                      key={cluster.cluster}
+                      data={cluster.points}
+                      fill={clusterColors[cluster.cluster]}
+                    />
+                  ))}
                 </ScatterChart>
               </ResponsiveContainer>
             </div>

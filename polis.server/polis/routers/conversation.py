@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from polis import models
 from polis.auth.user import CurrentUser
-from polis.core.routines import update_conversation_pca
+from polis.core.routines import update_conversation_analysis
 from polis.database import Database
 from pydantic import BaseModel
 
@@ -65,7 +65,12 @@ async def read_conversation(
             )
         )
 
-    graph = list([{"x": pca.x, "y": pca.y} for pca in conversation_db.pcas])
+    graph = list(
+        [
+            {"x": pca.x, "y": pca.y, "cluster": cluster.cluster}
+            for pca, cluster in zip(conversation_db.pcas, conversation_db.clusters)
+        ]
+    )
 
     detail = ConversationDetail(
         id=conversation_db.id,
@@ -130,6 +135,6 @@ async def vote_on_comment(
         db.add(db_vote)
     db.commit()
 
-    update_conversation_pca(comment.conversation, db)
+    update_conversation_analysis(comment.conversation, db)
 
     return {"id": db_vote.id}

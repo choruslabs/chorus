@@ -15,6 +15,7 @@ class Conversation(Base):
     author = relationship("User")
     comments = relationship("Comment", backref="conversation")
     pcas = relationship("UserPca", backref="conversation")
+    clusters = relationship("UserCluster", backref="conversation")
 
 
 class Comment(Base):
@@ -48,5 +49,16 @@ class UserPca(Base):
     conversation_id: Mapped[UUID] = mapped_column(ForeignKey("conversations.id"))
     x: Mapped[float] = mapped_column()
     y: Mapped[float] = mapped_column()
+
+    user = relationship("User")
+
+
+class UserCluster(Base):
+    __tablename__ = "user_cluster"
+
+    id: Mapped[UUID] = mapped_column(primary_key=True, default=uuid4)
+    user_id: Mapped[UUID] = mapped_column(ForeignKey("users.id"))
+    conversation_id: Mapped[UUID] = mapped_column(ForeignKey("conversations.id"))
+    cluster: Mapped[int] = mapped_column()
 
     user = relationship("User")
