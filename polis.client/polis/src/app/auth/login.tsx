@@ -22,29 +22,29 @@ const LoginPage = () => {
 
   return (
     <div className="h-screen w-screen flex flex-col justify-center items-center">
-      <div className="w-full p-3 bg-sky-500 flex pl-5">
+      <div className="w-full bg-sky-500 flex pl-5 p-3">
         <Logo fill="white" />
-        <h1 className="ml-2 text-white text-xl font-bold">Polis</h1>
+        <h1 className="text-white text-xl font-bold ml-3">Polis</h1>
       </div>
-      <div className="flex flex-col items-center h-full w-1/3">
+      <div className="h-full flex flex-col items-center w-full md:w-1/3 p-4">
         <img src={FullLogo} alt="Polis Logo" className="h-32 w-32 mb-8 mt-14" />
         <h2 className="text-4xl font-bold mb-8">Sign in</h2>
-        <div className="flex flex-col w-full border p-8 mb-8 rounded-xl">
+        <div className="flex flex-col w-full border mb-8 rounded-xl p-4">
           <Input
-            className="mb-4 p-2 pl-3 bg-gray-100 rounded-md"
+            className="mb-4 bg-gray-100 rounded-md p-2"
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
           <Input
-            className="mb-6 p-2 pl-3 bg-gray-100 rounded-md"
+            className="mb-6 bg-gray-100 rounded-md p-2"
             placeholder="Password"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
           <Button
-            className="bg-sky-500 text-white p-2 rounded"
+            className="bg-sky-500 text-whiterounded"
             onClick={() => handleLogin(email, password)}
           >
             Sign in

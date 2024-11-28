@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { baseApiUrl } from "../../components/api/base";
 import CoreBase from "./base";
 import {
   addComment,
@@ -12,7 +11,15 @@ import {
   ChevronDoubleRightIcon,
   XCircleIcon,
 } from "@heroicons/react/16/solid";
-import Plot from "react-plotly.js";
+import {
+  ResponsiveContainer,
+  ScatterChart,
+  Scatter,
+  XAxis,
+  YAxis,
+  Tooltip,
+  CartesianGrid,
+} from "recharts";
 import { Button, Textarea } from "@headlessui/react";
 
 interface Comment {
@@ -29,12 +36,26 @@ interface Conversation {
   graph: { x: number; y: number }[];
 }
 
+const TooltipContent = (props) => {
+  console.log(props);
+  return (
+    <div className="bg-white p-4 rounded-lg shadow-md">
+      <p className="text-lg">
+        {props.payload[0]?.payload.x.toPrecision(3)},{" "}
+        {props.payload[0]?.payload.y.toPrecision(3)}
+      </p>
+    </div>
+  );
+};
+
 const ConversationPage = () => {
   const { id } = useParams();
 
   const [conversation, setConversation] = useState<Conversation | null>(null);
+  const [unvotedLength, setUnvotedLength] = useState(0);
   const [comment, setComment] = useState<Comment | null>(null);
   const [content, setContent] = useState("");
+  const [commentAdded, setCommentAdded] = useState(false);
 
   const fetchConversation = async () => {
     if (!id) {
@@ -65,6 +86,8 @@ const ConversationPage = () => {
 
     try {
       await addComment(id, content);
+      setContent("");
+      setCommentAdded(true);
     } catch (error) {
       console.error("Error adding comment");
     }
@@ -79,6 +102,7 @@ const ConversationPage = () => {
       const unvoted = conversation.comments.filter(
         (comment) => comment.vote === null
       );
+      setUnvotedLength(unvoted.length);
       if (unvoted.length > 0) setComment(unvoted[0]);
       else setComment(null);
     }
@@ -86,83 +110,79 @@ const ConversationPage = () => {
 
   return (
     <CoreBase>
-      <div className="h-full w-full flex items-center justify-between p-10">
-        <div className="h-full w-1/2 mr-8 bg-gray-200 flex items-center justify-center">
-          {conversation?.graph && (
-            <Plot
-              data={[
-                {
-                  x: conversation.graph.map((point) => point.x),
-                  y: conversation.graph.map((point) => point.y),
-                  type: "scatter",
-                  mode: "markers",
-                  marker: { color: "indigo", size: 10 },
-                },
-              ]}
-              layout={{
-                width: 600,
-                height: 600,
-                paper_bgcolor: "transparent",
-                plot_bgcolor: "transparent",
-              }}
-              config={{ displayModeBar: false, staticPlot: true }}
-            />
-          )}
-        </div>
-        <div className="flex flex-col ml-8 w-1/2 h-full">
-          <div className="flex flex-col items-start h-full">
-            <div className="mt-12 h-48">
-              <h3 className="text-xl font-bold">Conversation</h3>
-              <h1 className="text-4xl font-bold">{conversation?.name}</h1>
-              <p className="mt-4">{conversation?.description}</p>
-            </div>
-            <div className="flex flex-col mt-12 h-36 w-full mt-12">
-              {comment ? (
-                <>
-                  <div className="flex flex-col border-l-4 border-sky-500 p-4">
-                    <p>{comment.content}</p>
-                  </div>
-                  <div className="flex mt-4">
-                    <button
-                      className="bg-green-500 text-white p-1 pl-3 pr-3 rounded mr-2 flex items-center"
+      <div className="h-full w-full flex flex-col lg:flex-row">
+        <div className="w-full lg:w-1/2 lg:h-full lg:p-8">
+          <div className="w-full h-full flex flex-col p-8">
+            <h4 className="text-xl font-bold mb-4">Conversation</h4>
+            <h1 className="text-4xl font-bold mb-4">{conversation?.name}</h1>
+            <p className="mb-4">{conversation?.description}</p>
+            <hr className="mb-4" />
+            <h4 className="text-xl font-bold mb-4">Comments</h4>
+            {comment ? (
+              <>
+                <p className="mb-4">{unvotedLength} remaining votes</p>
+                <div className="flex flex-col mb-4 p-4 bg-gray-100 rounded-lg">
+                  <p className="mb-4">{comment.content}</p>
+                  <div className="flex items-center">
+                    <Button
+                      className="bg-green-500 text-white mr-4"
                       onClick={() => handleVote(comment.id, 1)}
                     >
-                      <CheckCircleIcon className="h-5 w-5 mr-2" />
+                      <CheckCircleIcon className="h-4 w-4 mr-2" />
                       Agree
-                    </button>
-                    <button
-                      className="bg-red-500 text-white p-1 pl-3 pr-3 rounded flex items-center"
+                    </Button>
+                    <Button
+                      className="bg-red-500 text-white mr-4"
                       onClick={() => handleVote(comment.id, -1)}
                     >
-                      <XCircleIcon className="h-5 w-5 mr-2" />
+                      <XCircleIcon className="h-4 w-4 mr-2" />
                       Disagree
-                    </button>
-                    <button
-                      className="bg-gray-500 text-white p-1 pl-3 pr-3 rounded ml-2 flex items-center"
-                      onClick={() => handleVote(comment.id, 0)}
+                    </Button>
+                    <Button
+                      className="bg-gray-400 text-white"
+                      onClick={() => setComment(null)}
                     >
-                      <ChevronDoubleRightIcon className="h-5 w-5 mr-2" />
+                      <ChevronDoubleRightIcon className="h-4 w-4 mr-2" />
                       Pass
-                    </button>
+                    </Button>
                   </div>
-                </>
-              ) : (
-                <div className="w-full flex flex-col items-start">
-                  <p className="font-semibold mb-2">You are all caught up!</p>
-                  <p className="mb-2">Check back later for more comments.</p>
-                  <Textarea
-                    className="w-4/5 h-24 mt-4 mb-6 p-2 rounded bg-gray-100"
-                    value={content}
-                    onChange={(e) => setContent(e.target.value)}
-                  />
-                  <Button
-                    className="bg-sky-500 text-white p-2 rounded"
-                    onClick={handleAddComment}
-                  >
-                    Add comment
-                  </Button>
                 </div>
-              )}
+              </>
+            ) : (
+              <>
+                <p className="mb-4">
+                  No more comments to vote on. Add your own comment:
+                </p>
+                <Textarea
+                  className="mb-4 bg-gray-100 rounded-md p-2"
+                  value={content}
+                  onChange={(e) => setContent(e.target.value)}
+                />
+                <Button
+                  className="bg-sky-500 text-white"
+                  onClick={handleAddComment}
+                >
+                  Add Comment
+                </Button>
+                {commentAdded && <p className="text-green-500 mt-3">Comment added successfully!</p>}
+              </>
+            )}
+          </div>
+        </div>
+        <div className="w-full lg:w-1/2 lg:h-full p-8">
+          <div className="w-full h-full flex flex-col items-center justify-center bg-gray-100">
+            <div className="w-full flex flex-col items-center mb-4 w-full sm:h-2/3 sm:w-2/3">
+              <ResponsiveContainer width="80%" aspect={1}>
+                <ScatterChart data={conversation?.graph}>
+                  <CartesianGrid />
+                  <XAxis type="number" dataKey="x" unit="" hide />
+                  <YAxis type="number" dataKey="y" unit="" hide />
+                  <Tooltip
+                    content={(props: any) => <TooltipContent {...props} />}
+                  />
+                  <Scatter type="monotone" dataKey="y" stroke="#8884d8" />
+                </ScatterChart>
+              </ResponsiveContainer>
             </div>
           </div>
         </div>

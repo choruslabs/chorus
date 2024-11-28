@@ -14,7 +14,7 @@ const CoreBase = ({ children }: { children: any }) => {
 
       setUser(data);
     } catch (error: any) {
-        console.log(error);
+      console.log(error);
       if (error.status === 401) {
         handleLogout();
       }
@@ -39,16 +39,18 @@ const CoreBase = ({ children }: { children: any }) => {
       <div className="w-full p-3 bg-sky-500 pl-5 flex justify-between">
         <div className="flex">
           <Logo fill="white" />
-          <h1 className="ml-2 text-white text-xl font-bold">Polis</h1>
+          <h1 className="ml-3 text-white text-xl font-bold">Polis</h1>
         </div>
         <div className="flex">
-          <p className="text-white mr-4">Welcome, {user.username}</p>
+          <p className="text-white mr-4 max-sm:hidden">
+            Welcome, {user.username}
+          </p>
           <a className="text-white" onClick={handleLogout}>
             Logout
           </a>
         </div>
       </div>
-      {children}
+      <div className="grow p-10 w-full overflow-y-auto">{children}</div>
     </div>
   );
 };
