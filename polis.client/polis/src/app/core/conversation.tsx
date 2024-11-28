@@ -140,7 +140,7 @@ const ConversationPage = () => {
                     </Button>
                     <Button
                       className="bg-gray-400 text-white"
-                      onClick={() => setComment(null)}
+                      onClick={() => handleVote(comment.id, 0)}
                     >
                       <ChevronDoubleRightIcon className="h-4 w-4 mr-2" />
                       Pass
