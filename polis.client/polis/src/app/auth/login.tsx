@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
 
   const navigate = useNavigate();
 
@@ -15,8 +16,12 @@ const LoginPage = () => {
     try {
       await login(email, password);
       navigate("/dashboard");
-    } catch (error) {
-      console.error("Error logging in");
+    } catch (error: any) {
+      if (error.status == 401) {
+        setError("Invalid email or password.");
+      } else {
+        setError("An error occurred. Please try again.");
+      }
     }
   };
 
@@ -27,6 +32,11 @@ const LoginPage = () => {
         <h1 className="text-white text-xl font-bold ml-3">Polis</h1>
       </div>
       <div className="h-full flex flex-col items-center w-full md:w-1/3 p-4">
+        {error && (
+          <div className="bg-red-500 text-white p-2 rounded-md mb-4 absolute top-16">
+            {error}
+          </div>
+        )}
         <img src={FullLogo} alt="Polis Logo" className="h-32 w-32 mb-8 mt-14" />
         <h2 className="text-4xl font-bold mb-8">Sign in</h2>
         <div className="flex flex-col w-full border mb-8 rounded-xl p-4">
