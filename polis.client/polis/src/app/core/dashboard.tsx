@@ -9,6 +9,11 @@ const DashboardPage = () => (
         <h2 className="text-4xl font-bold mb-8">Welcome to Polis!</h2>
         <p className="mb-4">You are logged in.</p>
         <p>Start or participate in a conversation.</p>
+        <a href="/create">
+          <button className="bg-sky-500 text-white rounded-md p-2 mt-4">
+            Start a Conversation
+          </button>
+        </a>
       </div>
     </div>
   </CoreBase>
