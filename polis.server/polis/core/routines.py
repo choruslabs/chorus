@@ -80,6 +80,10 @@ def update_conversation_analysis(conversation: models.Conversation, db: Session)
             db.add(user_pca)
         user_pca.x, user_pca.y = pca_values.astype(float).tolist()
 
+    if cluster is None:
+        db.commit()
+        return
+
     for i, label in enumerate(cluster.labels_):
         user_cluster = (
             db.query(models.UserCluster)
