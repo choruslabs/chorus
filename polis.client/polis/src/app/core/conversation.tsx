@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import CoreBase from "./base";
 import {
   addComment,
@@ -77,6 +77,8 @@ const ConversationPage = () => {
   const [commentAdded, setCommentAdded] = useState(false);
   const [clusters, setClusters] = useState<Cluster[]>([]);
 
+  const navigate = useNavigate();
+
   const fetchConversation = async () => {
     if (!id) {
       return;
@@ -108,8 +110,10 @@ const ConversationPage = () => {
         })
       );
       setClusters(clusters);
-    } catch (error) {
-      console.error("Error fetching conversation");
+    } catch (error: any) {
+      if (error.status === 404 || error.status === 422) {
+        navigate("/not-found");
+      }
     }
   };
 
@@ -153,94 +157,100 @@ const ConversationPage = () => {
 
   return (
     <CoreBase>
-      <div className="h-full w-full flex flex-col lg:flex-row">
-        <div className="w-full lg:w-1/2 lg:h-full lg:px-24">
-          <div className="w-full h-full flex flex-col p-8">
-            <h4 className="text-xl font-bold mb-4">Conversation</h4>
-            <h1 className="text-4xl font-bold mb-4">{conversation?.name}</h1>
-            <p className="mb-4">{conversation?.description}</p>
-            <hr className="mb-4" />
-            <h4 className="text-xl font-bold mb-4">Comments</h4>
-            {comment ? (
-              <>
-                <p className="mb-4">{unvotedLength} remaining votes</p>
-                <div className="flex flex-col mb-4 p-4 bg-gray-100 rounded-lg">
-                  <p className="mb-4">{comment.content}</p>
-                  <div className="flex items-center">
-                    <Button
-                      className="bg-green-500 text-white mr-4"
-                      onClick={() => handleVote(comment.id, 1)}
-                    >
-                      <CheckCircleIcon className="h-4 w-4 mr-2" />
-                      Agree
-                    </Button>
-                    <Button
-                      className="bg-red-500 text-white mr-4"
-                      onClick={() => handleVote(comment.id, -1)}
-                    >
-                      <XCircleIcon className="h-4 w-4 mr-2" />
-                      Disagree
-                    </Button>
-                    <Button
-                      className="bg-gray-400 text-white"
-                      onClick={() => handleVote(comment.id, 0)}
-                    >
-                      <ChevronDoubleRightIcon className="h-4 w-4 mr-2" />
-                      Pass
-                    </Button>
-                  </div>
-                </div>
-              </>
-            ) : (
-              <>
-                <p className="mb-4">
-                  No more comments to vote on. Add your own comment:
-                </p>
-                <Textarea
-                  className="mb-4 bg-gray-100 rounded-md p-2"
-                  value={content}
-                  onChange={(e) => setContent(e.target.value)}
-                />
-                <Button
-                  className="bg-sky-500 text-white"
-                  onClick={handleAddComment}
-                  disabled={!content}
-                >
-                  Add Comment
-                </Button>
-                {commentAdded && (
-                  <p className="text-green-500 mt-3">
-                    Comment added successfully!
-                  </p>
-                )}
-              </>
-            )}
-          </div>
+      {conversation === null ? (
+        <div className="h-full w-full flex items-center justify-center">
+          <p>Loading conversation...</p>
         </div>
-        <div className="w-full lg:w-1/2 lg:h-full p-8">
-          <div className="w-full h-full flex flex-col items-center justify-center bg-gray-100">
-            <div className="w-full flex flex-col items-center mb-4 w-full sm:h-2/3 sm:w-2/3">
-              <ResponsiveContainer width="80%" aspect={1}>
-                <ScatterChart data={conversation?.graph}>
-                  <CartesianGrid />
-                  <XAxis type="number" dataKey="x" unit="" hide />
-                  <YAxis type="number" dataKey="y" unit="" hide />
-                  <Tooltip
-                    content={(props: any) => <TooltipContent {...props} />}
+      ) : (
+        <div className="h-full w-full flex flex-col lg:flex-row">
+          <div className="w-full lg:w-1/2 lg:h-full lg:px-24">
+            <div className="w-full h-full flex flex-col p-8">
+              <h4 className="text-xl font-bold mb-4">Conversation</h4>
+              <h1 className="text-4xl font-bold mb-4">{conversation?.name}</h1>
+              <p className="mb-4">{conversation?.description}</p>
+              <hr className="mb-4" />
+              <h4 className="text-xl font-bold mb-4">Comments</h4>
+              {comment ? (
+                <>
+                  <p className="mb-4">{unvotedLength} remaining votes</p>
+                  <div className="flex flex-col mb-4 p-4 bg-gray-100 rounded-lg">
+                    <p className="mb-4">{comment.content}</p>
+                    <div className="flex items-center">
+                      <Button
+                        className="bg-green-500 text-white mr-4"
+                        onClick={() => handleVote(comment.id, 1)}
+                      >
+                        <CheckCircleIcon className="h-4 w-4 mr-2" />
+                        Agree
+                      </Button>
+                      <Button
+                        className="bg-red-500 text-white mr-4"
+                        onClick={() => handleVote(comment.id, -1)}
+                      >
+                        <XCircleIcon className="h-4 w-4 mr-2" />
+                        Disagree
+                      </Button>
+                      <Button
+                        className="bg-gray-400 text-white"
+                        onClick={() => handleVote(comment.id, 0)}
+                      >
+                        <ChevronDoubleRightIcon className="h-4 w-4 mr-2" />
+                        Pass
+                      </Button>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <p className="mb-4">
+                    No more comments to vote on. Add your own comment:
+                  </p>
+                  <Textarea
+                    className="mb-4 bg-gray-100 rounded-md p-2"
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
                   />
-                  {clusters.map((cluster) => (
-                    <Scatter
-                      key={cluster.cluster}
-                      data={cluster.points}
-                      fill={clusterColors[cluster.cluster]}
+                  <Button
+                    className="bg-sky-500 text-white"
+                    onClick={handleAddComment}
+                    disabled={!content}
+                  >
+                    Add Comment
+                  </Button>
+                  {commentAdded && (
+                    <p className="text-green-500 mt-3">
+                      Comment added successfully!
+                    </p>
+                  )}
+                </>
+              )}
+            </div>
+          </div>
+          <div className="w-full lg:w-1/2 lg:h-full p-8">
+            <div className="w-full h-full flex flex-col items-center justify-center bg-gray-100">
+              <div className="w-full flex flex-col items-center mb-4 w-full sm:h-2/3 sm:w-2/3">
+                <ResponsiveContainer width="80%" aspect={1}>
+                  <ScatterChart data={conversation?.graph}>
+                    <CartesianGrid />
+                    <XAxis type="number" dataKey="x" unit="" hide />
+                    <YAxis type="number" dataKey="y" unit="" hide />
+                    <Tooltip
+                      content={(props: any) => <TooltipContent {...props} />}
                     />
-                  ))}
-                </ScatterChart>
-              </ResponsiveContainer>
+                    {clusters.map((cluster) => (
+                      <Scatter
+                        key={cluster.cluster}
+                        data={cluster.points}
+                        fill={clusterColors[cluster.cluster]}
+                      />
+                    ))}
+                  </ScatterChart>
+                </ResponsiveContainer>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </CoreBase>
   );
 };
