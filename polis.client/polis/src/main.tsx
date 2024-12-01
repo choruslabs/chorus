@@ -7,6 +7,8 @@ import ConversationPage from "./app/core/conversation";
 import LoginPage from "./app/auth/login";
 import RegisterPage from "./app/auth/register";
 import DashboardPage from "./app/core/dashboard";
+import CreateConversationPage from "./app/core/manage/create";
+import { AuthProvider } from "./components/context/AuthContext";
 
 const router = createBrowserRouter([
   {
@@ -29,10 +31,16 @@ const router = createBrowserRouter([
     path: "/conversation/:id",
     element: <ConversationPage />,
   },
+  {
+    path: "/create",
+    element: <CreateConversationPage />,
+  },
 ]);
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </StrictMode>
 );

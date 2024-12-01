@@ -1,6 +1,6 @@
 import { fetchApi, getApi, postApi } from "./base";
 
-export const login = async (username: string, password: string) => {
+export const postLogin = async (username: string, password: string) => {
   const formData = new FormData();
 
   formData.append("username", username);
@@ -12,7 +12,7 @@ export const login = async (username: string, password: string) => {
   });
 };
 
-export const register = (username: string, password: string) =>
+export const postRegister = (username: string, password: string) =>
   postApi("/register", {
     username,
     password,
@@ -20,4 +20,4 @@ export const register = (username: string, password: string) =>
 
 export const getUserMe = () => getApi("/users/me");
 
-export const logout = () => postApi("/logout");
+export const postLogout = () => postApi("/logout");

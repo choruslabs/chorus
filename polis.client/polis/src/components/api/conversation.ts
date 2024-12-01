@@ -8,3 +8,6 @@ export const voteComment = async (commentId: string, value: number) =>
 
 export const addComment = async (conversationId: string, content: string) =>
   postApi(`/conversations/${conversationId}/comments`, { content });
+
+export const createConversation = async (conversation: any) =>
+  postApi(`/conversations`, conversation);

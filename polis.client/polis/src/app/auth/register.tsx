@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { register } from "../../components/api/auth";
+import { postRegister } from "../../components/api/auth";
 import Logo from "../../components/ui/logo";
 import FullLogo from "../../assets/pol.is_.webp";
 import { Button, Input } from "@headlessui/react";
@@ -14,7 +14,7 @@ const RegisterPage = () => {
 
   const handleRegister = async (email: string, password: string) => {
     try {
-      await register(email, password);
+      await postRegister(email, password);
       navigate("/login");
     } catch (error: any) {
       if (error.status == 409) {

@@ -1,38 +1,9 @@
-import { useEffect, useState } from "react";
-import { getUserMe, logout } from "../../components/api/auth";
+import { useContext } from "react";
 import Logo from "../../components/ui/logo";
-import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../components/context/AuthContext";
 
 const CoreBase = ({ children }: { children: any }) => {
-  const [user, setUser] = useState({ username: "" });
-
-  const navigate = useNavigate();
-
-  const fetchUser = async () => {
-    try {
-      const data = await getUserMe();
-
-      setUser(data);
-    } catch (error: any) {
-      console.log(error);
-      if (error.status === 401) {
-        handleLogout();
-      }
-    }
-  };
-
-  const handleLogout = async () => {
-    try {
-      await logout();
-      navigate("/login");
-    } catch (error) {
-      console.error("Error logging out");
-    }
-  };
-
-  useEffect(() => {
-    fetchUser();
-  }, []);
+  const {user, logout} = useContext(AuthContext);
 
   return (
     <div className="h-screen w-screen flex flex-col items-center">
@@ -43,9 +14,9 @@ const CoreBase = ({ children }: { children: any }) => {
         </div>
         <div className="flex">
           <p className="text-white mr-4 max-sm:hidden">
-            Welcome, {user.username}
+            Welcome, {user?.username}
           </p>
-          <a className="text-white" onClick={handleLogout}>
+          <a className="text-white" onClick={logout}>
             Logout
           </a>
         </div>
