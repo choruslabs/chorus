@@ -154,7 +154,7 @@ const ConversationPage = () => {
   return (
     <CoreBase>
       <div className="h-full w-full flex flex-col lg:flex-row">
-        <div className="w-full lg:w-1/2 lg:h-full lg:p-8">
+        <div className="w-full lg:w-1/2 lg:h-full lg:px-24">
           <div className="w-full h-full flex flex-col p-8">
             <h4 className="text-xl font-bold mb-4">Conversation</h4>
             <h1 className="text-4xl font-bold mb-4">{conversation?.name}</h1>
