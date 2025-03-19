@@ -40,6 +40,17 @@ class ConversationDetail(BaseModel):
     graph: Optional[list] = None
 
 
+@router.get("/conversations")
+async def read_conversations(db: Database, current_user: CurrentUser):
+    conversations = (
+        db.query(models.Conversation)
+        .filter(models.Conversation.author_id == current_user.id)
+        .all()
+    )
+
+    return [{"id": conversation.id} for conversation in conversations]
+
+
 @router.get("/conversations/{conversation_id}")
 async def read_conversation(
     conversation_id: UUID, db: Database, current_user: CurrentUser
@@ -50,8 +61,6 @@ async def read_conversation(
 
     comments = []
     for comment in conversation_db.comments:
-        if comment.user == current_user:
-            continue
         vote = (
             db.query(models.Vote)
             .filter(models.Vote.comment == comment, models.Vote.user == current_user)

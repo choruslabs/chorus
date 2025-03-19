@@ -25,6 +25,7 @@ class Comment(Base):
     conversation_id: Mapped[UUID] = mapped_column(ForeignKey("conversations.id"))
     user_id: Mapped[UUID] = mapped_column(ForeignKey("users.id"))
     content: Mapped[str] = mapped_column()
+    approved: Mapped[bool] = mapped_column(default=False)
 
     user = relationship("User")
     votes = relationship("Vote", backref="comment")
