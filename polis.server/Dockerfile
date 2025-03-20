@@ -20,4 +20,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 EXPOSE 8000
 
 # Run uvicorn server
-CMD ["gunicorn", "polis.main:app", "-w", "4", "-k", "uvicorn.workers.UvicornWorker", "-b", "0.0.0.0:8000"]
+CMD ["uvicorn", "polis.main:app", "--host", "0.0.0.0", "--port", "8000"]
