@@ -1,1 +1,1 @@
-This is an open-source [Pol.is](https://pol.is/home) implementation conceived by [Civic Tech Toronto](https://civictech.ca/).
+This is an open-source web application implementing a Polis-like algorithm.
