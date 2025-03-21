@@ -72,7 +72,7 @@ async def login(
     access_token = create_access_token({"sub": user.username}, settings)
 
     response.set_cookie(key="access_token", value=access_token, httponly=True)
-    return {"access_token": form_data.username, "token_type": "bearer"}
+    return {"access_token": access_token, "token_type": "bearer"}
 
 
 @router.post("/register")
