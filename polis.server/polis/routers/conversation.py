@@ -1,7 +1,7 @@
-from typing import Annotated, Optional
+from typing import Optional
 from uuid import UUID
-from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
+from fastapi import APIRouter, HTTPException
+from sqlalchemy import false
 from polis import models
 from polis.auth.user import CurrentUser
 from polis.core.routines import update_conversation_analysis
@@ -13,11 +13,14 @@ router = APIRouter()
 
 
 class Conversation(BaseModel):
+    id: UUID
     name: str
     description: str = None
+    author_id: UUID
 
 
 class Comment(BaseModel):
+    id: UUID
     content: str
 
 
@@ -25,22 +28,25 @@ class Vote(BaseModel):
     value: int
 
 
-class CommentDetail(BaseModel):
-    id: UUID
-    content: str
+class CommentDetail(Comment):
+    pass
+
+
+class ConversationDetail(Conversation):
+    pass
+
+
+class CommentWithUserInfo(CommentDetail):
     vote: Optional[int] = None
 
 
-class ConversationDetail(BaseModel):
-    id: UUID
-    name: str
-    description: str = None
-    author_id: UUID
-    comments: list[CommentDetail]
-    graph: Optional[list] = None
+class ConversationUpdate(BaseModel):
+    name: Optional[str] = None
+    description: Optional[str] = None
+    display_unmoderated: Optional[bool] = false
 
 
-@router.get("/conversations")
+@router.get("/conversations", response_model=list[Conversation])
 async def read_conversations(db: Database, current_user: CurrentUser):
     conversations = (
         db.query(models.Conversation)
@@ -48,10 +54,10 @@ async def read_conversations(db: Database, current_user: CurrentUser):
         .all()
     )
 
-    return [{"id": conversation.id} for conversation in conversations]
+    return conversations
 
 
-@router.get("/conversations/{conversation_id}")
+@router.get("/conversations/{conversation_id}", response_model=ConversationDetail)
 async def read_conversation(
     conversation_id: UUID, db: Database, current_user: CurrentUser
 ):
@@ -59,38 +65,49 @@ async def read_conversation(
     if conversation_db is None:
         raise HTTPException(status_code=404, detail="Conversation not found")
 
-    comments = []
-    for comment in conversation_db.comments:
-        vote = (
-            db.query(models.Vote)
-            .filter(models.Vote.comment == comment, models.Vote.user == current_user)
-            .first()
-        )
-        comments.append(
-            CommentDetail(
-                id=comment.id,
-                content=comment.content,
-                vote=vote.value if vote else None,
-            )
-        )
+    return conversation_db
 
-    graph = list(
-        [
-            {"x": pca.x, "y": pca.y, "cluster": cluster.cluster}
-            for pca, cluster in zip(conversation_db.pcas, conversation_db.clusters)
+
+def get_comment_user_info(
+    comment: models.Comment, db: Database, current_user: CurrentUser
+):
+    vote = (
+        db.query(models.Vote)
+        .filter(models.Vote.comment == comment, models.Vote.user == current_user)
+        .first()
+    )
+    return {
+        "id": comment.id,
+        "content": comment.content,
+        "vote": vote.value if vote else None,
+    }
+
+
+@router.get(
+    "/conversations/{conversation_id}/comments",
+    response_model=list[CommentDetail] | list[CommentWithUserInfo],
+)
+async def read_comments(
+    conversation_id: UUID,
+    db: Database,
+    current_user: CurrentUser,
+    include_user_info: bool = False,
+):
+    conversation = db.query(models.Conversation).get(conversation_id)
+    if conversation is None:
+        raise HTTPException(status_code=404, detail="Conversation not found")
+
+    comments = conversation.comments
+
+    if not conversation.display_unmoderated:
+        comments = list(filter(lambda c: c.approved, comments))
+
+    if include_user_info:
+        return [
+            get_comment_user_info(comment, db, current_user) for comment in comments
         ]
-    )
-
-    detail = ConversationDetail(
-        id=conversation_db.id,
-        name=conversation_db.name,
-        description=conversation_db.description,
-        author_id=conversation_db.author_id,
-        comments=comments,
-        graph=graph,
-    )
-
-    return detail
+    else:
+        return comments
 
 
 @router.post("/conversations")
@@ -104,6 +121,27 @@ async def create_conversation(
     db.commit()
 
     return {"id": db_conversation.id}
+
+
+@router.put("/conversations/{conversation_id}")
+async def update_conversation(
+    conversation_id: UUID,
+    conversation: ConversationUpdate,
+    db: Database,
+    current_user: CurrentUser,
+):
+    conversation_db = db.query(models.Conversation).get(conversation_id)
+    if conversation_db is None:
+        raise HTTPException(status_code=404, detail="Conversation not found")
+    if conversation_db.author != current_user:
+        raise HTTPException(status_code=403, detail="Not authorized")
+
+    for key, value in conversation.model_dump(exclude_unset=True).items():
+        setattr(conversation_db, key, value)
+
+    db.commit()
+
+    return {"id": conversation_db.id}
 
 
 @router.post("/conversations/{conversation_id}/comments")
