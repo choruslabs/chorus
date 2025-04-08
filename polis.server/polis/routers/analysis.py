@@ -85,8 +85,8 @@ async def read_conversation(
     conversation_id: UUID,
     db: Database,
     current_user: CurrentUser,
-    include_groups=False,
-    include_stats=False,
+    include_groups: bool = False,
+    include_stats: bool = False,
 ):
     conversation = db.query(models.Conversation).get(conversation_id)
     if conversation is None:
@@ -96,7 +96,7 @@ async def read_conversation(
 
     voter_ids = set(cluster.user_id for cluster in conversation.clusters)
     participant_ids = set(comment.user_id for comment in conversation.comments)
-    user_ids = list(voter_ids & participant_ids)
+    user_ids = list(voter_ids | participant_ids)
 
     comment_ids = [comment.id for comment in conversation.comments]
 
