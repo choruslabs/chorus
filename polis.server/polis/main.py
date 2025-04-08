@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from polis.routers import conversation, auth, moderation
+from polis.routers import conversation, auth, moderation, analysis
 from polis.settings import settings
 from polis.database import db
 from polis.models import *
@@ -25,3 +25,4 @@ def read_root():
 app.include_router(auth.router, tags=["auth"])
 app.include_router(conversation.router, tags=["conversation"])
 app.include_router(moderation.router, tags=["moderation"])
+app.include_router(analysis.router, tags=["analysis"])

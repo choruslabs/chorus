@@ -1,10 +1,7 @@
-from typing import Annotated, Optional
 from uuid import UUID
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
 from polis import models
 from polis.auth.user import CurrentUser
-from polis.core.routines import update_conversation_analysis
 from polis.database import Database
 from pydantic import BaseModel
 
