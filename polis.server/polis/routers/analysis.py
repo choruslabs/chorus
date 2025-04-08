@@ -25,8 +25,12 @@ class Conversation(BaseModel):
     id: UUID
     user_ids: list[UUID]
     comment_ids: list[UUID]
-    num_votes: int
-    groups: list[Group]
+
+    groups: list[Group] = None
+
+    num_votes: int = None
+    participation_rate: float = None
+    voting_rate: float = None
 
 
 def get_conversation_groups(conversation: models.Conversation, db: Database):
@@ -64,27 +68,58 @@ async def read_conversation_groups(
     conversation_id: UUID, db: Database, current_user: CurrentUser
 ):
     conversation = db.query(models.Conversation).get(conversation_id)
+    if conversation is None:
+        raise HTTPException(status_code=404, detail="Conversation not found")
+    if conversation.author != current_user:
+        raise HTTPException(status_code=404, detail="Conversation not found")
+
     return get_conversation_groups(conversation, db)
 
 
-@router.get("/conversation/{conversation_id}", response_model=Conversation)
+@router.get(
+    "/conversation/{conversation_id}",
+    response_model=Conversation,
+    response_model_exclude_none=True,
+)
 async def read_conversation(
-    conversation_id: UUID, db: Database, current_user: CurrentUser
+    conversation_id: UUID,
+    db: Database,
+    current_user: CurrentUser,
+    include_groups=False,
+    include_stats=False,
 ):
     conversation = db.query(models.Conversation).get(conversation_id)
+    if conversation is None:
+        raise HTTPException(status_code=404, detail="Conversation not found")
+    if conversation.author != current_user:
+        raise HTTPException(status_code=404, detail="Conversation not found")
 
-    user_ids = [cluster.user_id for cluster in conversation.clusters]
+    voter_ids = set(cluster.user_id for cluster in conversation.clusters)
+    participant_ids = set(comment.user_id for comment in conversation.comments)
+    user_ids = list(voter_ids & participant_ids)
+
     comment_ids = [comment.id for comment in conversation.comments]
-    num_votes = (
-        db.query(models.Vote).filter(models.Vote.comment_id.in_(comment_ids)).count()
-    )
 
-    groups = get_conversation_groups(conversation, db)
-
-    return {
+    response = {
         "id": conversation_id,
         "user_ids": user_ids,
         "comment_ids": comment_ids,
-        "num_votes": num_votes,
-        "groups": groups,
     }
+
+    if include_groups:
+        response["groups"] = get_conversation_groups(conversation, db)
+
+    if include_stats:
+        num_votes = (
+            db.query(models.Vote)
+            .filter(models.Vote.comment_id.in_(comment_ids))
+            .count()
+        )
+
+        response["num_votes"] = num_votes
+        response["num_participants"] = len(participant_ids)
+
+        response["participation_rate"] = len(participant_ids) / len(user_ids)
+        response["voting_rate"] = num_votes / (len(user_ids) * len(comment_ids))
+
+    return response
