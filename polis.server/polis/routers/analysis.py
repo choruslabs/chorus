@@ -75,7 +75,9 @@ async def read_conversation(
 
     user_ids = [cluster.user_id for cluster in conversation.clusters]
     comment_ids = [comment.id for comment in conversation.comments]
-    num_votes = db.query(models.Vote).filter(models.Vote.comment_id.in_(comment_ids))
+    num_votes = (
+        db.query(models.Vote).filter(models.Vote.comment_id.in_(comment_ids)).count()
+    )
 
     groups = get_conversation_groups(conversation, db)
 
