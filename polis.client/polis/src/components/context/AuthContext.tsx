@@ -39,6 +39,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const logout = async () => {
     await postLogout();
     setUser(null);
+    window.location.href = "/login";
   };
 
   return (
