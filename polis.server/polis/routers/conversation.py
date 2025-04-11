@@ -19,8 +19,18 @@ class Conversation(BaseModel):
     author_id: UUID
 
 
+class ConversationCreate(BaseModel):
+    name: str
+    description: str = None
+    display_unmoderated: bool = false
+
+
 class Comment(BaseModel):
     id: UUID
+    content: str
+
+
+class CommentCreate(BaseModel):
     content: str
 
 
@@ -112,7 +122,7 @@ async def read_comments(
 
 @router.post("/conversations")
 async def create_conversation(
-    conversation: Conversation, db: Database, current_user: CurrentUser
+    conversation: ConversationCreate, db: Database, current_user: CurrentUser
 ):
     db_conversation = models.Conversation(
         **conversation.model_dump(), author=current_user
@@ -146,7 +156,10 @@ async def update_conversation(
 
 @router.post("/conversations/{conversation_id}/comments")
 async def create_comment(
-    conversation_id: UUID, comment: Comment, db: Database, current_user: CurrentUser
+    conversation_id: UUID,
+    comment: CommentCreate,
+    db: Database,
+    current_user: CurrentUser,
 ):
     conversation = db.query(models.Conversation).get(conversation_id)
     if conversation is None:
