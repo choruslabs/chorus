@@ -179,9 +179,7 @@ async def create_comment(
     return {"id": db_comment.id}
 
 
-@router.get(
-    "/conversations/{conversation_id}/comments/remaining", response_model=CommentDetail
-)
+@router.get("/conversations/{conversation_id}/comments/remaining")
 async def get_next_remaining_comment(
     conversation_id: UUID,
     db: Database,
@@ -208,7 +206,7 @@ async def get_next_remaining_comment(
     if remaining_comment is None:
         raise HTTPException(status_code=404, detail="No remaining comments found")
 
-    return remaining_comment
+    return {"num_votes": len(user_voted_comments), "comment": remaining_comment}
 
 
 @router.post("/comments/{comment_id}/vote")
