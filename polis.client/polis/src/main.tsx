@@ -7,6 +7,7 @@ import LoginPage from './app/auth/login';
 import RegisterPage from './app/auth/register';
 import DashboardPage from './app/core/dashboard';
 import { AuthProvider } from './components/context/AuthContext';
+import ConversationPage from './app/core/conversation';
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
   {
     path: '/dashboard',
     element: <DashboardPage />,
+  },
+  {
+    path: '/conversation/:conversationId',
+    element: <ConversationPage />,
   },
 ]);
 

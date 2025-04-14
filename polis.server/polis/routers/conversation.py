@@ -12,17 +12,22 @@ from pydantic import BaseModel
 router = APIRouter()
 
 
+class UserBasic(BaseModel):
+    id: UUID
+    username: str
+
+
 class Conversation(BaseModel):
     id: UUID
     name: str
     description: str = None
-    author_id: UUID
+    author: UserBasic
 
 
 class ConversationCreate(BaseModel):
     name: str
     description: str = None
-    display_unmoderated: bool = false
+    display_unmoderated: bool = False
 
 
 class Comment(BaseModel):
@@ -53,7 +58,7 @@ class CommentWithUserInfo(CommentDetail):
 class ConversationUpdate(BaseModel):
     name: Optional[str] = None
     description: Optional[str] = None
-    display_unmoderated: Optional[bool] = false
+    display_unmoderated: Optional[bool] = False
 
 
 @router.get("/conversations", response_model=list[Conversation])
@@ -172,6 +177,38 @@ async def create_comment(
     db.commit()
 
     return {"id": db_comment.id}
+
+
+@router.get(
+    "/conversations/{conversation_id}/comments/remaining", response_model=CommentDetail
+)
+async def get_next_remaining_comment(
+    conversation_id: UUID,
+    db: Database,
+    current_user: CurrentUser,
+):
+    conversation = db.query(models.Conversation).get(conversation_id)
+    if conversation is None:
+        raise HTTPException(status_code=404, detail="Conversation not found")
+
+    user_votes = db.query(models.Vote).filter(models.Vote.user == current_user).all()
+    user_voted_comments = {vote.comment_id for vote in user_votes}
+
+    remaining_comment = (
+        db.query(models.Comment)
+        .filter(
+            models.Comment.conversation == conversation,
+            models.Comment.approved,
+            models.Comment.user != current_user,
+            models.Comment.id.notin_(user_voted_comments),
+        )
+        .first()
+    )
+
+    if remaining_comment is None:
+        raise HTTPException(status_code=404, detail="No remaining comments found")
+
+    return remaining_comment
 
 
 @router.post("/comments/{comment_id}/vote")

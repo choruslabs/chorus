@@ -34,3 +34,6 @@ export const createComment = async (conversationId: string, content: string) =>
 
 export const createVote = async (commentId: string, value: number) =>
   postApi(`/comments/${commentId}/vote`, { value });
+
+export const getNextComment = async (conversationId: string) =>
+  getApi(`/conversations/${conversationId}/comments/remaining`);
