@@ -4,6 +4,7 @@ from polis import models
 from polis.auth.user import CurrentUser
 from polis.database import Database
 from pydantic import BaseModel
+import numpy as np
 
 
 router = APIRouter(prefix="/analysis")
@@ -19,6 +20,8 @@ class Group(BaseModel):
     group_id: int
     user_ids: list[UUID]
     comment_vote_counts: dict[UUID, int]
+    variance: float = None
+    top_comments: list[CommentStatistics] = None
 
 
 class Conversation(BaseModel):
@@ -41,7 +44,7 @@ def get_conversation_groups(conversation: models.Conversation, db: Database):
     for user_cluster in user_clusters:
         group_id = user_cluster.cluster
 
-        if not group_id in groups:
+        if group_id not in groups:
             groups[group_id] = {
                 "user_ids": [],
                 "comment_vote_counts": {comment.id: 0 for comment in comments},
@@ -60,6 +63,33 @@ def get_conversation_groups(conversation: models.Conversation, db: Database):
         for vote in votes:
             groups[group_id]["comment_vote_counts"][vote.comment_id] += vote.value
 
+    for group_id, group in groups.items():
+        group["variance"] = np.var(list(group["comment_vote_counts"].values()), ddof=1)
+
+        top_comment_ids = list(
+            map(
+                lambda item: item[0],
+                sorted(
+                    group["comment_vote_counts"].items(),
+                    key=lambda item: item[1],
+                    reverse=True,
+                ),
+            )
+        )[:3]
+
+        top_comments = [
+            db.query(models.Comment).get(comment_id) for comment_id in top_comment_ids
+        ]
+
+        group["top_comments"] = [
+            {
+                "id": comment.id,
+                "content": comment.content,
+                "consensus": group["comment_vote_counts"][comment.id],
+            }
+            for comment in top_comments
+        ]
+
     return [{"group_id": i, **group} for i, group in groups.items()]
 
 
@@ -69,8 +99,6 @@ async def read_conversation_groups(
 ):
     conversation = db.query(models.Conversation).get(conversation_id)
     if conversation is None:
-        raise HTTPException(status_code=404, detail="Conversation not found")
-    if conversation.author != current_user:
         raise HTTPException(status_code=404, detail="Conversation not found")
 
     return get_conversation_groups(conversation, db)
@@ -90,8 +118,6 @@ async def read_conversation(
 ):
     conversation = db.query(models.Conversation).get(conversation_id)
     if conversation is None:
-        raise HTTPException(status_code=404, detail="Conversation not found")
-    if conversation.author != current_user:
         raise HTTPException(status_code=404, detail="Conversation not found")
 
     voter_ids = set(cluster.user_id for cluster in conversation.clusters)
