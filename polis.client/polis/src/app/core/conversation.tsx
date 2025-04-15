@@ -101,6 +101,7 @@ const ConversationPage = () => {
 
     if (response) {
       fetchNextComment();
+      fetchAnalysis();
     } else {
       setError('Failed to vote');
     }
