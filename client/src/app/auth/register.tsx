@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { postRegister } from '../../components/api/auth';
 import Logo from '../../components/ui/logo';
-import FullLogo from '../../assets/pol.is_.webp';
 import { Button, Input } from '@headlessui/react';
 import { useNavigate } from 'react-router-dom';
 

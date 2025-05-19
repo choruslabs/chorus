@@ -1,6 +1,5 @@
 import { useContext, useState } from 'react';
 import Logo from '../../components/ui/logo';
-import FullLogo from '../../assets/pol.is_.webp';
 import { Button, Input } from '@headlessui/react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../components/context/AuthContext';
