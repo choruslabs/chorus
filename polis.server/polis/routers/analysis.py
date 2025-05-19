@@ -35,6 +35,8 @@ class Conversation(BaseModel):
     participation_rate: float = None
     voting_rate: float = None
 
+    consensus_comments: list[CommentStatistics] = None
+
 
 def get_conversation_groups(conversation: models.Conversation, db: Database):
     user_clusters = conversation.clusters
@@ -85,7 +87,8 @@ def get_conversation_groups(conversation: models.Conversation, db: Database):
             {
                 "id": comment.id,
                 "content": comment.content,
-                "consensus": group["comment_vote_counts"][comment.id],
+                "consensus": group["comment_vote_counts"][comment.id]
+                / len(user_clusters),
             }
             for comment in top_comments
         ]
@@ -104,6 +107,32 @@ async def read_conversation_groups(
     return get_conversation_groups(conversation, db)
 
 
+def get_consensus_comments(comments: list[models.Comment], groups: list[Group], k=3):
+    consensus = {
+        comment.id: {
+            "id": comment.id,
+            "content": comment.content,
+            "consensus": 0.0,
+        }
+        for comment in comments
+    }
+
+    for group in groups:
+        for comment_id, vote_count in group["comment_vote_counts"].items():
+            consensus[comment_id]["consensus"] += vote_count / len(group["user_ids"])
+
+    consensus = sorted(
+        consensus.values(), key=lambda item: item["consensus"], reverse=True
+    )
+
+    for comment in consensus:
+        comment["consensus"] /= len(groups)
+
+    if len(consensus) > k:
+        consensus = consensus[:k]
+    return consensus
+
+
 @router.get(
     "/conversation/{conversation_id}",
     response_model=Conversation,
@@ -115,6 +144,7 @@ async def read_conversation(
     current_user: CurrentUser,
     include_groups: bool = False,
     include_stats: bool = False,
+    include_consensus_comments: bool = False,
 ):
     conversation = db.query(models.Conversation).get(conversation_id)
     if conversation is None:
@@ -147,5 +177,13 @@ async def read_conversation(
 
         response["participation_rate"] = len(participant_ids) / len(user_ids)
         response["voting_rate"] = num_votes / (len(user_ids) * len(comment_ids))
+
+    if include_consensus_comments:
+        if "groups" not in response:
+            response["groups"] = get_conversation_groups(conversation, db)
+
+        response["consensus_comments"] = get_consensus_comments(
+            conversation.comments, response["groups"]
+        )
 
     return response

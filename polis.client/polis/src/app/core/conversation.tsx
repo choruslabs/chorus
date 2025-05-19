@@ -9,7 +9,7 @@ import {
 import { useEffect, useState } from 'react';
 import { CheckIcon, ForwardIcon, XMarkIcon } from '@heroicons/react/24/solid';
 import { Button, Input, Legend } from '@headlessui/react';
-import { getConversationGroups } from '../../components/api/analysis';
+import { getConversationWithConsensus } from '../../components/api/analysis';
 
 const ConversationPage = () => {
   const { conversationId } = useParams();
@@ -18,6 +18,7 @@ const ConversationPage = () => {
   const [comment, setComment] = useState<any>(null);
 
   const [groups, setGroups] = useState<any>(null);
+  const [consensus, setConsensus] = useState<any>(null);
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -53,10 +54,11 @@ const ConversationPage = () => {
       return;
     }
 
-    const response = await getConversationGroups(conversationId);
+    const response = await getConversationWithConsensus(conversationId);
 
     if (response) {
-      setGroups(response);
+      setGroups(response.groups);
+      setConsensus(response.consensus_comments);
     } else {
       setError('Failed to fetch analysis');
     }
@@ -181,7 +183,7 @@ const ConversationPage = () => {
             {!loading && !error && (
               <div className='flex items-center justify-around mt-16'>
                 <Input
-                  className='w-full max-w-md p-2 border rounded shadow'
+                  className='w-full max-w-md p-2 border rounded bg-gray-100'
                   placeholder='Add a comment...'
                   value={newComment}
                   onChange={(e) => setNewComment(e.target.value)}
@@ -200,57 +202,30 @@ const ConversationPage = () => {
             )}
           </div>
         </div>
-        <div className='flex flex-col w-full h-full bg-emerald-500 p-16'>
-          <div className='flex flex-col w-full h-full bg-gray-100 border-b'>
-            <div className='flex flex-col px-8 p-4 bg-emerald-600 text-white'>
-              <h1 className='text-xl font-bold'>Groups</h1>
+        <div className='flex w-1/3 flex-col w-full h-full bg-emerald-500 p-16'>
+          {consensus && (
+            <div className='flex flex-col w-full'>
+              <h1 className='text-3xl font-bold text-white mb-6'>
+                Consensus
+              </h1>
+              {consensus.map((comment: any, index: number) => (
+                <div
+                  key={comment.id}
+                  className='bg-white p-5 rounded-xl shadow-lg mb-4'>
+                  <p className='text-gray-500 text-sm'>#{index + 1}</p>
+                  <p className='font-semibold text-md mt-2'>
+                    {comment.content}
+                  </p>
+                  <p className='text-gray-500 text-sm mt-2'>
+                    Consensus:{' '}
+                    <span className='font-bold text-xl text-green-700 shadow-sm'>
+                      {Math.round(comment.consensus * 100)}%
+                    </span>
+                  </p>
+                </div>
+              ))}
             </div>
-            <div className='flex flex-col w-full h-full p-4 overflow-y-auto'>
-              {groups && (
-                <>
-                  <h3 className='text-sm text-gray-100'>
-                    {groups.length} groups
-                  </h3>
-                  {groups.map((group: any, index: number) => (
-                    <>
-                      <div
-                        key={group.id}
-                        className='flex items-center justify-between px-4 p-2 bg-gray-200 border-b mb-3'>
-                        <p className='text-sm text-gray-800'>
-                          Group {index + 1}
-                        </p>
-                        <p className='text-sm text-gray-600'>
-                          {group.user_ids.length} members
-                        </p>
-                        <p className='text-sm text-gray-800'>
-                          Variance:{' '}
-                          <span className='font-semibold text-lg'>
-                            {group.variance.toFixed(2)}
-                          </span>
-                        </p>
-                      </div>
-                      <div className='flex items-center justify-between px-4 p-2 bg-gray-100 border-b mb-3'>
-                        <p className='text-sm text-gray-800'>Top comments</p>
-                        <p className='text-sm text-gray-600'>
-                          {group.top_comments.length} comments
-                        </p>
-                      </div>
-                      <div className='flex flex-col px-4 p-2 bg-gray-100 border-b mb-3'>
-                        {group.top_comments.map((comment: any) => (
-                          <div className='flex items-center justify-between'>
-                            <p className='text-md'>{comment.content}</p>
-                            <span className='text-sm text-gray-600 font-semibold'>
-                              {comment.consensus.toFixed(2) * 100}%
-                            </span>
-                          </div>
-                        ))}
-                      </div>
-                    </>
-                  ))}
-                </>
-              )}
-            </div>
-          </div>
+          )}
         </div>
       </div>
     </CoreBase>
