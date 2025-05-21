@@ -30,7 +30,13 @@ const LoginPage = () => {
     <div className='h-screen w-screen flex justify-between items-center'>
       <div className='w-1/3 h-full bg-emerald-500 flex flex-col justify-center pl-16'>
         <Logo fill='white' />
-        <h1 className='text-white text-6xl font-bold mt-5'>PublicSquareTO</h1>
+        <h1 className='text-white text-6xl font-bold mt-5'>
+          Public
+          <br />
+          Square
+          <br />
+          TO
+        </h1>
       </div>
       <div className='w-2/3 h-full flex justify-center'>
         <div className='w-1/2 flex flex-col justify-center'>

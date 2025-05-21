@@ -10,7 +10,7 @@ const CoreBase = ({ children }: { children: any }) => {
       <div className="w-full p-3 bg-emerald-500 pl-5 flex justify-between">
         <div className="flex">
           <Logo fill="white" />
-          <h1 className="ml-3 text-white text-xl font-bold">PublicSquareTO</h1>
+          <h1 className="ml-3 text-white text-xl font-bold">Public Square TO</h1>
         </div>
         <div className="flex">
           <p className="text-white mr-4 max-sm:hidden">
