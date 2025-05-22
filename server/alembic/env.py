@@ -9,7 +9,7 @@ from alembic import context
 # access to the values within the .ini file in use.
 config = context.config
 
-from psqto.settings import settings
+from convergent.settings import settings
 config.set_main_option("sqlalchemy.url", settings.database_url)
 
 # Interpret the config file for Python logging.
@@ -21,7 +21,7 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-from psqto.models import *
+from convergent.models import *
 target_metadata = Base.metadata
 
 # other values from the config, defined by the needs of env.py,

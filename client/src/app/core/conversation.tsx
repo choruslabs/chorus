@@ -11,6 +11,19 @@ import { CheckIcon, ForwardIcon, XMarkIcon } from '@heroicons/react/24/solid';
 import { Button, Input, Legend } from '@headlessui/react';
 import { getConversationWithConsensus } from '../../components/api/analysis';
 
+const ConversationHeading = ({
+  title,
+  description,
+}: {
+  title: string;
+  description: string;
+}) => (
+  <div className='flex flex-col p-4'>
+    <h1 className='text-2xl font-bold'>{title}</h1>
+    <p className='text-gray-600'>{description}</p>
+  </div>
+);
+
 const ConversationPage = () => {
   const { conversationId } = useParams();
 
@@ -205,9 +218,7 @@ const ConversationPage = () => {
         <div className='flex w-1/3 flex-col w-full h-full bg-emerald-500 p-16'>
           {consensus && (
             <div className='flex flex-col w-full'>
-              <h1 className='text-3xl font-bold text-white mb-6'>
-                Consensus
-              </h1>
+              <h1 className='text-3xl font-bold text-white mb-6'>Consensus</h1>
               {consensus.map((comment: any, index: number) => (
                 <div
                   key={comment.id}

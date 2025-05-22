@@ -4,7 +4,7 @@ from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
-    database_url: str = "sqlite:///psqto.db"
+    database_url: str = "sqlite:///convergent.db"
 
     client_origin: str = "http://localhost:5173"
     allowed_origins: list[str] = [client_origin]

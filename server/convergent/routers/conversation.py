@@ -2,10 +2,10 @@ from typing import Optional
 from uuid import UUID
 from fastapi import APIRouter, HTTPException
 from sqlalchemy import false
-from psqto import models
-from psqto.auth.user import CurrentUser
-from psqto.core.routines import update_conversation_analysis
-from psqto.database import Database
+from convergent import models
+from convergent.auth.user import CurrentUser
+from convergent.core.routines import update_conversation_analysis
+from convergent.database import Database
 from pydantic import BaseModel
 
 

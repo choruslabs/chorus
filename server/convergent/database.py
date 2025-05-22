@@ -2,7 +2,7 @@ from typing import Annotated
 from fastapi import Depends
 from sqlalchemy import create_engine
 from sqlalchemy.orm import DeclarativeBase, Session
-from psqto.settings import settings
+from convergent.settings import settings
 
 
 class Base(DeclarativeBase):

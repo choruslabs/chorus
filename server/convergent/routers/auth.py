@@ -6,10 +6,10 @@ from sqlalchemy.exc import IntegrityError
 import jwt
 from pydantic import BaseModel
 from passlib.context import CryptContext
-from psqto import models
-from psqto.database import Database
-from psqto.settings import Settings, SettingsDep
-from psqto.auth.user import CurrentUser
+from convergent import models
+from convergent.database import Database
+from convergent.settings import Settings, SettingsDep
+from convergent.auth.user import CurrentUser
 
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")

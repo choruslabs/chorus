@@ -1,4 +1,4 @@
-This is an open-source web application implementing a psqto-like algorithm.
+This is an open-source web application implementing a polis-like algorithm for mapping high-dimensional opinion spaces.
 
 ## Installation
 
@@ -18,7 +18,7 @@ pip install -r requirements.txt
 To run the API (in auto-reload mode):
 
 ```bash
-uvicorn psqto.main:app --reload
+uvicorn convergent.main:app --reload
 ```
 
 ### Frontend

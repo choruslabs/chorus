@@ -12,7 +12,7 @@ const AppBar = ({ user, logout }: { user: any; logout: () => void }) => (
     <div className='flex'>
       <Logo fill='white' />
       <h1 className='ml-3 mr-16 text-white text-xl font-bold'>
-        Public Square TO
+        Convergent
       </h1>
     </div>
     <div className='flex items-center'>

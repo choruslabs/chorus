@@ -2,9 +2,9 @@ from typing import Annotated, Optional
 from uuid import UUID
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from psqto import models
-from psqto.auth.user import CurrentUser
-from psqto.database import Database
+from convergent import models
+from convergent.auth.user import CurrentUser
+from convergent.database import Database
 import numpy as np
 from sklearn.decomposition import PCA
 from sklearn.cluster import KMeans

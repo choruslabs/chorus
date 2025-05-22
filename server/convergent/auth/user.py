@@ -2,9 +2,9 @@ from typing import Annotated
 from fastapi import Cookie, Depends, HTTPException
 import jwt
 from sqlalchemy.orm import Session
-from psqto import models
-from psqto.settings import SettingsDep
-from psqto.database import Database
+from convergent import models
+from convergent.settings import SettingsDep
+from convergent.database import Database
 
 
 def get_current_user(

@@ -1,7 +1,7 @@
 from uuid import uuid4, UUID
 from sqlalchemy import String, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from psqto.database import Base
+from convergent.database import Base
 
 
 class Conversation(Base):

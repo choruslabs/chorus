@@ -1,8 +1,8 @@
 from uuid import UUID
 from fastapi import APIRouter, Depends, HTTPException
-from psqto import models
-from psqto.auth.user import CurrentUser
-from psqto.database import Database
+from convergent import models
+from convergent.auth.user import CurrentUser
+from convergent.database import Database
 from pydantic import BaseModel
 import numpy as np
 

@@ -1,9 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from psqto.routers import conversation, auth, moderation, analysis
-from psqto.settings import settings
-from psqto.database import db
-from psqto.models import *
+from convergent.routers import conversation, auth, moderation, analysis
+from convergent.settings import settings
+from convergent.database import db
+from convergent.models import *
 
 
 app = FastAPI()
