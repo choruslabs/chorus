@@ -22,7 +22,8 @@ const CurrentComment = ({ comment, commentIndex, onComplete }) => {
       if (response) {
         onComplete();
       } else {
-        // Handle error
+        console.error('Failed to process the vote. Please try again.');
+        alert('An error occurred while processing your vote. Please try again.');
       }
     });
   };
