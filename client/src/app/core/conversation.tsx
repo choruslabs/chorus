@@ -11,27 +11,101 @@ import { CheckIcon, ForwardIcon, XMarkIcon } from '@heroicons/react/24/solid';
 import { Button, Input, Legend } from '@headlessui/react';
 import { getConversationWithConsensus } from '../../components/api/analysis';
 
-const ConversationHeading = ({
-  title,
-  description,
-}: {
-  title: string;
-  description: string;
-}) => (
-  <div className='flex flex-col p-4'>
-    <h1 className='text-2xl font-bold'>{title}</h1>
-    <p className='text-gray-600'>{description}</p>
-  </div>
-);
+const VoteCounter = ({ counts }) => {
+  return <div className='flex items-center space-x-2'>&#9646;</div>;
+};
+
+const CurrentComment = ({ comment, commentIndex, onComplete }) => {
+  const handleVote = async (voteType) => {
+    if (!comment) return;
+    await createVote(comment.id, voteType).then((response) => {
+      if (response) {
+        onComplete();
+      } else {
+        // Handle error
+      }
+    });
+  };
+
+  return (
+    <div className='flex flex-col p-4'>
+      <h4 className='text-md font-bold mb-2'>Comment {commentIndex + 1}</h4>
+      <p className='text-gray-800 mb-4'>{comment?.content}</p>
+      <div className='flex items-center space-x-4 mb-4'>
+        <Button
+          onClick={() => handleVote(1)}
+          className='bg-primary text-white flex items-center'>
+          <CheckIcon className='h-5 w-5 mr-3' />
+          Agree
+        </Button>
+        <Button
+          onClick={() => handleVote(-1)}
+          className='bg-primary text-white flex items-center'>
+          <XMarkIcon className='h-5 w-5 mr-3' />
+          Disagree
+        </Button>
+        <Button
+          onClick={() => handleVote(0)}
+          className='bg-primary text-white flex items-center'>
+          <ForwardIcon className='h-5 w-5 mr-3' />
+          Pass
+        </Button>
+      </div>
+    </div>
+  );
+};
+
+const CommentSection = ({ conversation }) => {
+  const [commentIndex, setCommentIndex] = useState(0);
+  const [comment, setComment] = useState<any>(null);
+
+  const nextComment = async () => {
+    await getNextComment(conversation.id).then((response) => {
+      if (response) {
+        setComment({
+          ...response.comment,
+          number: response.num_votes + 1,
+        });
+      } else {
+        setComment(null);
+      }
+    });
+  };
+
+  const openCreateCommentModal = () => {
+    // Logic to open modal for creating a new comment
+  };
+
+  useEffect(() => {
+    nextComment();
+  }, [conversation]);
+
+  return (
+    <div className='flex flex-col w-full h-full p-4 bg-background rounded-lg p-8'>
+      <div className='flex w-full justify-between items-center mb-8'>
+        <p className='font-semibold text-secondary'>Active Comments</p>
+        <Button
+          onClick={openCreateCommentModal}
+          className='bg-white border-black border-1 text-black px-4 py-2 rounded'>
+          Add Comment
+        </Button>
+      </div>
+      <div className='flex flex-col space-y-8 p-4 bg-white rounded-lg'>
+        <VoteCounter counts={{ agrees: 0, disagrees: 0 }} />
+        <CurrentComment
+          comment={comment}
+          commentIndex={commentIndex}
+          onComplete={nextComment}
+        />
+      </div>
+    </div>
+  );
+};
 
 const ConversationPage = () => {
   const { conversationId } = useParams();
 
   const [conversation, setConversation] = useState<any>(null);
-  const [comment, setComment] = useState<any>(null);
-
-  const [groups, setGroups] = useState<any>(null);
-  const [consensus, setConsensus] = useState<any>(null);
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -58,185 +132,18 @@ const ConversationPage = () => {
     };
 
     fetchConversation();
-    fetchAnalysis();
   }, [conversationId]);
-
-  const fetchAnalysis = async () => {
-    if (!conversationId) {
-      setError('Invalid URL');
-      return;
-    }
-
-    const response = await getConversationWithConsensus(conversationId);
-
-    if (response) {
-      setGroups(response.groups);
-      setConsensus(response.consensus_comments);
-    } else {
-      setError('Failed to fetch analysis');
-    }
-  };
-
-  const fetchNextComment = async () => {
-    if (!conversationId) {
-      setError('Invalid URL');
-      return;
-    }
-
-    const response = await getNextComment(conversationId).catch((err) => {
-      if (err.status === 404) {
-        setComment(null);
-        return;
-      }
-    });
-
-    if (response) {
-      setComment({
-        ...response.comment,
-        number: response.num_votes + 1,
-      });
-    } else {
-      setComment(null);
-    }
-  };
-
-  useEffect(() => {
-    if (conversation) {
-      fetchNextComment();
-    }
-  }, [conversation]);
-
-  const handleVote = async (commentId: string, value: number) => {
-    if (!conversationId) {
-      setError('Invalid URL');
-      return;
-    }
-
-    const response = await createVote(commentId, value);
-
-    if (response) {
-      fetchNextComment();
-      fetchAnalysis();
-    } else {
-      setError('Failed to vote');
-    }
-  };
-
-  const handleSubmitComment = async () => {
-    if (!conversationId) {
-      setError('Invalid URL');
-      return;
-    }
-
-    const response = await createComment(conversationId, newComment);
-
-    if (response) {
-      setNewComment('');
-    } else {
-      setError('Failed to submit comment');
-    }
-  };
 
   return (
     <CoreBase>
-      <div className='flex w-screen h-full'>
-        <div className='flex flex-col w-full h-full'>
-          <div className='flex flex-col w-full bg-gray-100 border-b'>
-            <div className='flex items-center justify-between px-8 p-4 bg-emerald-600 text-white'>
-              <h1 className='text-xl font-bold'>{conversation?.name}</h1>
-              <h3 className='text-sm text-gray-100'>
-                By {conversation?.author?.username}
-              </h3>
-            </div>
-            <div className='flex items-center justify-between px-8 p-4'>
-              <p className='text-sm text-gray-500'>
-                {conversation?.description}
-              </p>
-            </div>
+      <div className='flex flex-col w-full h-full p-8 md:p-24'>
+        <h1 className='text-3xl font-bold mb-4'>{conversation?.name}</h1>
+        <p className='text-gray-600 mb-16'>{conversation?.description}</p>
+        <div className='flex space-x-16 mb-8'>
+          <div className='w-1/2'>
+            <CommentSection conversation={conversation} />
           </div>
-          <div className='flex flex-col w-full p-16 justify-center grow'>
-            {loading && <p className='text-center'>Loading...</p>}
-            {error && <p className='text-center text-red-500'>{error}</p>}
-            {comment ? (
-              <div className='flex items-center justify-around w-full'>
-                <div className='mx-5 rounded-xl shadow-xl border'>
-                  <div className='flex flex-col p-5'>
-                    <p className='text-gray-500 text-sm'>#{comment?.number}</p>
-                    <p className='font-semibold text-xl mt-2 w-96'>
-                      {comment?.content}
-                    </p>
-                  </div>
-                </div>
-                <div className='flex flex-col'>
-                  <div
-                    className='bg-green-500 mx-2 pl-2 pr-4 py-0.5 rounded-xl text-white mb-3 w-fit cursor-pointer'
-                    onClick={() => handleVote(comment.id, 1)}>
-                    <CheckIcon className='w-5 h-5 inline mr-2' />
-                    Agree
-                  </div>
-                  <div
-                    className='bg-red-500 mx-2 pl-2 pr-4 py-0.5 rounded-xl text-white mb-3 w-fit cursor-pointer'
-                    onClick={() => handleVote(comment.id, -1)}>
-                    <XMarkIcon className='w-5 h-5 inline mr-2' />
-                    Disagree
-                  </div>
-                  <div
-                    className='bg-gray-500 mx-2 pl-2 pr-4 py-0.5 rounded-xl text-white w-fit cursor-pointer'
-                    onClick={() => handleVote(comment.id, 0)}>
-                    <ForwardIcon className='w-5 h-5 inline mr-2' />
-                    Skip
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <div className='flex items-center justify-center w-full'>
-                <p className='text-gray-500 text-sm'>No more comments</p>
-              </div>
-            )}
-            {!loading && !error && (
-              <div className='flex items-center justify-around mt-16'>
-                <Input
-                  className='w-full max-w-md p-2 border rounded bg-gray-100'
-                  placeholder='Add a comment...'
-                  value={newComment}
-                  onChange={(e) => setNewComment(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
-                      handleSubmitComment();
-                    }
-                  }}
-                />
-                <Button
-                  className='bg-emerald-600 text-white p-2 rounded'
-                  onClick={handleSubmitComment}>
-                  Submit
-                </Button>
-              </div>
-            )}
-          </div>
-        </div>
-        <div className='flex w-1/3 flex-col w-full h-full bg-emerald-500 p-16'>
-          {consensus && (
-            <div className='flex flex-col w-full'>
-              <h1 className='text-3xl font-bold text-white mb-6'>Consensus</h1>
-              {consensus.map((comment: any, index: number) => (
-                <div
-                  key={comment.id}
-                  className='bg-white p-5 rounded-xl shadow-lg mb-4'>
-                  <p className='text-gray-500 text-sm'>#{index + 1}</p>
-                  <p className='font-semibold text-md mt-2'>
-                    {comment.content}
-                  </p>
-                  <p className='text-gray-500 text-sm mt-2'>
-                    Consensus:{' '}
-                    <span className='font-bold text-xl text-green-700 shadow-sm'>
-                      {Math.round(comment.consensus * 100)}%
-                    </span>
-                  </p>
-                </div>
-              ))}
-            </div>
-          )}
+          <div></div>
         </div>
       </div>
     </CoreBase>

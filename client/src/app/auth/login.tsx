@@ -28,7 +28,7 @@ const LoginPage = () => {
 
   return (
     <div className='h-screen w-screen flex justify-between items-center'>
-      <div className='w-1/3 h-full bg-emerald-500 flex flex-col justify-center pl-16'>
+      <div className='w-1/3 h-full bg-secondary flex flex-col justify-center pl-16'>
         <Logo fill='white' />
         <h1 className='text-white text-6xl font-bold mt-5'>
           Public
@@ -60,7 +60,7 @@ const LoginPage = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <Button
-            className='mb-8 bg-emerald-500 text-white rounded-sm'
+            className='mb-8 bg-secondary text-white rounded-sm'
             onClick={() => handleLogin(email, password)}>
             Sign in
           </Button>
