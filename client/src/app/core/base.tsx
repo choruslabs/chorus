@@ -8,7 +8,7 @@ const UserDropdown = () => (
 );
 
 const AppBar = ({ user, logout }: { user: any; logout: () => void }) => (
-  <div className='w-full p-3 bg-emerald-500 pl-5 flex items-center justify-between'>
+  <div className='w-full p-3 bg-secondary pl-5 flex items-center justify-between'>
     <div className='flex'>
       <Logo fill='white' />
       <h1 className='ml-3 mr-16 text-white text-xl font-bold'>
