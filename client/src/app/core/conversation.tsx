@@ -12,7 +12,7 @@ import { Button, Input, Legend } from '@headlessui/react';
 import { getConversationWithConsensus } from '../../components/api/analysis';
 
 const VoteCounter = ({ counts }) => {
-  return <div className='flex items-center space-x-2'>&#9646;</div>;
+  return <div className='flex items-center space-x-2'>Vote counter placeholder&#9646;</div>;
 };
 
 const CurrentComment = ({ comment, commentIndex, onComplete }) => {
@@ -29,26 +29,26 @@ const CurrentComment = ({ comment, commentIndex, onComplete }) => {
   };
 
   return (
-    <div className='flex flex-col p-4'>
+    <div className='flex flex-col mx-auto'>
       <h4 className='text-md font-bold mb-2'>Comment {commentIndex + 1}</h4>
       <p className='text-gray-800 mb-4'>{comment?.content}</p>
-      <div className='flex items-center space-x-4 mb-4'>
+      <div className='flex w-full items-center gap-4 mb-4 flex-wrap'>
         <Button
           onClick={() => handleVote(1)}
-          className='bg-primary text-white flex items-center'>
-          <CheckIcon className='h-5 w-5 mr-3' />
+          className='bg-primary text-white flex items-center flex-wrap gap-3 p-2 rounded-2'>
+          <CheckIcon className='h-5 w-5' />
           Agree
         </Button>
         <Button
           onClick={() => handleVote(-1)}
-          className='bg-primary text-white flex items-center'>
-          <XMarkIcon className='h-5 w-5 mr-3' />
+          className='bg-primary text-white flex items-center flex-wrap gap-3 p-2 rounded-2'>
+          <XMarkIcon className='h-5 w-5' />
           Disagree
         </Button>
         <Button
           onClick={() => handleVote(0)}
-          className='bg-primary text-white flex items-center'>
-          <ForwardIcon className='h-5 w-5 mr-3' />
+          className='bg-primary text-white flex items-center flex-wrap gap-3 p-2 rounded-2'>
+          <ForwardIcon className='h-5 w-5' />
           Pass
         </Button>
       </div>
@@ -82,12 +82,13 @@ const CommentSection = ({ conversation }) => {
   }, [conversation]);
 
   return (
-    <div className='flex flex-col w-full h-full p-4 bg-background rounded-lg p-8'>
+    <section className='flex flex-1 flex-col w-full h-full bg-background rounded-lg py-8 px-4'>
       <div className='flex w-full justify-between items-center mb-8'>
-        <p className='font-semibold text-secondary'>Active Comments</p>
+        <h2 className='font-semibold text-secondary'>Active Comments</h2>
         <Button
+          id="add-comment"
           onClick={openCreateCommentModal}
-          className='bg-white border-black border-1 text-black px-4 py-2 rounded'>
+          className='bg-white border-black border text-black px-4 py-2 rounded-sm'>
           Add Comment
         </Button>
       </div>
@@ -99,7 +100,7 @@ const CommentSection = ({ conversation }) => {
           onComplete={nextComment}
         />
       </div>
-    </div>
+    </section>
   );
 };
 
@@ -137,15 +138,13 @@ const ConversationPage = () => {
 
   return (
     <CoreBase>
-      <div className='flex flex-col w-full h-full p-8 md:p-24'>
-        <h1 className='text-3xl font-bold mb-4'>{conversation?.name}</h1>
-        <p className='text-gray-600 mb-16'>{conversation?.description}</p>
-        <div className='flex space-x-16 mb-8'>
-          <div className='w-1/2'>
-            <CommentSection conversation={conversation} />
-          </div>
-          <div></div>
-        </div>
+      <div id='converstion-container' className='flex flex-col w-full h-full py-8 max-w-4xl md:py-24 md:px-8'>
+        <h1 id='topic' className='text-3xl font-bold mb-4'>{conversation?.name}</h1>
+        <p id='description' className='text-gray-600 mb-16'>{conversation?.description}</p>
+        <main className='flex space-x-16 mb-8 w-full  flex-col md:flex-row'>
+          <CommentSection conversation={conversation} />
+          <div className='flex-1'></div>
+        </main>
       </div>
     </CoreBase>
   );
