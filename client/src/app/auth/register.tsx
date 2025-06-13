@@ -39,7 +39,7 @@ const RegisterPage = () => {
         </div>
       </div>
       <div id="sign-in-container" className='flex-2 w-full h-full flex justify-center p-8 md:p-0'>
-        <div className='max-w-64 self-center flex flex-col justify-center'>
+        <div className='w-1/2 self-center flex flex-col justify-center'>
           {error && (
             <div className='bg-red-500 text-white p-2 rounded-md mb-4 absolute top-16 self-center'>
               {error}
