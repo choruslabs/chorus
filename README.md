@@ -4,6 +4,8 @@ This is an open-source web application implementing a polis-like algorithm for m
 
 ### Web API
 
+#### Local (without Docker)
+
 The web API is written in [FastAPI](https://fastapi.tiangolo.com/), a web framework for Python. You need to install Python before running the API.
 
 Installation for Windows (instructions are minimally changed for Linux):
@@ -20,6 +22,24 @@ To run the API (in auto-reload mode):
 ```bash
 uvicorn convergent.main:app --reload
 ```
+
+Go to http://localhost:8000/docs to check if it works: you should see a Swagger page.
+
+#### Using Docker
+
+To build the server image using Docker:
+
+```bash
+cd server
+docker build -t convergent.server .
+```
+To run it on port 8000:
+
+```bash
+docker run -p 8000:8000 convergent.server
+```
+
+Go to http://localhost:8000/docs to check if it works: you should see a Swagger page.
 
 ### Frontend
 
