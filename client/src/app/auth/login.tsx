@@ -27,21 +27,19 @@ const LoginPage = () => {
   };
 
   return (
-    <div className='h-screen w-screen flex justify-between items-center'>
-      <div className='w-1/3 h-full bg-secondary flex flex-col justify-center pl-16'>
-        <Logo fill='white' />
-        <h1 className='text-white text-6xl font-bold mt-5'>
-          Public
-          <br />
-          Square
-          <br />
-          TO
-        </h1>
+    <div className='h-screen w-screen flex flex-col md:flex-row justify-between items-center' id="container">
+      <div id="branding" className='flex-1 w-full h-full bg-secondary flex flex-col justify-center p-8 md:p-0'>
+        <div id='logo-text' className='md:mx-auto w-min'>
+          <Logo fill='white' />
+          <h1 className='text-white text-6xl font-bold mt-5'>
+            Convergent
+          </h1>
+        </div>
       </div>
-      <div className='w-2/3 h-full flex justify-center'>
+      <div id="sign-in-container" className='flex-2 w-full h-full flex justify-center p-8 md:p-0'>
         <div className='w-1/2 flex flex-col justify-center'>
           {error && (
-            <div className='bg-red-500 text-white p-2 rounded-md mb-4 absolute top-16'>
+            <div className='bg-red-500 text-white p-2 rounded-md mb-4 absolute top-16 self-center'>
               {error}
             </div>
           )}
@@ -60,7 +58,7 @@ const LoginPage = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <Button
-            className='mb-8 bg-secondary text-white rounded-sm'
+            className='mb-8 p-2 bg-secondary text-white rounded-md'
             onClick={() => handleLogin(email, password)}>
             Sign in
           </Button>

@@ -1,3 +1,5 @@
+# Convergent
+
 This is an open-source web application implementing a polis-like algorithm for mapping high-dimensional opinion spaces.
 
 ## Installation
@@ -54,6 +56,6 @@ npm install
 
 To run the frontend (in development mode):
 
-```
+```bash
 npm run dev
 ```
