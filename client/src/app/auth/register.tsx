@@ -30,11 +30,7 @@ const RegisterPage = () => {
         <div id='logo-text' className='md:mx-auto w-min'>
           <Logo fill='white' />
           <h1 className='text-white text-6xl font-bold mt-5'>
-            Public
-            <br />
-            Square
-            <br />
-            TO
+            Convergent
           </h1>
         </div>
       </div>
