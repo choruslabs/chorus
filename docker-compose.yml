@@ -1,0 +1,19 @@
+services:
+  server:
+    build: server/
+    environment:
+      - DATABASE_URL=postgresql://user:password@db:5432/convergent
+      - SECRET_KEY=your_secret_key
+    depends_on:
+      - db
+    ports:
+      - "8000:8000"
+
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: convergent
+    ports:
+      - "5432:5432"
