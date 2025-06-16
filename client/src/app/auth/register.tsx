@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { postRegister } from '../../components/api/auth';
 import { Button, Input } from '@headlessui/react';
+import { useNavigate } from 'react-router';
 import CoreBase from '../core/base';
 
 const RegisterPage = () => {

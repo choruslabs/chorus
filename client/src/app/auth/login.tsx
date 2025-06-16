@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 import { Button, Input } from '@headlessui/react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { AuthContext } from '../../components/context/AuthContext';
 import CoreBase from '../core/base';
 
