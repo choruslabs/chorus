@@ -2,7 +2,8 @@
 
 @theme {
   --color-primary: #101c3a;
-  --color-secondary: #2b4a91;
+  --color-secondary: #808080;
+  --color-text-secondary: #626262;
   --color-background: #f7f9fc;
 }
 
@@ -12,7 +13,7 @@
   font-weight: 400;
 
   color-scheme: light;
-  color: #213547;
+  color: #535862;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -35,7 +36,7 @@
     margin: 0;
     display: flex;
     place-items: center;
-    min-width: 320px;
+    min-width: 100vw;
     min-height: 100vh;
   }
 
@@ -67,11 +68,6 @@
   }
 
   @media (prefers-color-scheme: light) {
-    :root {
-      color: #213547;
-      background-color: #ffffff;
-    }
-
     a:hover {
       color: #747bff;
     }
