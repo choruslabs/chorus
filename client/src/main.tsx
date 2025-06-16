@@ -8,6 +8,10 @@ import RegisterPage from './app/auth/register';
 import DashboardPage from './app/core/dashboard';
 import { AuthProvider } from './components/context/AuthContext';
 import ConversationPage from './app/core/conversation';
+import ConversationConfigPage from './app/core/ConversationEdit';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+const queryClient = new QueryClient()
 
 const router = createBrowserRouter([
   {
@@ -23,8 +27,16 @@ const router = createBrowserRouter([
     element: <RegisterPage />,
   },
   {
+    path: '/home',
+    element: <DashboardPage />,
+  },
+  {
     path: '/dashboard',
     element: <DashboardPage />,
+  },
+  {
+    path: '/conversation/new',
+    element: <ConversationConfigPage />
   },
   {
     path: '/conversation/:conversationId',
@@ -34,8 +46,10 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <AuthProvider>
-      <RouterProvider router={router} />
-    </AuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
+    </QueryClientProvider>
   </StrictMode>
 );

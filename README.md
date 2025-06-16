@@ -35,6 +35,7 @@ To build the server image using Docker:
 cd server
 docker build -t convergent.server .
 ```
+
 To run it on port 8000:
 
 ```bash

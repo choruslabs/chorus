@@ -23,7 +23,7 @@ EXPOSE 8000
 RUN chmod +x /app/entrypoint.sh
 
 # Set the entrypoint script
-ENTRYPOINT ["/app/entrypoint.sh"]
+ENTRYPOINT ["/bin/sh", "/app/entrypoint.sh"]
 
 # Run uvicorn server
 CMD ["uvicorn", "convergent.main:app", "--host", "0.0.0.0", "--port", "8000"]
