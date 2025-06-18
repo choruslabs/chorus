@@ -19,6 +19,13 @@ venv/Scripts/activate # (in Linux, use source venv/bin/activate)
 pip install -r requirements.txt
 ```
 
+Add an environment file `.env` in the `server` directory in the same format as `sample.env`, but
+replace:
+
+- `DATABASE_URL` with the URL of your **Postgres** database (e.g., `postgresql://user:password@localhost/dbname`)
+- `SECRET_KEY` with a random string (you can use `openssl rand -hex 32` to generate one)
+- `ALLOWED_ORIGINS` with a comma-separated list of allowed origins (e.g., `http://localhost:5173` if you use the default Vite port)
+
 To run the API (in auto-reload mode):
 
 ```bash
