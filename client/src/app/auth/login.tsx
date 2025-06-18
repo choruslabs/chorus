@@ -1,8 +1,8 @@
 import { useContext, useState } from 'react';
-import Logo from '../../components/ui/logo';
 import { Button, Input } from '@headlessui/react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { AuthContext } from '../../components/context/AuthContext';
+import CoreBase from '../core/base';
 
 const LoginPage = () => {
   const { login } = useContext(AuthContext);
@@ -27,17 +27,9 @@ const LoginPage = () => {
   };
 
   return (
-    <div className='h-screen w-screen flex flex-col md:flex-row justify-between items-center' id="container">
-      <div id="branding" className='flex-1 w-full h-full bg-secondary flex flex-col justify-center p-8 md:p-0'>
-        <div id='logo-text' className='md:mx-auto w-min'>
-          <Logo fill='white' />
-          <h1 className='text-white text-6xl font-bold mt-5'>
-            Convergent
-          </h1>
-        </div>
-      </div>
+    <CoreBase>
       <div id="sign-in-container" className='flex-2 w-full h-full flex justify-center p-8 md:p-0'>
-        <div className='w-1/2 flex flex-col justify-center'>
+        <div className='flex flex-col justify-center'>
           {error && (
             <div className='bg-red-500 text-white p-2 rounded-md mb-4 absolute top-16 self-center'>
               {error}
@@ -64,13 +56,13 @@ const LoginPage = () => {
           </Button>
           <p>
             Don't have an account?{' '}
-            <a href='/register' className='text-emerald-500'>
+            <a href='/register' className='text-text-secondary'>
               Register here.
             </a>
           </p>
         </div>
       </div>
-    </div>
+    </CoreBase>
   );
 };
 

@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { postRegister } from '../../components/api/auth';
-import Logo from '../../components/ui/logo';
 import { Button, Input } from '@headlessui/react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
+import CoreBase from '../core/base';
 
 const RegisterPage = () => {
   const [email, setEmail] = useState('');
@@ -25,17 +25,9 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className='h-screen w-screen flex flex-col md:flex-row justify-between items-center' id="container">
-      <div id="branding" className='flex-1 w-full h-full bg-secondary flex flex-col justify-center p-8 md:p-0'>
-        <div id='logo-text' className='md:mx-auto w-min'>
-          <Logo fill='white' />
-          <h1 className='text-white text-6xl font-bold mt-5'>
-            Convergent
-          </h1>
-        </div>
-      </div>
+    <CoreBase>
       <div id="sign-in-container" className='flex-2 w-full h-full flex justify-center p-8 md:p-0'>
-        <div className='w-1/2 self-center flex flex-col justify-center'>
+        <div className='self-center flex flex-col justify-center'>
           {error && (
             <div className='bg-red-500 text-white p-2 rounded-md mb-4 absolute top-16 self-center'>
               {error}
@@ -68,7 +60,7 @@ const RegisterPage = () => {
           </p>
         </div>
       </div>
-    </div>
+    </CoreBase>
   );
 };
 
