@@ -50,7 +50,7 @@ const LoginPage = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <Button
-            className='mb-8 p-2 bg-secondary text-white rounded-md'
+            className='mb-8 p-2 bg-gray-500 hover:bg-secondary text-white rounded-md'
             onClick={() => handleLogin(email, password)}>
             Sign in
           </Button>
