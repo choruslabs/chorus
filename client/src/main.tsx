@@ -42,6 +42,10 @@ const router = createBrowserRouter([
     path: '/conversation/:conversationId',
     element: <ConversationPage />,
   },
+  {
+    path: '/conversation/:conversationId/edit',
+    element: <ConversationConfigPage />,
+  },
 ]);
 
 createRoot(document.getElementById('root')!).render(
