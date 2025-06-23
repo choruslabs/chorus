@@ -1,13 +1,13 @@
 import { Input, Textarea } from '@headlessui/react';
 import CoreBase from './base';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { getApi, postApi, putApi } from '../../components/api/base';
 import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Conversation } from './dashboard';
 
 const ConversationConfigPage = () => {
-
+    let navigate = useNavigate();
     let params = useParams();
 
     const editId = params.conversationId
@@ -51,6 +51,7 @@ const ConversationConfigPage = () => {
 
             })
         }
+        navigate('/home');
     }
 
     return (
@@ -69,21 +70,6 @@ const ConversationConfigPage = () => {
                     <Input className='border-gray-500 border-2 justify-self-start aspect-square h-6' type='checkbox' name="display-unmoderated" id="display-unmoderated"></Input>
                     <button className='border-4 border-green-500 p-2 bg-green-200 rounded-2xl'>Submit</button>
                 </form>
-
-
-                <div id="submission-status" className='transition-opacity'>
-                    {(!editId && conversationId.length > 0) &&
-                        <>
-                            <h2>Conversation created!</h2>
-                            <p>id: {conversationId}</p>
-                        </>}
-                    {(editId && updated > 0) &&
-                        <>
-                            <h2>Conversation updated!</h2>
-                            <p>id: {conversationId}</p>
-                            <p>updated: {updated}</p>
-                        </>}
-                </div>
             </div>
         </CoreBase>
     )
