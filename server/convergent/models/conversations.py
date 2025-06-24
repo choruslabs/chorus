@@ -1,5 +1,6 @@
+from datetime import datetime
 from uuid import uuid4, UUID
-from sqlalchemy import String, ForeignKey
+from sqlalchemy import String, ForeignKey, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from convergent.database import Base
 
@@ -12,6 +13,8 @@ class Conversation(Base):
     description: Mapped[str] = mapped_column()
     author_id: Mapped[UUID] = mapped_column(ForeignKey("users.id"))
     display_unmoderated: Mapped[bool] = mapped_column(default=False)
+    date_created: Mapped[datetime] = mapped_column(server_default=func.now())
+    is_active: Mapped[bool] = mapped_column(default=True)
 
     author = relationship("User")
     comments = relationship("Comment", backref="conversation")
@@ -27,6 +30,7 @@ class Comment(Base):
     user_id: Mapped[UUID] = mapped_column(ForeignKey("users.id"))
     content: Mapped[str] = mapped_column()
     approved: Mapped[bool] = mapped_column(nullable=True)
+    date_created: Mapped[datetime] = mapped_column(server_default=func.now())
 
     user = relationship("User")
     votes = relationship("Vote", backref="comment")
@@ -39,6 +43,7 @@ class Vote(Base):
     comment_id: Mapped[UUID] = mapped_column(ForeignKey("comments.id"))
     user_id: Mapped[UUID] = mapped_column(ForeignKey("users.id"))
     value: Mapped[int] = mapped_column()
+    date_created: Mapped[datetime] = mapped_column(server_default=func.now())
 
     user = relationship("User")
 
@@ -51,6 +56,7 @@ class UserPca(Base):
     conversation_id: Mapped[UUID] = mapped_column(ForeignKey("conversations.id"))
     x: Mapped[float] = mapped_column()
     y: Mapped[float] = mapped_column()
+    date_updated: Mapped[datetime] = mapped_column(server_default=func.now())
 
     user = relationship("User")
 
@@ -62,5 +68,6 @@ class UserCluster(Base):
     user_id: Mapped[UUID] = mapped_column(ForeignKey("users.id"))
     conversation_id: Mapped[UUID] = mapped_column(ForeignKey("conversations.id"))
     cluster: Mapped[int] = mapped_column()
+    date_updated: Mapped[datetime] = mapped_column(server_default=func.now())
 
     user = relationship("User")

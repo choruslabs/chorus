@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Optional
 from uuid import UUID
 from fastapi import APIRouter, HTTPException
@@ -22,6 +23,9 @@ class Conversation(BaseModel):
     name: str
     description: str = None
     author: UserBasic
+    num_participants: int = None
+    date_created: datetime = None
+    is_active: bool = True
 
 
 class ConversationCreate(BaseModel):
@@ -61,15 +65,30 @@ class ConversationUpdate(BaseModel):
     display_unmoderated: Optional[bool] = False
 
 
-@router.get("/conversations", response_model=list[Conversation])
-async def read_conversations(db: Database, current_user: CurrentUser):
-    conversations = (
-        db.query(models.Conversation)
-        .filter(models.Conversation.author_id == current_user.id)
-        .all()
+def get_conversation_details(
+    conversation_db: models.Conversation, db: Database, current_user: CurrentUser
+):
+    num_participants = (
+        db.query(models.Comment.user_id)
+        .filter(models.Comment.conversation == conversation_db)
+        .distinct()
+        .count()
     )
 
-    return conversations
+    conversation = Conversation.model_validate(conversation_db, from_attributes=True)
+    conversation.num_participants = num_participants
+
+    return conversation
+
+
+@router.get("/conversations", response_model=list[Conversation])
+async def read_conversations(db: Database, current_user: CurrentUser):
+    conversations = db.query(models.Conversation).all()
+
+    return [
+        get_conversation_details(conversation, db, current_user)
+        for conversation in conversations
+    ]
 
 
 @router.get("/conversations/{conversation_id}", response_model=ConversationDetail)
@@ -80,7 +99,8 @@ async def read_conversation(
     if conversation_db is None:
         raise HTTPException(status_code=404, detail="Conversation not found")
 
-    return conversation_db
+    conversation = get_conversation_details(conversation_db, db, current_user)
+    return conversation
 
 
 def get_comment_user_info(
