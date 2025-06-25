@@ -13,45 +13,43 @@ import {
   PlusIcon,
   XMarkIcon,
 } from '@heroicons/react/24/solid';
-import { Button, Input, Legend } from '@headlessui/react';
-import { getConversationWithConsensus } from '../../components/api/analysis';
+import { Button } from '@headlessui/react';
 import { Conversation } from './dashboard';
-import { useQuery } from '@tanstack/react-query';
 
 type Comment = { content: string; id: string };
 
 const VotingSection = ({
   comment,
-  numVotes,
+  commentNumber,
   onVote,
 }: {
   comment: Comment | null;
-  numVotes?: number;
+  commentNumber?: number;
   onVote: (commentId: string, vote: 'agree' | 'disagree' | 'skip') => void;
 }) => {
   return (
     comment && (
       <div className='flex flex-col items-start gap-4 p-4 bg-white rounded-xl'>
         <div className='flex flex-col items-start gap-2 mb-2'>
-          <p className='text-lg font-semibold'>Comment {numVotes}</p>
+          <p className='text-lg font-semibold'>Comment {commentNumber}</p>
           <p className='text-gray-700'>{comment.content}</p>
         </div>
         <div className='flex items-center gap-2'>
           <Button
             onClick={() => onVote(comment.id, 'agree')}
-            className='bg-primary hover:bg-green-600 text-white px-2 py-2 rounded-xl flex flex-row items-center gap-x-2'>
+            className='bg-primary text-white px-2 py-2 rounded-xl flex flex-row items-center gap-x-2'>
             <CheckIcon className='h-5 w-5' />
             Agree
           </Button>
           <Button
             onClick={() => onVote(comment.id, 'disagree')}
-            className='bg-primary hover:bg-red-600 text-white px-2 py-2 rounded-xl flex flex-row items-center gap-x-2'>
+            className='bg-primary text-white px-2 py-2 rounded-xl flex flex-row items-center gap-x-2'>
             <XMarkIcon className='h-5 w-5' />
             Disagree
           </Button>
           <Button
             onClick={() => onVote(comment.id, 'skip')}
-            className='bg-background hover:bg-gray-600 px-2 py-2 rounded-xl flex flex-row items-center gap-x-2 border border-gray-300 text-gray-700'>
+            className='bg-background px-2 py-2 rounded-xl flex flex-row items-center gap-x-2 border border-gray-300 text-gray-700'>
             <ForwardIcon className='h-5 w-5' />
             Skip
           </Button>
@@ -65,26 +63,29 @@ const ConversationPage = () => {
   const { conversationId } = useParams<{ conversationId: string }>();
   const [conversation, setConversation] = useState<Conversation | null>(null);
   const [currentComment, setCurrentComment] = useState<Comment | null>(null);
-  const [numVotes, setNumVotes] = useState<number>(0);
+  const [commentNumber, setCommentNumber] = useState<number>(0);
 
   const nextComment = async () => {
     if (!conversationId) return;
 
     const { comment, num_votes } = await getNextComment(conversationId);
     setCurrentComment(comment);
-    setNumVotes(num_votes + 1);
+    setCommentNumber(num_votes + 1);
+  };
+
+  const fetchConversation = async () => {
+    if (!conversationId) return;
+
+    const data = await getConversation(conversationId);
+    setConversation(data);
   };
 
   useEffect(() => {
-    const fetchConversation = async () => {
-      if (!conversationId) return;
-
-      const data = await getConversation(conversationId);
-      setConversation(data);
+    const fetchData = async () => {
+      await fetchConversation();
+      await nextComment();
     };
-
-    fetchConversation();
-    nextComment();
+    fetchData();
   }, [conversationId]);
 
   const openAddCommentModal = () => {
@@ -118,7 +119,7 @@ const ConversationPage = () => {
           </Button>
           <VotingSection
             comment={currentComment}
-            numVotes={numVotes}
+            commentNumber={commentNumber}
             onVote={onVote}
           />
         </div>
