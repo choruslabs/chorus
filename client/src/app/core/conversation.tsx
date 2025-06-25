@@ -1,168 +1,128 @@
-import { useParams } from "react-router";
-import CoreBase from "./base";
+import { useParams } from 'react-router';
+import CoreBase from './base';
 import {
   createComment,
   createVote,
   getConversation,
   getNextComment,
-} from "../../components/api/conversation";
-import { useEffect, useState } from "react";
-import { CheckIcon, ForwardIcon, XMarkIcon } from "@heroicons/react/24/solid";
-import { Button, Input, Legend } from "@headlessui/react";
-import { getConversationWithConsensus } from "../../components/api/analysis";
-import { Conversation } from "./dashboard";
-import { useQuery } from "@tanstack/react-query";
+} from '../../components/api/conversation';
+import { useEffect, useState } from 'react';
+import {
+  CheckIcon,
+  ForwardIcon,
+  PlusIcon,
+  XMarkIcon,
+} from '@heroicons/react/24/solid';
+import { Button } from '@headlessui/react';
+import { Conversation } from './dashboard';
 
 type Comment = { content: string; id: string };
 
-const VoteCounter = ({ counts }) => {
-  return (
-    <div className="flex items-center space-x-2">
-      Vote counter placeholder&#9646;
-    </div>
-  );
-};
-
-const CurrentComment = ({
-  comment = { content: "test comment placeholder", id: "placeholder" },
-  commentIndex = 0,
-  onComplete,
+const VotingSection = ({
+  comment,
+  commentNumber,
+  onVote,
 }: {
-  comment: Comment;
-  commentIndex: number;
-  onComplete: Function;
+  comment: Comment | null;
+  commentNumber?: number;
+  onVote: (commentId: string, vote: 'agree' | 'disagree' | 'skip') => void;
 }) => {
-  const handleVote = async (voteType) => {
-    if (!comment) return;
-    await createVote(comment.id, voteType).then((response) => {
-      if (response) {
-        onComplete();
-      } else {
-        console.error("Failed to process the vote. Please try again.");
-        alert(
-          "An error occurred while processing your vote. Please try again.",
-        );
-      }
-    });
-  };
-
   return (
-    <div className="flex flex-col mx-auto w-full">
-      <h4 className="text-md font-bold mb-2">Comment {commentIndex + 1}</h4>
-      <time>12, June 2025</time>
-      <p id="comment-description" className="text-gray-800 min-h-20">
-        {comment?.content}
-      </p>
-      <div
-        id="comment-actions"
-        className="flex w-full items-center gap-4 mb-4 flex-wrap"
-      >
-        <Button
-          onClick={() => handleVote(1)}
-          className="bg-gray-500 hover:bg-secondary text-white rounded-md flex items-center flex-wrap gap-3 p-2 rounded-2"
-        >
-          <CheckIcon className="h-5 w-5" />
-          Agree
-        </Button>
-        <Button
-          onClick={() => handleVote(-1)}
-          className="bg-gray-500 hover:bg-secondary text-white rounded-md flex items-center flex-wrap gap-3 p-2 rounded-2"
-        >
-          <XMarkIcon className="h-5 w-5" />
-          Disagree
-        </Button>
-        <Button
-          onClick={() => handleVote(0)}
-          className="bg-gray-500 hover:bg-secondary text-white rounded-md flex items-center flex-wrap gap-3 p-2 rounded-2 ml-auto"
-        >
-          <ForwardIcon className="h-5 w-5" />
-          Pass
-        </Button>
+    comment && (
+      <div className='flex flex-col items-start gap-4 p-4 bg-white rounded-xl'>
+        <div className='flex flex-col items-start gap-2 mb-2'>
+          <p className='text-lg font-semibold'>Comment {commentNumber}</p>
+          <p className='text-gray-700'>{comment.content}</p>
+        </div>
+        <div className='flex items-center gap-2'>
+          <Button
+            onClick={() => onVote(comment.id, 'agree')}
+            className='bg-primary text-white px-2 py-2 rounded-xl flex flex-row items-center gap-x-2'>
+            <CheckIcon className='h-5 w-5' />
+            Agree
+          </Button>
+          <Button
+            onClick={() => onVote(comment.id, 'disagree')}
+            className='bg-primary text-white px-2 py-2 rounded-xl flex flex-row items-center gap-x-2'>
+            <XMarkIcon className='h-5 w-5' />
+            Disagree
+          </Button>
+          <Button
+            onClick={() => onVote(comment.id, 'skip')}
+            className='bg-background px-2 py-2 rounded-xl flex flex-row items-center gap-x-2 border border-gray-300 text-gray-700'>
+            <ForwardIcon className='h-5 w-5' />
+            Skip
+          </Button>
+        </div>
       </div>
-    </div>
-  );
-};
-
-const CommentSection = ({ conversation }: { conversation: Conversation }) => {
-  const [commentIndex, setCommentIndex] = useState(0);
-  const [comment, setComment] = useState<Comment | undefined>(undefined);
-
-  const nextComment = async () => {
-    await getNextComment(conversation.id).then((response) => {
-      if (response) {
-        setComment({
-          ...response.comment,
-          number: response.num_votes + 1,
-        });
-      } else {
-        setComment(undefined);
-      }
-    });
-  };
-
-  const openCreateCommentModal = () => {
-    // Logic to open modal for creating a new comment
-  };
-
-  useEffect(() => {
-    nextComment();
-  }, [conversation]);
-
-  return (
-    <section className="flex flex-1 flex-col w-full h-full bg-background rounded-lg py-8 px-4">
-      <div className="flex w-full justify-between items-center mb-8">
-        <h2 className="font-semibold text-secondary">Active Comments</h2>
-        <Button
-          id="add-comment"
-          onClick={openCreateCommentModal}
-          className="bg-white border-black border text-black px-4 py-2 rounded-sm"
-        >
-          + Add Comment
-        </Button>
-      </div>
-      <div className="flex flex-col space-y-8 p-4 bg-white rounded-lg">
-        <VoteCounter counts={{ agrees: 0, disagrees: 0 }} />
-        {comment && (
-          <CurrentComment
-            comment={comment}
-            commentIndex={commentIndex}
-            onComplete={nextComment}
-          />
-        )}
-      </div>
-    </section>
+    )
   );
 };
 
 const ConversationPage = () => {
-  const { conversationId } = useParams();
+  const { conversationId } = useParams<{ conversationId: string }>();
+  const [conversation, setConversation] = useState<Conversation | null>(null);
+  const [currentComment, setCurrentComment] = useState<Comment | null>(null);
+  const [commentNumber, setCommentNumber] = useState<number>(0);
 
-  const [newComment, setNewComment] = useState<string>("");
+  const nextComment = async () => {
+    if (!conversationId) return;
 
-  const conversation = useQuery<Conversation>({
-    queryKey: [""],
-    queryFn: async () => {
-      if (!conversationId) throw new Error("Invalid URL");
-      return await getConversation(conversationId);
-    },
-  }).data;
+    const { comment, num_votes } = await getNextComment(conversationId);
+    setCurrentComment(comment);
+    setCommentNumber(num_votes + 1);
+  };
+
+  const fetchConversation = async () => {
+    if (!conversationId) return;
+
+    const data = await getConversation(conversationId);
+    setConversation(data);
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await fetchConversation();
+      await nextComment();
+    };
+    fetchData();
+  }, [conversationId]);
+
+  const openAddCommentModal = () => {
+    // Logic to open a modal for adding a comment
+  };
+
+  const onVote = async (
+    commentId: string,
+    vote: 'agree' | 'disagree' | 'skip'
+  ) => {
+    const voteNum = vote === 'agree' ? 1 : vote === 'disagree' ? -1 : 0;
+
+    if (!conversationId) return;
+    await createVote(commentId, voteNum);
+    await nextComment();
+  };
 
   return (
     <CoreBase>
-      <div
-        id="converstion-container"
-        className="flex flex-col h-full py-8 w-[95%] max-w-4xl mx-auto"
-      >
-        <h1 id="topic" className="text-3xl font-bold mb-4 text-gray-900">
-          {conversation?.name}
-        </h1>
-        <p id="description" className="mb-16">
-          {conversation?.description}
-        </p>
-        <main className="flex space-x-16 mb-8 w-full  flex-col md:flex-row">
-          {conversation && <CommentSection conversation={conversation} />}
-          <div className="flex-1"></div>
-        </main>
+      <div>
+        <div className='p-8'>
+          <h1 className='text-3xl font-bold mb-4'>{conversation?.name}</h1>
+          <p className='mb-4'>{conversation?.description}</p>
+        </div>
+        <div className='p-8 bg-background'>
+          <p className='font-semibold text-secondary mb-4'>Comments</p>
+          <Button
+            onClick={openAddCommentModal}
+            className='flex mb-4 bg-white border border-gray-300 p-2 w-full items-center justify-center gap-x-2 rounded-xl'>
+            <PlusIcon height={30} width={30} /> Add Comment
+          </Button>
+          <VotingSection
+            comment={currentComment}
+            commentNumber={commentNumber}
+            onVote={onVote}
+          />
+        </div>
       </div>
     </CoreBase>
   );
