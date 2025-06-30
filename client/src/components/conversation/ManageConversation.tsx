@@ -1,29 +1,33 @@
 import { useEffect, useState } from "react";
 import { Conversation } from "../../app/core/dashboard";
 import ConversationConfig from "./ConversationConfig";
-import { Button } from "@headlessui/react";
+import { NavLink } from "react-router";
 
 export default function ManageConversation({
   editIdItem,
+  refetch,
 }: {
   editIdItem: Conversation;
+  refetch: Function;
 }) {
-  const [dialogOpen, setDialogOpen] = useState(false);
-
   const [dialog, setDialog] = useState<HTMLDialogElement | null>(null);
 
   useEffect(() => {
-    const editButton = document.getElementById("edit-button");
-    setDialog(document.getElementById("edit-dialog"));
+    // const editButton = document.getElementById("edit-button");
+    setDialog(document.getElementById("edit-dialog") as HTMLDialogElement);
   }, []);
 
-  const handleEditClick = (state) => {
-    setDialogOpen(state);
+  const handleEditClick = (state: boolean) => {
     if (state) {
       dialog?.showModal();
     } else {
       dialog?.close();
     }
+  };
+
+  const onFormComplete = () => {
+    dialog?.close();
+    if (refetch) refetch();
   };
   return (
     <>
@@ -50,21 +54,33 @@ export default function ManageConversation({
             </li>
           </ol>
         </nav>
-        <h1 className="text-5xl font-bold mb-8">{editIdItem.name}</h1>
-        <button
-          id="edit-button"
-          className="border-2 px-2 py-2 rounded-xl flex flex-row items-center gap-x-2"
-          onClick={() => handleEditClick(true)}
-        >
-          Edit
-        </button>
-        <nav>
-          <a>Distribute</a>
-          <a>Monitor</a>
-          <a>Moderate</a>
+        <div className="title flex justify-between">
+          <h1 className="text-4xl font-bold my-4">
+            Conversation: {editIdItem.name}
+          </h1>
+          <button
+            id="edit-button"
+            className="border-2 px-2 py-2 rounded-xl flex flex-row items-center gap-x-2 h-min self-center-safe"
+            onClick={() => handleEditClick(true)}
+          >
+            Edit
+          </button>
+        </div>
+
+        {!!editIdItem.description && <p>{editIdItem.description}</p>}
+
+        <nav className="border-b-2 flex">
+          <NavLink className="p-4" to="distribute">
+            Distribute
+          </NavLink>
+          <NavLink className="p-4" to="monitor">
+            Monitor
+          </NavLink>
+          <NavLink className="p-4" to="moderate">
+            Moderate
+          </NavLink>
         </nav>
       </section>
-
       <dialog
         id="edit-dialog"
         className="m-[revert] p-[revert] border-2 backdrop:bg-primary backdrop:opacity-80"
@@ -76,7 +92,11 @@ export default function ManageConversation({
         >
           Close
         </button>
-        <ConversationConfig editItem={editIdItem} />
+        <ConversationConfig
+          editItem={editIdItem}
+          type="dialog"
+          onComplete={onFormComplete}
+        />
       </dialog>
     </>
   );

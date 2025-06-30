@@ -10,6 +10,7 @@ import { AuthProvider } from "./components/context/AuthContext";
 import ConversationPage from "./app/core/conversation";
 import ConversationConfigPage from "./app/core/ConversationConfigPage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import ManageComments from "./components/conversation/ManageComments";
 
 const queryClient = new QueryClient();
 
@@ -34,7 +35,26 @@ const router = createBrowserRouter([
             path: ":conversationId",
             children: [
               { index: true, Component: ConversationPage },
-              { path: "edit", Component: ConversationConfigPage },
+              {
+                path: "edit",
+                Component: ConversationConfigPage,
+                children: [
+                  { index: true, Component: ManageComments },
+                  {
+                    path: "monitor",
+                    Component: () => <></>,
+                  },
+                  {
+                    path: "distribute",
+                    Component: () => <></>,
+                  },
+                  {
+                    path: "moderate",
+                    Component: ManageComments,
+                    children: [{ index: true, Component: ManageComments }],
+                  },
+                ],
+              },
             ],
           },
         ],

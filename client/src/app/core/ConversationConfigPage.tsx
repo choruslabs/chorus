@@ -1,4 +1,4 @@
-import { useParams } from "react-router";
+import { Outlet, useParams } from "react-router";
 import ConversationConfig from "../../components/conversation/ConversationConfig";
 import CoreBase from "./base";
 import { useQuery } from "@tanstack/react-query";
@@ -19,19 +19,29 @@ const ConversationConfigPage = () => {
     const editIdItem = useQuery<Conversation>({
       queryKey: [""],
       queryFn: () => getApi(`/conversations/${editId}`),
-    }).data;
+    });
     useEffect(() => {
-      if (editIdItem) {
-        setConversationName(editIdItem.name);
-        setConversationDescription(editIdItem.description);
+      if (editIdItem.data) {
+        setConversationName(editIdItem.data.name);
+        setConversationDescription(editIdItem.data.description);
       }
-    }, [editIdItem]);
+    }, [editIdItem.data]);
+
+    const refetchData = () => {
+      editIdItem.refetch();
+    };
 
     if (editId) {
       return (
         <CoreBase>
-          {editIdItem ? (
-            <ManageConversation editIdItem={editIdItem} />
+          {editIdItem.data ? (
+            <>
+              <ManageConversation
+                editIdItem={editIdItem.data}
+                refetch={refetchData}
+              />
+              <Outlet />
+            </>
           ) : (
             <section>Loading...</section>
           )}

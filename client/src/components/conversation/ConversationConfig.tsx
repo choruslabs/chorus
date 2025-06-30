@@ -6,8 +6,12 @@ import { Conversation } from "../../app/core/dashboard";
 
 export default function ConversationConfig({
   editItem,
+  type,
+  onComplete,
 }: {
   editItem?: Conversation;
+  type?: string;
+  onComplete?: Function;
 }) {
   let navigate = useNavigate();
 
@@ -24,7 +28,7 @@ export default function ConversationConfig({
 
   function formSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const formData = new FormData(event.target);
+    const formData = new FormData(event.target as HTMLFormElement);
     const newConversationRequestBody = {
       display_unmoderated: formData.get("display-unmoderated") === "on",
       name: formData.get("name"),
@@ -44,7 +48,12 @@ export default function ConversationConfig({
         }
       );
     }
-    navigate("/home");
+    if (onComplete) {
+      onComplete();
+    }
+    if (type !== "dialog") {
+      navigate("/home");
+    }
   }
 
   return (
@@ -53,6 +62,7 @@ export default function ConversationConfig({
         {editItem ? "Edit conversation" : "New conversation"}
       </h1>
       <form
+        method={type}
         onSubmit={formSubmit}
         id="conversation-form"
         className="grid mx-auto md:grid-cols-2 gap-2 w-full"
