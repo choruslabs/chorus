@@ -68,9 +68,15 @@ const ConversationPage = () => {
   const nextComment = async () => {
     if (!conversationId) return;
 
-    const { comment, num_votes } = await getNextComment(conversationId);
-    setCurrentComment(comment);
-    setCommentNumber(num_votes + 1);
+    try {
+      const { comment, num_votes } = await getNextComment(conversationId);
+      setCurrentComment(comment);
+      setCommentNumber(num_votes + 1);
+    } catch (error: any) {
+      if (error.status === 404) {
+        setCurrentComment(null);
+      }
+    }
   };
 
   const fetchConversation = async () => {
@@ -117,11 +123,17 @@ const ConversationPage = () => {
             className='flex mb-4 bg-white border border-gray-300 p-2 w-full items-center justify-center gap-x-2 rounded-xl'>
             <PlusIcon height={30} width={30} /> Add Comment
           </Button>
-          <VotingSection
-            comment={currentComment}
-            commentNumber={commentNumber}
-            onVote={onVote}
-          />
+          {currentComment ? (
+            <VotingSection
+              comment={currentComment}
+              commentNumber={commentNumber}
+              onVote={onVote}
+            />
+          ) : (
+            <div className='flex flex-col items-center justify-center p-4 bg-white rounded-xl'>
+              <p className='text-gray-500'>No more comments to review.</p>
+            </div>
+          )}
         </div>
       </div>
     </CoreBase>
