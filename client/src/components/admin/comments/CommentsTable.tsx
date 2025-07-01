@@ -6,7 +6,7 @@ export default function CommentsTable({
   return (
     <>
       {(comments || []).map((item) => (
-        <p>{item.content}</p>
+        <p key={item.id}>{item.content}</p>
       ))}
     </>
   );
