@@ -11,7 +11,7 @@ export default function ConversationsList() {
   return (
     <div className="flex flex-col items-start h-full w-[85%] mx-auto py-10">
       <div id="heading" className="flex w-full justify-between flex-wrap">
-        <div id="hdeading-text">
+        <div id="heading-text">
           <h1 className="text-5xl font-bold mb-8">Conversations</h1>
           <h2 className="mb-16">Find all conversations created below.</h2>
         </div>
