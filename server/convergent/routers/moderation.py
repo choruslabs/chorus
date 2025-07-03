@@ -29,13 +29,33 @@ async def read_comments(
     return conversation.comments
 
 
+def get_comment(comment_id: UUID, db: Database):
+    comment = db.query(models.Comment).get(comment_id)
+    if comment is None:
+        raise HTTPException(status_code=404, detail="Comment not found")
+    return
+
+
+def get_comment_for_moderation(
+    comment_id: UUID, db: Database, current_user: CurrentUser
+):
+    comment = get_comment(comment_id, db)
+    if comment.conversation.author != current_user:
+        raise HTTPException(status_code=404, detail="Comment not found")
+    return comment
+
+
 @router.put("/comments/{comment_id}/approve")
 async def approve_comment(comment_id: UUID, db: Database, current_user: CurrentUser):
-    comment_db = db.query(models.Comment).get(comment_id)
-    if comment_db is None:
-        raise HTTPException(status_code=404, detail="Comment not found")
-    if comment_db.conversation.author != current_user:
-        raise HTTPException(status_code=404, detail="Comment not found")
+    comment_db = get_comment_for_moderation(comment_id, db, current_user)
     comment_db.approved = True
+    db.commit()
+    return {"success": True}
+
+
+@router.put("/comments/{comment_id}/reject")
+async def reject_comment(comment_id: UUID, db: Database, current_user: CurrentUser):
+    comment_db = get_comment_for_moderation(comment_id, db, current_user)
+    comment_db.approved = False
     db.commit()
     return {"success": True}
