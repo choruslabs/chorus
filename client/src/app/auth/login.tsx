@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Button, Input } from "@headlessui/react";
+import { Input } from "@headlessui/react";
 import { useNavigate } from "react-router";
 import { AuthContext } from "../../components/context/AuthContext";
 import CoreBase from "../core/base";
@@ -32,7 +32,13 @@ const LoginPage = () => {
         id="sign-in-container"
         className="flex-2 w-full h-full flex justify-center p-8 md:p-0"
       >
-        <div className="flex flex-col justify-center">
+        <form
+          className="flex flex-col justify-center"
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleLogin(email, password);
+          }}
+        >
           {error && (
             <div className="bg-red-500 text-white p-2 rounded-md mb-4 absolute top-16 self-center">
               {error}
@@ -52,19 +58,19 @@ const LoginPage = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <Button
+          <button
             className="mb-8 p-2 bg-gray-500 hover:bg-secondary text-white rounded-md"
             onClick={() => handleLogin(email, password)}
           >
             Sign in
-          </Button>
+          </button>
           <p>
             Don't have an account?{" "}
             <a href="/register" className="text-text-secondary">
               Register here.
             </a>
           </p>
-        </div>
+        </form>
       </div>
     </CoreBase>
   );

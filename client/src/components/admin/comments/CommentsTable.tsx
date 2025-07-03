@@ -1,12 +1,15 @@
+import { type ModerationComment } from "../../../app/core/dashboard";
+import { CommentsTableItem } from "./CommentsTableItem";
+
 export default function CommentsTable({
   comments,
 }: {
-  comments: { id: string; content: string }[];
+  comments: ModerationComment[];
 }) {
   return (
     <>
       {(comments || []).map((item) => (
-        <p key={item.id}>{item.content}</p>
+        <CommentsTableItem comment={item} />
       ))}
     </>
   );

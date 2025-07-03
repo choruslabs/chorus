@@ -11,7 +11,7 @@ export default function ManageComments() {
   const convoId = params.conversationId;
   const comments = useQuery<[]>({
     queryKey: [`comment-query-${convoId}`],
-    queryFn: () => getApi(`/conversations/${convoId}/comments`),
+    queryFn: () => getApi(`/moderation/conversations/${convoId}/comments`),
   });
 
   const [dialog, setDialog] = useState<HTMLDialogElement | null>(null);

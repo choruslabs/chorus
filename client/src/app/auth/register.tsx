@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { postRegister } from "../../components/api/auth";
-import { Button, Input } from "@headlessui/react";
+import { Input } from "@headlessui/react";
 import { useNavigate } from "react-router";
 import CoreBase from "../core/base";
 
@@ -30,7 +30,13 @@ const RegisterPage = () => {
         id="sign-in-container"
         className="flex-2 w-full h-full flex justify-center p-8 md:p-0"
       >
-        <div className="self-center flex flex-col justify-center">
+        <form
+          className="self-center flex flex-col justify-center"
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleRegister(email, password);
+          }}
+        >
           {error && (
             <div className="bg-red-500 text-white p-2 rounded-md mb-4 absolute top-16 self-center">
               {error}
@@ -50,19 +56,16 @@ const RegisterPage = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <Button
-            className="mb-8 p-2 bg-gray-500 hover:bg-secondary text-white rounded-md"
-            onClick={() => handleRegister(email, password)}
-          >
+          <button className="mb-8 p-2 bg-gray-500 hover:bg-secondary text-white rounded-md">
             Register
-          </Button>
+          </button>
           <p>
             Already have an account?{" "}
             <a href="/login" className="text-emerald-500">
               Sign in here.
             </a>
           </p>
-        </div>
+        </form>
       </div>
     </CoreBase>
   );

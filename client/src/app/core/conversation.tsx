@@ -34,30 +34,31 @@ const VotingSection = ({
     comment && (
       <div className="flex flex-col items-start gap-4 p-4 bg-white rounded-xl">
         <div className="flex flex-col items-start gap-2 mb-2">
-          <p className="text-lg font-semibold">Comment {commentNumber}</p>
-          <p className="text-gray-700">{comment.content}</p>
+          <h3 className="font-semibold">Comment {commentNumber}</h3>
+          <p className="text-gray-700 text-2xl font-bold">{comment.content}</p>
+          <time className="text-gray-500">(time here)</time>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 w-full">
           <Button
             onClick={() => onVote(comment.id, "agree")}
-            className="bg-primary text-white px-2 py-2 rounded-xl flex flex-row items-center gap-x-2"
+            className="border hover:bg-primary hover:text-white px-2 py-2 rounded-xl flex flex-row items-center gap-x-2"
           >
             <CheckIcon className="h-5 w-5" />
             Agree
           </Button>
           <Button
             onClick={() => onVote(comment.id, "disagree")}
-            className="bg-primary text-white px-2 py-2 rounded-xl flex flex-row items-center gap-x-2"
+            className="border hover:bg-primary hover:text-white px-2 py-2 rounded-xl flex flex-row items-center gap-x-2"
           >
             <XMarkIcon className="h-5 w-5" />
             Disagree
           </Button>
           <Button
             onClick={() => onVote(comment.id, "skip")}
-            className="bg-background px-2 py-2 rounded-xl flex flex-row items-center gap-x-2 border border-gray-300 text-gray-700"
+            className="bg-background px-2 py-2 rounded-xl flex flex-row items-center gap-x-2 border border-gray-300 text-gray-700 hover:bg-primary hover:text-white ml-auto"
           >
-            <ForwardIcon className="h-5 w-5" />
             Skip
+            <ForwardIcon className="h-5 w-5" />
           </Button>
         </div>
       </div>
@@ -143,14 +144,19 @@ const ConversationPage = () => {
           <h1 className="text-3xl font-bold mb-4">{conversation?.name}</h1>
           <p className="mb-4">{conversation?.description}</p>
         </section>
-        <section className="p-8 bg-background">
-          <p className="font-semibold text-secondary mb-4">Comments</p>
-          <Button
-            onClick={() => handleEditClick(true)}
-            className="flex mb-4 bg-white border border-gray-300 p-2 w-full items-center justify-center gap-x-2 rounded-xl"
-          >
-            <PlusIcon height={30} width={30} /> Add Comment
-          </Button>
+        <section className="p-8 bg-background md:w-1/2">
+          <div className="flex justify-between items-center">
+            <h2 className="font-semibold text-secondary mb-4">
+              Active Comments
+            </h2>
+            <Button
+              onClick={() => handleEditClick(true)}
+              className="flex mb-4 bg-white border border-gray-300 p-2 w-min whitespace-nowrap items-center justify-center gap-x-2 rounded-xl"
+            >
+              <PlusIcon height={30} width={30} /> Add Comment
+            </Button>
+          </div>
+
           {currentComment ? (
             <VotingSection
               comment={currentComment}
@@ -158,8 +164,8 @@ const ConversationPage = () => {
               onVote={onVote}
             />
           ) : (
-            <div className='flex flex-col items-center justify-center p-4 bg-white rounded-xl'>
-              <p className='text-gray-500'>No more comments to review.</p>
+            <div className="flex flex-col items-center justify-center p-4 bg-white rounded-xl">
+              <p className="text-gray-500">No more comments to review.</p>
             </div>
           )}
         </section>
