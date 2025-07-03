@@ -32,5 +32,6 @@ threadpoolctl==3.6.0
 typing_extensions==4.12.2
 uvicorn==0.32.0
 uvloop==0.21.0
+# winuvloop==0.2.0 for windows env
 watchfiles==0.24.0
 websockets==13.1

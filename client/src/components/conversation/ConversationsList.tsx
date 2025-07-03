@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Conversation } from "../../app/core/dashboard";
 import { getApi } from "../api/base";
-import { ConversationTable } from "../admin/ConversationsTable";
+import { ConversationsTable } from "../admin/conversations/ConversationsTable";
 
 export default function ConversationsList() {
   const conversations = useQuery<Conversation[]>({
@@ -23,7 +23,7 @@ export default function ConversationsList() {
         </a>
       </div>
       {conversations.data && (
-        <ConversationTable conversations={conversations.data} />
+        <ConversationsTable conversations={conversations.data} />
       )}
     </div>
   );
