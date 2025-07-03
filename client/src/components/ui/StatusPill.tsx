@@ -13,7 +13,7 @@ export const StatusPill = ({
             ? "bg-green-100 text-green-800"
             : "bg-red-100 text-red-800"
           : moderationStatus !== undefined
-          ? moderationStatus
+          ? moderationStatus !== null
             ? moderationStatus
               ? "bg-green-100 text-green-800"
               : "bg-red-100 text-red-800"
@@ -27,7 +27,7 @@ export const StatusPill = ({
           ? "Active"
           : "Inactive"
         : moderationStatus !== undefined
-        ? moderationStatus
+        ? moderationStatus !== null
           ? moderationStatus
             ? "approved"
             : "rejected"

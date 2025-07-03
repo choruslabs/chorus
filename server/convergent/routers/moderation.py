@@ -48,7 +48,7 @@ def get_comment(comment_id: UUID, db: Database):
     comment = db.query(models.Comment).get(comment_id)
     if comment is None:
         raise HTTPException(status_code=404, detail="Comment not found")
-    return
+    return comment
 
 
 def get_comment_for_moderation(
