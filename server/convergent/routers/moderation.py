@@ -5,6 +5,7 @@ from convergent.auth.user import CurrentUser
 from convergent.database import Database
 from pydantic import BaseModel
 from typing import Optional
+from convergent.routers.conversation import Conversation, get_conversation_details
 
 router = APIRouter(prefix="/moderation")
 
@@ -16,11 +17,25 @@ class Comment(BaseModel):
     approved: Optional[bool] = None
 
 
+@router.get("/conversations", response_model=list[Conversation])
+async def read_conversations(db: Database, current_user: CurrentUser):
+    conversations = (
+        db.query(models.Conversation)
+        .where(models.Conversation.author == current_user)
+        .all()
+    )
+
+    return [
+        get_conversation_details(conversation, db, current_user)
+        for conversation in conversations
+    ]
+
+
 @router.get("/conversations/{conversation_id}/comments", response_model=list[Comment])
-async def read_comments(
-    conversation_id: UUID, db: Database, current_user: CurrentUser
-):
-    conversation: models.Conversation | None = db.query(models.Conversation).get(conversation_id)
+async def read_comments(conversation_id: UUID, db: Database, current_user: CurrentUser):
+    conversation: models.Conversation | None = db.query(models.Conversation).get(
+        conversation_id
+    )
     if conversation is None:
         raise HTTPException(status_code=404, detail="Conversation not found")
     if conversation.author != current_user:

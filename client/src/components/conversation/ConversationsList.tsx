@@ -6,7 +6,7 @@ import { ConversationsTable } from "../admin/conversations/ConversationsTable";
 export default function ConversationsList() {
   const conversations = useQuery<Conversation[]>({
     queryKey: ["conversations"],
-    queryFn: () => getApi("/conversations"),
+    queryFn: () => getApi("/moderation/conversations"),
   });
   return (
     <div className="flex flex-col items-start h-full w-[85%] mx-auto py-10">
