@@ -22,7 +22,7 @@
     "react-dom": "^18.3.1",
     "react-plotly.js": "^2.6.0",
     "react-router": "^7.6.2",
-    "recharts": "^2.13.3"
+    "recharts": "^3.0.2"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^4.0.1",
@@ -39,8 +39,8 @@
     "@vitest/browser": "^3.2.4",
     "@vitest/coverage-v8": "^3.2.4",
     "eslint": "^9.29.0",
-    "eslint-plugin-react-hooks": "^5.0.0",
-    "eslint-plugin-react-refresh": "^0.4.13",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.20",
     "eslint-plugin-storybook": "^9.0.14",
     "globals": "^15.11.0",
     "msw": "^2.10.3",
@@ -51,7 +51,7 @@
     "storybook-addon-remix-react-router": "^5.0.0",
     "tailwindcss": "^4.1.10",
     "typescript": "~5.6.2",
-    "typescript-eslint": "^8.10.0",
+    "typescript-eslint": "^8.35.1",
     "vite": "^6.3.5",
     "vitest": "^3.2.4"
   },
