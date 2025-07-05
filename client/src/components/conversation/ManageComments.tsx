@@ -5,7 +5,7 @@ import CommentsTable from "../admin/comments/CommentsTable";
 import { ModerationComment } from "../../app/core/dashboard";
 
 export default function ManageComments() {
-  let params = useParams();
+  const params = useParams();
 
   const convoId = params.conversationId;
   const comments = useQuery<ModerationComment[]>({

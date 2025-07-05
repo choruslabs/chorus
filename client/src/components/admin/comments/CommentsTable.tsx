@@ -45,7 +45,7 @@ export default function CommentsTable({
         </button>
       </div>
       {(comments || []).map((item) => (
-        <CommentsTableItem comment={item} />
+        <CommentsTableItem comment={item} onComplete={onComplete} />
       ))}
       {!!conversationId && (
         <dialog
