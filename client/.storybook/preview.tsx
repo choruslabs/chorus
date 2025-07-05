@@ -5,7 +5,16 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import "../src/index.css"; // tailwind CSS etc
 
-initialize();
+let options = {};
+if (location.hostname.includes("github.io")) {
+  options = {
+    serviceWorker: {
+      url: "/convergent/mockServiceWorker.js", // manually pointing msw config file
+    },
+  };
+}
+
+initialize(options);
 
 const preview: Preview = {
   decorators: [
