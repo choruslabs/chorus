@@ -1,8 +1,24 @@
 import type { Preview } from "@storybook/react-vite";
 
+import { initialize, mswLoader } from "msw-storybook-addon";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
 import "../src/index.css"; // tailwind CSS etc
 
+initialize();
+
 const preview: Preview = {
+  decorators: [
+    (Story) => {
+      const queryClient = new QueryClient();
+
+      return (
+        <QueryClientProvider client={queryClient}>
+          <Story />
+        </QueryClientProvider>
+      );
+    },
+  ],
   parameters: {
     controls: {
       matchers: {
@@ -18,6 +34,7 @@ const preview: Preview = {
       test: "todo",
     },
   },
+  loaders: [mswLoader],
 };
 
 export default preview;

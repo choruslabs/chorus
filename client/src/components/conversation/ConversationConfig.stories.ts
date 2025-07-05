@@ -8,7 +8,7 @@ import {
 import ConversationConfig from "./ConversationConfig";
 
 const meta = {
-  title: "client/Conversation Config",
+  title: "client/admin/Conversation Config",
   component: ConversationConfig,
   decorators: [withRouter],
   argTypes: {
@@ -36,6 +36,7 @@ export const EditConversation: Story = {
       num_participants: 0,
       date_created: "",
       is_active: false,
+      display_unmoderated: true,
     },
   },
 };
