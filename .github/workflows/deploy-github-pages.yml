@@ -25,9 +25,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
-        working-directory: client
       #👇 Add Storybook build and deploy to GitHub Pages as a step in the workflow
       - uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
         with:
+          install_command: cd client && yarn install # default: npm ci
+          build_command: cd client && yarn build-storybook # default: npm run build-storybook
+          path: client/dist/storybook # default: dist/storybook
           checkout: false # default: true
-        working-directory: client
