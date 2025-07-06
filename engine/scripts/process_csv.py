@@ -1,4 +1,5 @@
 from pathlib import Path
+import numpy as np
 import pandas
 from convergent_engine import decompose_votes, cluster_users, get_comment_consensus
 
@@ -9,11 +10,13 @@ def process_csv(comments_csv: Path, votes_matrix_csv: Path):
 
     comments = content_df.set_index("comment-id")["comment-body"]
 
-    comment_ids = content_df['comment-id'].astype(str)
-    votes_matrix = votes_matrix_df.set_index("participant")[comment_ids].fillna(0)
+    comment_ids = content_df["comment-id"].astype(str).tolist()
+    votes_matrix = votes_matrix_df.set_index("participant")[comment_ids]
     votes_matrix = votes_matrix.values
 
-    reduced = decompose_votes(votes_matrix)
+    votes_matrix_nonan = np.nan_to_num(votes_matrix, nan=0)
+
+    reduced = decompose_votes(votes_matrix_nonan)
     kmeans = cluster_users(reduced)
 
     comment_consensus = [

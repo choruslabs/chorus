@@ -46,7 +46,17 @@ def get_comment_consensus(
 
         for cluster in np.unique(cluster_labels):
             cluster_votes = votes_matrix[cluster_labels == cluster, comment_index]
-            cluster_agree_probs[cluster] = np.mean(cluster_votes == 1)
+
+            if len(cluster_votes) == 0 or np.all(np.isnan(cluster_votes)):
+                cluster_agree_probs[cluster] = 0.5
+                continue
+
+            agree_vote_count = np.sum(cluster_votes == 1)
+            total_vote_count = np.sum(~np.isnan(cluster_votes))
+
+            cluster_agree_probs[cluster] = (1 + agree_vote_count) / (
+                2 + total_vote_count
+            )
 
         return np.prod(cluster_agree_probs)
 
