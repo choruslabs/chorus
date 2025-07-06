@@ -3,8 +3,8 @@ import pandas
 from convergent_engine import decompose_votes, cluster_users, get_comment_consensus
 
 
-def process_csv(content_csv: Path, votes_matrix_csv: Path):
-    content_df = pandas.read_csv(content_csv)
+def process_csv(comments_csv: Path, votes_matrix_csv: Path):
+    content_df = pandas.read_csv(comments_csv)
     votes_matrix_df = pandas.read_csv(votes_matrix_csv)
 
     comments = content_df.set_index("comment-id")["comment-body"]
@@ -30,7 +30,9 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Process polis-exported CSV files for clustering and analysis."
     )
-    parser.add_argument("content_csv", type=Path, help="Path to the content CSV file.")
+    parser.add_argument(
+        "comments_csv", type=Path, help="Path to the comments CSV file."
+    )
     parser.add_argument(
         "votes_matrix_csv", type=Path, help="Path to the votes matrix CSV file."
     )
@@ -41,7 +43,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     reduced, labels, comments, votes_matrix, comment_consensus = process_csv(
-        args.content_csv, args.votes_matrix_csv
+        args.comments_csv, args.votes_matrix_csv
     )
 
     report_dir = args.report_dir
