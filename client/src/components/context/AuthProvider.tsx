@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     queryKey: ["user"],
     queryFn: () => getUserMe(),
     retry: (failCount, error) => {
-      if (error?.status === 422) return false;
+      if (error?.status === 422 || error?.status === 401) return false;
       return failCount < 3;
     },
   });
