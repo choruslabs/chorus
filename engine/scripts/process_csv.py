@@ -9,7 +9,7 @@ def process_csv(comments_csv: Path, votes_matrix_csv: Path):
 
     comments = content_df.set_index("comment-id")["comment-body"]
 
-    comment_ids = content_df.index.astype(str)
+    comment_ids = content_df['comment-id'].astype(str)
     votes_matrix = votes_matrix_df.set_index("participant")[comment_ids].fillna(0)
     votes_matrix = votes_matrix.values
 
