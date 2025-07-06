@@ -11,7 +11,7 @@ def decompose_votes(vote_matrix: np.ndarray):
 
     total_votes = np.sum(np.abs(vote_matrix))
     vote_scale = np.sum(np.abs(vote_matrix), axis=1)
-    vote_scale = np.sqrt(total_votes / vote_scale)
+    vote_scale = np.sqrt(total_votes / (vote_scale + 1e-10))
 
     return transformed * vote_scale[:, None]
 
