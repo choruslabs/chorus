@@ -45,7 +45,7 @@ export default function CommentsTable({
   return (
     <section className="w-[95%] max-w-4xl mx-auto">
       <div className="py-2 flex justify-between">
-        <details className="[&:open>summary]:rounded-b-none [&:open>summary]:border-b-0 relative">
+        <details className="[&:open>summary]:rounded-b-none [&:open>summary]:border-b-transparent relative">
           <summary className="border-2 px-2 py-2 rounded-xl flex flex-row items-center gap-x-2 w-min cursor-pointer">
             Filter <FunnelIcon className="h-8 w-8" />
           </summary>
