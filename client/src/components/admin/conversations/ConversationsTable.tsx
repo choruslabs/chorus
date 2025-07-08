@@ -81,7 +81,7 @@ export const ConversationsTable = ({
           + Create conversation
         </a>
       </div>
-      <div className="filter-row flex bg-gray-50 p-4 rounded-xl my-2 gap-2 w-full justify-between items-center-safe">
+      <div className="filter-row flex bg-gray-50 p-4 rounded-xl my-2 gap-2 w-full justify-between items-center-safe flex-wrap">
         <search className="h-full">
           <form className="h-full">
             <input
