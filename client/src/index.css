@@ -82,3 +82,8 @@
     }
   }
 }
+
+/* for storybook */
+.sb-show-main.sb-main-padded {
+  padding: 0;
+}
