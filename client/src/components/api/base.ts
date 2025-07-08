@@ -34,3 +34,12 @@ export const putApi = (url: string, data: any = {}) =>
     },
     body: JSON.stringify(data),
   });
+
+export const deleteApi = (url: string, data: any = {}) =>
+  fetchApi(url, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
