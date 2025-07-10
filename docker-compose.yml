@@ -1,4 +1,8 @@
 services:
+  engine:
+    build: engine/
+    image: convergent-engine:latest
+
   server:
     build: server/
     environment:
@@ -8,6 +12,8 @@ services:
       db:
         condition: service_healthy
         restart: true
+      engine:
+        condition: service_started
     ports:
       - "8000:8000"
 
