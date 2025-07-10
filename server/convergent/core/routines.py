@@ -1,14 +1,7 @@
-from typing import Annotated, Optional
-from uuid import UUID
-from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from convergent import models
-from convergent.auth.user import CurrentUser
-from convergent.database import Database
 import numpy as np
-from sklearn.decomposition import PCA
-from sklearn.cluster import KMeans
-from sklearn.metrics import silhouette_score
+from convergent_engine import decompose_votes, cluster_users
 
 
 def get_vote_matrix(conversation: models.Conversation):
@@ -19,7 +12,7 @@ def get_vote_matrix(conversation: models.Conversation):
         for vote in comment.votes:
             users.add(vote.user)
 
-    vote_matrix = np.zeros((len(users), len(comments)))
+    vote_matrix = np.full((len(users), len(comments)), fill_value=np.nan)
     user_index = {user: i for i, user in enumerate(users)}
     comment_index = {comment: i for i, comment in enumerate(comments)}
 
@@ -30,39 +23,13 @@ def get_vote_matrix(conversation: models.Conversation):
     return vote_matrix, user_index, comment_index
 
 
-def get_pca(vote_matrix: np.ndarray):
-    pca = PCA(n_components=2)
-
-    transformed = pca.fit_transform(vote_matrix)
-
-    total_votes = np.sum(np.abs(vote_matrix))
-    vote_scale = np.sum(np.abs(vote_matrix), axis=1)
-    vote_scale = np.sqrt(total_votes / vote_scale)
-
-    return transformed * vote_scale[:, None]
-
-
-def get_kmeans(reduced: np.ndarray):
-    best_silhouette = -1
-    best_kmeans = None
-    for n_clusters in range(2, min(6, len(reduced))):
-        kmeans = KMeans(n_clusters=n_clusters)
-        kmeans.fit(reduced)
-        silhouette = silhouette_score(reduced, kmeans.labels_)
-        if silhouette > best_silhouette:
-            best_silhouette = silhouette
-            best_kmeans = kmeans
-
-    return best_kmeans
-
-
 def update_conversation_analysis(conversation: models.Conversation, db: Session):
     vote_matrix, user_index, _ = get_vote_matrix(conversation)
     if min(vote_matrix.shape) < 2:
         return
 
-    pca = get_pca(vote_matrix)
-    cluster = get_kmeans(pca)
+    pca = decompose_votes(vote_matrix)
+    cluster = cluster_users(pca)
 
     index_to_user = {i: user for user, i in user_index.items()}
 
