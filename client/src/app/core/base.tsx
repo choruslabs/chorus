@@ -50,7 +50,10 @@ const CoreBase = ({
   }, [userStatus?.isError]);
 
   return (
-    <div className="h-screen w-screen flex flex-col items-center">
+    <div
+      id="core-base"
+      className="h-screen w-screen flex flex-col items-center"
+    >
       <div className="w-full h-16">
         <AppBar user={userStatus?.data} logout={logout} />
       </div>

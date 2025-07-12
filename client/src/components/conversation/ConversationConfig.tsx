@@ -108,7 +108,7 @@ export default function ConversationConfig({
             setConversationAllowUnmoderatedComments(event.target.checked)
           }
         ></Input>
-        <button className="border-4 border-green-500 p-2 bg-green-200 rounded-2xl">
+        <button className="border-2 border-green-500 p-2 bg-green-200 hover:bg-green-500 hover:text-white rounded-xl col-start-2">
           Submit
         </button>
       </form>

@@ -42,13 +42,13 @@ export const CommentsTableItem = ({
       <td className="p-5">
         <Input type="checkbox" className="h-5 w-5" />
       </td>
+      <td className="p-5">
+        <StatusPill moderationStatus={comment.approved} />
+      </td>
       <td className="p-5 w-full">
         <strong>{comment.id}</strong>
         <br />
         {comment.content}
-      </td>
-      <td className="p-5">
-        <StatusPill moderationStatus={comment.approved} />
       </td>
       <td className="p-5">
         <div className="flex gap-4">

@@ -6,7 +6,7 @@ export type Conversation = {
   id: string;
   name: string;
   description: string;
-  author: { username: string };
+  author: { id: string; username: string };
   num_participants: number;
   date_created: string;
   is_active: boolean;
@@ -16,6 +16,13 @@ export type Conversation = {
 export type Comment = {
   id: string;
   content: string;
+};
+
+export type ParticipationComment = Comment & {
+  user_id: string;
+  approved: boolean;
+  conversation_id: string;
+  date_created: string;
 };
 
 // See server\convergent\routers\moderation.py

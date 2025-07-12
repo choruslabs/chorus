@@ -1,12 +1,72 @@
 import { Input } from "@headlessui/react";
 import { Conversation } from "../../../app/core/dashboard";
 import { ConversationsTableItem } from "./ConversationsTableItem";
+import { useEffect, useMemo, useState } from "react";
+import dayjs from "dayjs";
 
 export const ConversationsTable = ({
   conversations,
 }: {
   conversations?: Conversation[];
 }) => {
+  const dates = useMemo(() => {
+    return (conversations ?? [])
+      .map((item) => item.date_created)
+      .sort((a, b) => (a > b ? 1 : -1));
+  }, [conversations]);
+
+  const minDate = useMemo(() => {
+    return (dates[0] ?? "").substring(0, 10);
+  }, [dates]);
+  const maxDate = useMemo(() => {
+    return (dates[dates.length - 1] ?? "").substring(0, 10);
+  }, [dates]);
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+
+  useEffect(() => {
+    if (dates.length > 0) {
+      setStartDate(dates[0].substring(0, 10));
+      setEndDate(dates[dates.length - 1].substring(0, 10));
+    }
+  }, [dates]);
+
+  const onDateRangeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.name === "range-start") {
+      setStartDate(event.target.value);
+    }
+    if (event.target.name === "range-end") {
+      setEndDate(event.target.value);
+    }
+  };
+
+  const onSearchQueryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const filteredConversations = useMemo(() => {
+    return conversations?.filter(
+      (item) =>
+        (startDate
+          ? dayjs(item.date_created).isAfter(
+              dayjs(startDate).subtract(1, "day"),
+              "day"
+            )
+          : true) &&
+        (endDate
+          ? dayjs(item.date_created).isBefore(
+              dayjs(endDate).add(1, "day"),
+              "day"
+            )
+          : true) &&
+        (searchQuery
+          ? item.name.includes(searchQuery) ||
+            item.description.includes(searchQuery)
+          : true)
+    );
+  }, [startDate, endDate, searchQuery, conversations]);
+
   return (
     <div className="flex flex-col items-start h-full w-[85%] mx-auto py-10">
       <div id="heading" className="flex w-full justify-between flex-wrap">
@@ -21,7 +81,35 @@ export const ConversationsTable = ({
           + Create conversation
         </a>
       </div>
-      {conversations && (
+      <div className="filter-row flex bg-gray-50 p-4 rounded-xl my-2 gap-2 w-full justify-between items-center-safe flex-wrap">
+        <search className="h-full">
+          <form className="h-full">
+            <input
+              type="search"
+              id="conversation-query"
+              name="conversation"
+              placeholder="Search for Conversations"
+              className="bg-white border-2 rounded-md px-2 h-full"
+              onInput={onSearchQueryChange}
+            />
+          </form>
+        </search>
+        {filteredConversations?.length !== conversations?.length && (
+          <p>
+            Showing {filteredConversations?.length} of {conversations?.length}{" "}
+            conversations
+          </p>
+        )}
+
+        <DateRangePicker
+          minDate={minDate}
+          maxDate={maxDate}
+          startDate={startDate}
+          endDate={endDate}
+          onChange={onDateRangeChange}
+        />
+      </div>
+      {filteredConversations && (
         <div className="border border-gray-200 rounded-2xl shadow-lg w-full min-w-min">
           <table id="conversation-table" className="w-full border-collapse">
             <thead>
@@ -38,8 +126,11 @@ export const ConversationsTable = ({
               </tr>
             </thead>
             <tbody>
-              {conversations.map((conversation) => (
-                <ConversationsTableItem conversation={conversation} />
+              {filteredConversations.map((conversation) => (
+                <ConversationsTableItem
+                  conversation={conversation}
+                  key={conversation.id}
+                />
               ))}
             </tbody>
           </table>
@@ -48,3 +139,61 @@ export const ConversationsTable = ({
     </div>
   );
 };
+
+function DateRangePicker({
+  minDate,
+  maxDate,
+  startDate,
+  endDate,
+  onChange,
+}: {
+  minDate?: string;
+  maxDate?: string;
+  startDate?: string;
+  endDate?: string;
+  onChange: Function;
+}) {
+  const today = new Date();
+  const todayFormatted = today.toISOString().substring(0, 10);
+  const buttonName = useMemo(() => {
+    if (!startDate && !endDate) {
+      return "Date";
+    }
+    return `${startDate} - ${endDate}`;
+  }, [startDate, endDate]);
+
+  const onDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (onChange) onChange(event);
+  };
+
+  return (
+    <details className="[&:open>summary]:rounded-br-none relative">
+      <summary className="border-2 px-2 py-2 rounded-xl flex flex-row items-center gap-x-2 w-max cursor-pointer bg-white">
+        {buttonName}
+      </summary>
+      <form className="flex flex-col border-2 absolute bg-white p-4 rounded-b-xl rounded-tl-xl w-max right-0">
+        <input
+          className="p-2 border-2 rounded-md"
+          type="date"
+          id="start"
+          name="range-start"
+          value={startDate ?? todayFormatted}
+          min={minDate}
+          max={maxDate}
+          onChange={onDateChange}
+        />
+        To
+        <input
+          className="p-2 border-2 rounded-md"
+          type="date"
+          id="end"
+          name="range-end"
+          value={endDate ?? todayFormatted}
+          min={minDate}
+          max={maxDate}
+          onChange={onDateChange}
+        />
+      </form>
+    </details>
+  );
+}
