@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import Optional
 from uuid import uuid4, UUID
 from sqlalchemy import String, ForeignKey, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -15,6 +16,9 @@ class Conversation(Base):
     display_unmoderated: Mapped[bool] = mapped_column(default=False)
     date_created: Mapped[datetime] = mapped_column(server_default=func.now())
     is_active: Mapped[bool] = mapped_column(default=True)
+    user_friendly_link: Mapped[Optional[str]] = mapped_column(
+        String(100), nullable=True
+    )
 
     author = relationship("User")
     comments = relationship("Comment", backref="conversation")
