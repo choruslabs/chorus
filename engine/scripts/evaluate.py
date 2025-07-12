@@ -56,7 +56,7 @@ def evaluate_consensus(
     sorted_normalized_pred = np.array(normalized_pred)[indices]
     sorted_normalized_target = np.array(normalized_target)[indices]
 
-    plt.figure(figsize=(10, 5))
+    plt.figure(figsize=(7, 7))
     plt.plot(sorted_normalized_pred, label="Predicted Consensus", marker="o")
     plt.plot(sorted_normalized_target, label="Target Consensus", marker="x")
     plt.xlabel("Comment Index")
