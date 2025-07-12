@@ -3,6 +3,7 @@ import { postApi, putApi } from "../api/base";
 import { useNavigate } from "react-router";
 import { useState } from "react";
 import { Conversation } from "../../app/core/dashboard";
+import { ArrowLeftIcon } from "@heroicons/react/24/solid";
 
 export default function ConversationConfig({
   editItem,
@@ -11,7 +12,7 @@ export default function ConversationConfig({
 }: {
   editItem?: Conversation;
   type?: string;
-  onComplete?: Function;
+  onComplete?: () => void;
 }) {
   const navigate = useNavigate();
 
@@ -29,6 +30,13 @@ export default function ConversationConfig({
     setConversationAllowUnmoderatedComments,
   ] = useState(editItem?.display_unmoderated ?? false);
 
+  const [conversationShowCharts, setConversationShowCharts] = useState(
+    editItem?.show_charts ?? false
+  ); // TODO: placeholder; change to correct value later
+
+  const [conversationAllowVotes, setConversationAllowVotes] = useState(
+    editItem?.allow_votes ?? false
+  ); // TODO: placeholder; change to correct value later
   // const [updated, setUpdated] = useState(0);
 
   async function formSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -36,6 +44,8 @@ export default function ConversationConfig({
     const formData = new FormData(event.target as HTMLFormElement);
     const newConversationRequestBody = {
       display_unmoderated: formData.get("display-unmoderated") === "on",
+      show_charts: formData.get("show-charts") === "on", // TODO: placeholder; change to correct value later
+      allow_votes: formData.get("allow-votes") === "on", // TODO: placeholder; change to correct value later
       name: formData.get("name"),
       description: formData.get("description"),
     };
@@ -67,49 +77,109 @@ export default function ConversationConfig({
   }
 
   return (
-    <div className="flex flex-col items-start  h-full py-4 w-[95%] max-w-3xl mx-auto">
-      <h1 className="text-5xl font-bold mb-8">
-        {editItem ? "Edit conversation" : "New conversation"}
-      </h1>
+    <div className="flex flex-col items-start h-full py-4 w-[95%] max-w-3xl mx-auto">
+      <div className="flex flex-row w-full gap-8 items-center mb-8">
+        {!editItem && (
+          <a
+            type="button"
+            className="h-12 p-3 aspect-square w-max rounded-full hover:bg-red-800 hover:text-white bg-gray-200"
+            title="back"
+            href="/conversation"
+            // onClick={() => handleEditClick(false)}
+          >
+            <span className="w-4">
+              <ArrowLeftIcon />
+            </span>
+          </a>
+        )}
+
+        <hgroup>
+          <h1 className="text-5xl font-bold">
+            {editItem ? "Edit conversation" : "Create conversation"}
+          </h1>
+          <p>
+            Add in copy that allows people to understand what creating a
+            conversation does.
+          </p>
+        </hgroup>
+      </div>
       <form
         method={type}
         onSubmit={formSubmit}
         id="conversation-form"
-        className="grid mx-auto md:grid-cols-2 gap-2 w-full"
+        className="w-full flex flex-col"
       >
-        <label htmlFor="name">Conversation Name</label>
-        <Input
-          className="border-gray-500 border-2"
-          type="text"
-          name="name"
-          id="name"
-          required
-          value={conversationName}
-          onChange={(event) => setConversationName(event.target.value)}
-        ></Input>
-        <label htmlFor="description">Conversation description</label>
-        <Textarea
-          className="border-gray-500 border-2"
-          name="description"
-          id="description"
-          value={conversationDescription}
-          onChange={(event) => setConversationDescription(event.target.value)}
-        ></Textarea>
-        <label htmlFor="display-unmoderated">
-          Show unmoderated comments to participants
-        </label>
-        <Input
-          className="border-gray-500 border-2 justify-self-start aspect-square h-6"
-          type="checkbox"
-          name="display-unmoderated"
-          id="display-unmoderated"
-          checked={conversationAllowUnmoderatedComments}
-          onChange={(event) =>
-            setConversationAllowUnmoderatedComments(event.target.checked)
-          }
-        ></Input>
-        <button className="border-2 border-green-500 p-2 bg-green-200 hover:bg-green-500 hover:text-white rounded-xl col-start-2">
-          Submit
+        <fieldset className="flex flex-col mx-auto gap-2 w-full">
+          <label htmlFor="name">Conversation Heading</label>
+          <Input
+            className="border-gray-500 border-2 rounded-md p-2"
+            type="text"
+            name="name"
+            id="name"
+            placeholder="Title here"
+            required
+            value={conversationName}
+            onChange={(event) => setConversationName(event.target.value)}
+          ></Input>
+          <label htmlFor="description">Description for conversation</label>
+          <Textarea
+            className="border-gray-500 border-2 rounded-md p-2"
+            name="description"
+            id="description"
+            placeholder="Description here"
+            value={conversationDescription}
+            onChange={(event) => setConversationDescription(event.target.value)}
+          ></Textarea>
+        </fieldset>
+        {!editItem && (
+          <div className="col-span-2 text-center">Seed Comment Placeholder</div>
+        )}
+
+        <fieldset>
+          <legend className="font-bold text-2xl">Setup Permissions</legend>
+          <label htmlFor="show-charts" className="flex gap-2 p-2">
+            <Input
+              className="border-gray-500 border-2 justify-self-start aspect-square h-6"
+              type="checkbox"
+              name="show-charts"
+              id="show-charts"
+              checked={conversationShowCharts}
+              onChange={(event) =>
+                setConversationShowCharts(event.target.checked)
+              }
+            ></Input>
+            Participants can see visualization
+          </label>
+          <label htmlFor="display-unmoderated" className="flex gap-2 p-2">
+            <Input
+              className="border-gray-500 border-2 justify-self-start aspect-square h-6"
+              type="checkbox"
+              name="display-unmoderated"
+              id="display-unmoderated"
+              checked={conversationAllowUnmoderatedComments}
+              onChange={(event) =>
+                setConversationAllowUnmoderatedComments(event.target.checked)
+              }
+            ></Input>
+            No comments shown without moderator approval
+          </label>
+          <label htmlFor="allow-votes" className="flex gap-2 p-2">
+            <Input
+              className="border-gray-500 border-2 justify-self-start aspect-square h-6"
+              type="checkbox"
+              name="allow-votes"
+              id="allow-votes"
+              checked={conversationAllowVotes}
+              onChange={(event) =>
+                setConversationAllowVotes(event.target.checked)
+              }
+            ></Input>
+            Make Conversation Open
+          </label>
+        </fieldset>
+
+        <button className="self-center border-2 border-gray-500 hover:border-green-500 p-2 bg-gray-500 hover:bg-green-500 text-white rounded-xl">
+          {editItem ? "Save" : "Create conversation"}
         </button>
       </form>
     </div>
