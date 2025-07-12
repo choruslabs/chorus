@@ -24,9 +24,9 @@ def get_rank_symbol(rank_pred, rank_target):
     if rank_pred == rank_target:
         return "= 0"
     elif rank_pred < rank_target:
-        return f"&darr; {abs(rank_pred - rank_target)}"
-    else:
         return f"&uarr; {abs(rank_pred - rank_target)}"
+    else:
+        return f"&darr; {abs(rank_pred - rank_target)}"
 
 
 def evaluate_consensus(
@@ -46,20 +46,15 @@ def evaluate_consensus(
     common_indices = list(
         set(consensus_pred.keys()).intersection(set(consensus_target.keys()))
     )
-    consensus_pred = {k: v for k, v in consensus_pred.items() if k in common_indices}
-    consensus_target = {
-        k: v for k, v in consensus_target.items() if k in common_indices
-    }
+    consensus_pred = [consensus_pred[i] for i in common_indices]
+    consensus_target = [consensus_target[i] for i in common_indices]
     comments = comments[common_indices].tolist()
 
-    mean_consensus_pred = np.mean(list(consensus_pred.values()))
-    mean_consensus_target = np.mean(list(consensus_target.values()))
+    mean_consensus_pred = np.mean(consensus_pred)
+    mean_consensus_target = np.mean(consensus_target)
 
-    std_consensus_pred = np.std(list(consensus_pred.values()))
-    std_consensus_target = np.std(list(consensus_target.values()))
-
-    consensus_pred = [consensus_pred[k] for k in common_indices]
-    consensus_target = [consensus_target[k] for k in common_indices]
+    std_consensus_pred = np.std(consensus_pred)
+    std_consensus_target = np.std(consensus_target)
 
     print(f"Mean Consensus Prediction: {mean_consensus_pred}")
     print(f"Mean Consensus Target: {mean_consensus_target}")
@@ -69,12 +64,10 @@ def evaluate_consensus(
     print(f"Std Consensus Target: {std_consensus_target}")
     print()
 
-    normalized_pred = (consensus_pred - np.mean(consensus_pred)) / np.std(
-        consensus_pred
-    )
-    normalized_target = (consensus_target - np.mean(consensus_target)) / np.std(
-        consensus_target
-    )
+    normalized_pred = (consensus_pred - mean_consensus_pred) / std_consensus_pred
+    normalized_target = (
+        consensus_target - mean_consensus_target
+    ) / std_consensus_target
 
     mse = np.mean((normalized_pred - normalized_target) ** 2)
     corr = np.corrcoef(normalized_pred, normalized_target)[0, 1]
@@ -82,8 +75,8 @@ def evaluate_consensus(
     print(f"Mean Squared Error: {mse}")
     print(f"Correlation: {corr}")
 
-    rank_pred = np.argsort(np.argsort(normalized_pred)) + 1
-    rank_target = np.argsort(np.argsort(normalized_target)) + 1
+    rank_pred = np.argsort(np.argsort(normalized_pred)[::-1]) + 1
+    rank_target = np.argsort(np.argsort(normalized_target)[::-1]) + 1
 
     rendered = pd.DataFrame(
         {
@@ -108,7 +101,38 @@ def evaluate_consensus(
     )
 
     rendered_path = report_dir / "consensus_evaluation.html"
-    rendered.to_html(rendered_path, index=False, escape=False)
+    html = rendered.to_html(index=False, escape=False, border=0)
+    css = """
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        body {
+            font-family: Arial, sans-serif;
+        }
+    </style>
+    """
+    with open(rendered_path, "w") as f:
+        f.write(f"<html><head>{css}</head><body>{html}</body></html>")
+
+    top5_pred = np.argsort(normalized_pred)[-5:][::-1]
+    top5_target = np.argsort(normalized_target)[-5:][::-1]
+    top5_accuracy = np.mean([1 if i in top5_target else 0 for i in top5_pred])
+    print(f"Top 5 Accuracy: {top5_accuracy:.2f}")
+
+    top10_pred = np.argsort(normalized_pred)[-10:][::-1]
+    top10_target = np.argsort(normalized_target)[-10:][::-1]
+    top10_accuracy = np.mean([1 if i in top10_target else 0 for i in top10_pred])
+    print(f"Top 10 Accuracy: {top10_accuracy:.2f}")
 
     indices = np.argsort(normalized_target)
     sorted_normalized_pred = np.array(normalized_pred)[indices]
