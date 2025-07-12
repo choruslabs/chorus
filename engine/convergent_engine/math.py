@@ -4,8 +4,11 @@ from sklearn.decomposition import PCA
 from sklearn.metrics import silhouette_score
 
 
-def decompose_votes(vote_matrix: np.ndarray, random_state: int = 42):
-    pca = PCA(n_components=2, random_state=random_state)
+random_state = 42
+
+
+def decompose_votes(vote_matrix: np.ndarray, random_state: int = random_state):
+    pca = PCA(n_components=2, random_state=random_state, svd_solver="covariance_eigh")
 
     vote_matrix_nonan = np.nan_to_num(vote_matrix, nan=0)
     transformed = pca.fit_transform(vote_matrix_nonan)
@@ -17,11 +20,13 @@ def decompose_votes(vote_matrix: np.ndarray, random_state: int = 42):
     return transformed * vote_scale[:, None]
 
 
-def cluster_users(reduced: np.ndarray, random_state: int = 42):
+def cluster_users(
+    reduced: np.ndarray, random_state: int = random_state, n_init: int = 100
+):
     best_silhouette = -1
     best_kmeans = None
     for n_clusters in range(2, min(6, len(reduced))):
-        kmeans = KMeans(n_clusters=n_clusters, random_state=random_state)
+        kmeans = KMeans(n_clusters=n_clusters, random_state=random_state, n_init=n_init)
         kmeans.fit(reduced)
         silhouette = silhouette_score(
             reduced, kmeans.labels_, random_state=random_state
