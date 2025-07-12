@@ -67,12 +67,20 @@ export const ConversationsTable = ({
     );
   }, [startDate, endDate, searchQuery, conversations]);
 
+  const hasConversations = useMemo(() => {
+    return !!conversations && conversations?.length > 0;
+  }, [conversations]);
+
   return (
     <div className="flex flex-col items-start h-full w-[85%] mx-auto py-10">
       <div id="heading" className="flex w-full justify-between flex-wrap">
         <div id="heading-text">
           <h1 className="text-5xl font-bold mb-8">Conversations</h1>
-          <h2 className="mb-16">Find all conversations created below.</h2>
+          <h2 className="mb-16">
+            {hasConversations
+              ? "Find all conversations created below."
+              : "No conversation found. Create one by clicking the button on the right."}
+          </h2>
         </div>
         <a
           className="mb-8 px-5 py-3 bg-secondary text-white rounded-md h-fit"
@@ -81,60 +89,67 @@ export const ConversationsTable = ({
           + Create conversation
         </a>
       </div>
-      <div className="filter-row flex bg-gray-50 p-4 rounded-xl my-2 gap-2 w-full justify-between items-center-safe flex-wrap">
-        <search className="h-full">
-          <form className="h-full">
-            <input
-              type="search"
-              id="conversation-query"
-              name="conversation"
-              placeholder="Search for Conversations"
-              className="bg-white border-2 rounded-md px-2 h-full"
-              onInput={onSearchQueryChange}
-            />
-          </form>
-        </search>
-        {filteredConversations?.length !== conversations?.length && (
-          <p>
-            Showing {filteredConversations?.length} of {conversations?.length}{" "}
-            conversations
-          </p>
-        )}
-
-        <DateRangePicker
-          minDate={minDate}
-          maxDate={maxDate}
-          startDate={startDate}
-          endDate={endDate}
-          onChange={onDateRangeChange}
-        />
-      </div>
-      {filteredConversations && (
-        <div className="border border-gray-200 rounded-2xl shadow-lg w-full min-w-min">
-          <table id="conversation-table" className="w-full border-collapse">
-            <thead>
-              <tr className="text-gray-500 items-center bottom-2 border-b-gray-200 border-b">
-                <th className="text-left p-5">
-                  <Input type="checkbox" className="h-5 w-5" />
-                </th>
-                <th className="text-left p-5">Conversation Title</th>
-                <th className="text-left p-5">Number of Participants</th>
-                <th className="text-left p-5">Date Created</th>
-                <th className="text-left p-5">Status</th>
-                <th className="text-left p-5">Created By</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredConversations.map((conversation) => (
-                <ConversationsTableItem
-                  conversation={conversation}
-                  key={conversation.id}
+      {hasConversations && (
+        <>
+          <div
+            id="conversation-filtering-control"
+            className="filter-row flex bg-gray-50 p-4 rounded-xl my-2 gap-2 w-full justify-between items-center-safe flex-wrap"
+          >
+            <search className="h-full">
+              <form className="h-full">
+                <input
+                  type="search"
+                  id="conversation-query"
+                  name="conversation"
+                  placeholder="Search for Conversations"
+                  className="bg-white border-2 rounded-md px-2 h-full"
+                  onInput={onSearchQueryChange}
                 />
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </form>
+            </search>
+            {filteredConversations?.length !== conversations?.length && (
+              <p>
+                Showing {filteredConversations?.length} of{" "}
+                {conversations?.length} conversations
+              </p>
+            )}
+
+            <DateRangePicker
+              minDate={minDate}
+              maxDate={maxDate}
+              startDate={startDate}
+              endDate={endDate}
+              onChange={onDateRangeChange}
+            />
+          </div>
+          {filteredConversations && (
+            <div className="border border-gray-200 rounded-2xl shadow-lg w-full min-w-min">
+              <table id="conversation-table" className="w-full border-collapse">
+                <thead>
+                  <tr className="text-gray-500 items-center bottom-2 border-b-gray-200 border-b">
+                    <th className="text-left p-5">
+                      <Input type="checkbox" className="h-5 w-5" />
+                    </th>
+                    <th className="text-left p-5">Conversation Title</th>
+                    <th className="text-left p-5">Number of Participants</th>
+                    <th className="text-left p-5">Date Created</th>
+                    <th className="text-left p-5">Status</th>
+                    <th className="text-left p-5">Created By</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredConversations.map((conversation) => (
+                    <ConversationsTableItem
+                      conversation={conversation}
+                      key={conversation.id}
+                    />
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </>
       )}
     </div>
   );
@@ -151,7 +166,7 @@ function DateRangePicker({
   maxDate?: string;
   startDate?: string;
   endDate?: string;
-  onChange: Function;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }) {
   const today = new Date();
   const todayFormatted = today.toISOString().substring(0, 10);
