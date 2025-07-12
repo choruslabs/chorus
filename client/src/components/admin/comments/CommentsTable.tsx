@@ -1,21 +1,28 @@
-import { useEffect, useMemo, useState } from "react";
-import { type ModerationComment } from "../../../app/core/dashboard";
+import { useMemo, useState } from "react";
+import {
+  type Conversation,
+  type ModerationComment,
+} from "../../../app/core/dashboard";
 import { CommentsTableItem } from "./CommentsTableItem";
-import CommentConfig from "./CommentConfig";
 import { FunnelIcon } from "@heroicons/react/24/outline";
-
+import { NewCommentDialog } from "./CommentDialog";
+const mappedState = new Map([
+  ["unmoderated", null],
+  ["approved", true],
+  ["rejected", false],
+]);
 export default function CommentsTable({
   comments,
-  conversationId,
+  conversation,
   onComplete,
 }: {
   comments: ModerationComment[];
-  conversationId?: string;
-  onComplete?: Function;
+  conversation?: Conversation;
+  onComplete?: () => void;
 }) {
   const [filter, setFilter] = useState<string[]>([]);
 
-  const onFilterChange = (e) => {
+  const onFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const toggledValue = e.target.value;
     if (filter.includes(toggledValue)) {
       setFilter(filter.filter((name) => name !== toggledValue));
@@ -25,11 +32,6 @@ export default function CommentsTable({
       setFilter(filter.concat([toggledValue]));
     }
   };
-  const mappedState = new Map([
-    ["unmoderated", null],
-    ["approved", true],
-    ["rejected", false],
-  ]);
 
   const filteredComments = useMemo(() => {
     if (filter.length === 0) return comments;
@@ -88,9 +90,9 @@ export default function CommentsTable({
             </label>
           </form>
         </details>
-        {!!conversationId && (
+        {!!conversation && (
           <NewCommentDialog
-            conversationId={conversationId}
+            conversation={conversation}
             onComplete={onComplete}
           />
         )}
@@ -103,60 +105,5 @@ export default function CommentsTable({
         />
       ))}
     </section>
-  );
-}
-
-function NewCommentDialog({
-  conversationId,
-  onComplete,
-}: {
-  conversationId: string;
-  onComplete?: Function;
-}) {
-  const [dialog, setDialog] = useState<HTMLDialogElement | null>(null);
-  useEffect(() => {
-    setDialog(document.getElementById("comment-dialog") as HTMLDialogElement);
-  }, []);
-  const handleEditClick = (state: boolean) => {
-    if (state) {
-      dialog?.showModal();
-    } else {
-      dialog?.close();
-    }
-  };
-
-  const onFormComplete = () => {
-    handleEditClick(false);
-
-    if (onComplete) {
-      onComplete();
-    }
-  };
-  return (
-    <>
-      <button
-        className="border-2 px-2 py-2 rounded-xl flex flex-row items-center gap-x-2 h-min self-center-safe"
-        onClick={() => handleEditClick(true)}
-      >
-        Add
-      </button>
-
-      <dialog
-        id="comment-dialog"
-        className="m-[revert] p-[revert] border-2 backdrop:bg-primary backdrop:opacity-80"
-      >
-        <button
-          className="border-2 px-2 py-2 rounded-xl flex flex-row items-center gap-x-2 ml-auto"
-          autoFocus
-          onClick={() => handleEditClick(false)}
-        >
-          Close
-        </button>
-        <CommentConfig
-          onComplete={onFormComplete}
-          conversationId={conversationId}
-        />
-      </dialog>
-    </>
   );
 }
