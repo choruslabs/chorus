@@ -5,6 +5,8 @@ from convergent.auth.user import CurrentUser
 from convergent.database import Database
 from pydantic import BaseModel
 import numpy as np
+from convergent_engine.math import get_comment_consensus
+from convergent.core.routines import get_vote_matrix
 
 
 router = APIRouter(prefix="/analysis")
@@ -34,8 +36,6 @@ class Conversation(BaseModel):
     num_votes: int = None
     participation_rate: float = None
     voting_rate: float = None
-
-    consensus_comments: list[CommentStatistics] = None
 
 
 def get_conversation_groups(conversation: models.Conversation, db: Database):
@@ -107,32 +107,6 @@ async def read_conversation_groups(
     return get_conversation_groups(conversation, db)
 
 
-def get_consensus_comments(comments: list[models.Comment], groups: list[Group], k=3):
-    consensus = {
-        comment.id: {
-            "id": comment.id,
-            "content": comment.content,
-            "consensus": 0.0,
-        }
-        for comment in comments
-    }
-
-    for group in groups:
-        for comment_id, vote_count in group["comment_vote_counts"].items():
-            consensus[comment_id]["consensus"] += vote_count / len(group["user_ids"])
-
-    consensus = sorted(
-        consensus.values(), key=lambda item: item["consensus"], reverse=True
-    )
-
-    for comment in consensus:
-        comment["consensus"] /= len(groups)
-
-    if len(consensus) > k:
-        consensus = consensus[:k]
-    return consensus
-
-
 @router.get(
     "/conversation/{conversation_id}",
     response_model=Conversation,
@@ -144,7 +118,6 @@ async def read_conversation(
     current_user: CurrentUser,
     include_groups: bool = False,
     include_stats: bool = False,
-    include_consensus_comments: bool = False,
 ):
     conversation = db.query(models.Conversation).get(conversation_id)
     if conversation is None:
@@ -178,12 +151,39 @@ async def read_conversation(
         response["participation_rate"] = len(participant_ids) / len(user_ids)
         response["voting_rate"] = num_votes / (len(user_ids) * len(comment_ids))
 
-    if include_consensus_comments:
-        if "groups" not in response:
-            response["groups"] = get_conversation_groups(conversation, db)
+    return response
 
-        response["consensus_comments"] = get_consensus_comments(
-            conversation.comments, response["groups"]
+
+@router.get(
+    "/conversation/{conversation_id}/comments",
+    response_model=list[CommentStatistics],
+)
+async def read_comments_with_consensus(
+    conversation_id: UUID, db: Database, current_user: CurrentUser
+):
+    conversation = db.query(models.Conversation).get(conversation_id)
+    if conversation is None:
+        raise HTTPException(status_code=404, detail="Conversation not found")
+
+    votes_matrix, user_index, comment_index = get_vote_matrix(conversation)
+
+    user_clusters = np.full(len(user_index), -1, dtype=int)  # Default to -1 for unclustered users
+    for cluster in conversation.clusters:
+        if cluster.user in user_index:
+            user_clusters[user_index[cluster.user]] = cluster.cluster
+        else:
+            raise ValueError(f"Cluster user {cluster.user} not found in user_index")
+
+    consensus_comments = []
+    for comment in conversation.comments:
+        comment_idx = comment_index.get(comment.id)
+        consensus = get_comment_consensus(votes_matrix, comment_idx, user_clusters)
+        consensus_comments.append(
+            {
+                "id": comment.id,
+                "content": comment.content,
+                "consensus": consensus,
+            }
         )
 
-    return response
+    return sorted(consensus_comments, key=lambda x: x["consensus"], reverse=True)
