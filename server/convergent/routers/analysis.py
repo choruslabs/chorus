@@ -176,7 +176,7 @@ async def read_comments_with_consensus(
 
     consensus_comments = []
     for comment in conversation.comments:
-        comment_idx = comment_index.get(comment.id)
+        comment_idx = comment_index.get(comment)
         consensus = get_comment_consensus(votes_matrix, comment_idx, user_clusters)
         consensus_comments.append(
             {
