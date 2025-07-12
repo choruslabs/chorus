@@ -2,7 +2,8 @@ from datetime import datetime
 from typing import Optional
 from uuid import UUID
 from fastapi import APIRouter, HTTPException
-from sqlalchemy import false
+from sqlalchemy import false, true
+import urllib
 from convergent import models
 from convergent.auth.user import CurrentUser
 from convergent.core.routines import update_conversation_analysis
@@ -27,12 +28,14 @@ class Conversation(BaseModel):
     display_unmoderated: bool
     date_created: datetime = None
     is_active: bool = True
+    user_friendly_link: Optional[str] = None
 
 
 class ConversationCreate(BaseModel):
     name: str
     description: str = None
     display_unmoderated: bool = False
+    user_friendly_link: Optional[str] = None
 
 
 class Comment(BaseModel):
@@ -90,6 +93,28 @@ async def read_conversations(db: Database, current_user: CurrentUser):
         get_conversation_details(conversation, db, current_user)
         for conversation in conversations
     ]
+
+
+@router.get(
+    "/conversations/friendly-link/{user_friendly_link}/id",
+    response_model=UUID,
+)
+async def get_conversation_id_by_friendly_link(
+    user_friendly_link: str, db: Database, current_user: CurrentUser
+):
+    conversation = (
+        db.query(models.Conversation)
+        .filter(
+            models.Conversation.user_friendly_link == user_friendly_link,
+            models.Conversation.is_active == true(),
+        )
+        .first()
+    )
+
+    if conversation is None:
+        raise HTTPException(status_code=404, detail="Conversation not found")
+
+    return conversation.id
 
 
 @router.get("/conversations/{conversation_id}", response_model=ConversationDetail)
@@ -150,6 +175,18 @@ async def read_comments(
 async def create_conversation(
     conversation: ConversationCreate, db: Database, current_user: CurrentUser
 ):
+    if conversation.user_friendly_link:
+        link = conversation.user_friendly_link.strip()
+        link = link.replace(" ", "-").lower()
+        conversation.user_friendly_link = urllib.parse.quote(link)
+
+        if db.query(models.Conversation).filter(
+            models.Conversation.user_friendly_link == conversation.user_friendly_link
+        ).first():
+            raise HTTPException(
+                status_code=409, detail="User friendly link already exists"
+            )
+
     db_conversation = models.Conversation(
         **conversation.model_dump(), author=current_user
     )
