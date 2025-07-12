@@ -167,9 +167,12 @@ async def read_comments_with_consensus(
 
     votes_matrix, user_index, comment_index = get_vote_matrix(conversation)
 
-    user_clusters = np.zeros(len(user_index), dtype=int)
+    user_clusters = np.full(len(user_index), -1, dtype=int)  # Default to -1 for unclustered users
     for cluster in conversation.clusters:
-        user_clusters[user_index[cluster.user]] = cluster.cluster
+        if cluster.user in user_index:
+            user_clusters[user_index[cluster.user]] = cluster.cluster
+        else:
+            raise ValueError(f"Cluster user {cluster.user} not found in user_index")
 
     consensus_comments = []
     for comment in conversation.comments:
