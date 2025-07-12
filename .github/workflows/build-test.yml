@@ -21,8 +21,10 @@ jobs:
 
       # Install dependencies
       - name: Install dependencies
-        run: cd client && npm install
+        run: |
+          cd client
+          npm install
 
       # Run the build command
       - name: Run npm build
-        run: npm run build
+        run: cd client && npm run build
