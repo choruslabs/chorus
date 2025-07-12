@@ -1,12 +1,10 @@
 import { useContext, useEffect } from "react";
 import Logo from "../../components/ui/logo";
 import { AuthContext } from "../../components/context/AuthContext";
-import { UserCircleIcon } from "@heroicons/react/24/solid";
 import { useNavigate } from "react-router";
+import { UserDropdown } from "../auth/UserDropdown";
 
-const UserDropdown = () => <UserCircleIcon className="h-8 w-8  mr-2" />;
-
-const AppBar = ({ user, logout }: { user: any; logout: () => void }) => (
+const AppBar = ({ children }: { children: React.ReactNode }) => (
   <div
     id="app-bar"
     className="w-full p-3 pl-5 flex items-center justify-between border-b-gray-200 border-b-2"
@@ -26,9 +24,7 @@ const AppBar = ({ user, logout }: { user: any; logout: () => void }) => (
         Contact
       </a>
     </div>
-    <div className="flex justify-end w-1/6">
-      <UserDropdown />
-    </div>
+    <div className="flex justify-end w-1/6">{children}</div>
   </div>
 );
 
@@ -47,7 +43,7 @@ const CoreBase = ({
     if (userStatus?.isError && requiresLogin) {
       navigate("/login");
     }
-  }, [userStatus?.isError]);
+  }, [navigate, requiresLogin, userStatus?.isError]);
 
   return (
     <div
@@ -55,7 +51,9 @@ const CoreBase = ({
       className="h-screen w-screen flex flex-col items-center"
     >
       <div className="w-full h-16">
-        <AppBar user={userStatus?.data} logout={logout} />
+        <AppBar>
+          <UserDropdown user={userStatus?.data} logout={logout} />
+        </AppBar>
       </div>
       <div className="grow w-full overflow-y-auto pt-4">
         {userStatus?.isLoading ? <>Loading...</> : children}
