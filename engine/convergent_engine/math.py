@@ -46,6 +46,9 @@ def get_comment_consensus(
         cluster_agree_probs = np.zeros(len(np.unique(cluster_labels)))
 
         for cluster in np.unique(cluster_labels):
+            if cluster == -1:
+                continue
+
             cluster_votes = votes_matrix[cluster_labels == cluster, comment_index]
 
             if len(cluster_votes) == 0 or np.all(np.isnan(cluster_votes)):
