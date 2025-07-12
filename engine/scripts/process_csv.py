@@ -4,7 +4,7 @@ import pandas
 from convergent_engine import decompose_votes, cluster_users, get_comment_consensus
 
 
-def process_csv(comments_csv: Path, votes_matrix_csv: Path):
+def process_csv(comments_csv: Path, votes_matrix_csv: Path, random_state: int):
     content_df = pandas.read_csv(comments_csv)
     votes_matrix_df = pandas.read_csv(votes_matrix_csv)
 
@@ -16,8 +16,8 @@ def process_csv(comments_csv: Path, votes_matrix_csv: Path):
 
     votes_matrix_nonan = np.nan_to_num(votes_matrix, nan=0)
 
-    reduced = decompose_votes(votes_matrix_nonan)
-    kmeans = cluster_users(reduced)
+    reduced = decompose_votes(votes_matrix_nonan, random_state=random_state)
+    kmeans = cluster_users(reduced, random_state=random_state)
 
     comment_consensus = [
         get_comment_consensus(votes_matrix, i, kmeans.labels_, "group_aware")
@@ -42,11 +42,17 @@ if __name__ == "__main__":
     parser.add_argument(
         "report_dir", type=Path, help="Directory to save the report files."
     )
+    parser.add_argument(
+        "--random_state",
+        type=int,
+        default=42,
+        help="Random state for reproducibility (default: 42).",
+    )
 
     args = parser.parse_args()
 
     reduced, labels, comments, votes_matrix, comment_consensus = process_csv(
-        args.comments_csv, args.votes_matrix_csv
+        args.comments_csv, args.votes_matrix_csv, random_state=args.random_state
     )
 
     report_dir = args.report_dir
