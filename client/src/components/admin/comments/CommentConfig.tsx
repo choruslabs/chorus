@@ -1,14 +1,17 @@
 import { useState } from "react";
 import { postApi, putApi } from "../../api/base";
+import { Conversation } from "../../../app/core/dashboard";
 
 export default function CommentConfig({
-  conversationId,
+  conversation,
   editId,
   onComplete,
+  onCancel,
 }: {
-  conversationId: string;
+  conversation: Conversation;
   editId?: string;
-  onComplete?: Function;
+  onComplete?: () => void;
+  onCancel?: () => void;
 }) {
   const [comment, setComment] = useState("");
   async function formSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -20,7 +23,7 @@ export default function CommentConfig({
     if (!editId) {
       // new conversation
       await postApi(
-        `/conversations/${conversationId}/comments`,
+        `/conversations/${conversation.id}/comments`,
         newConversationRequestBody
       );
       setComment("");
@@ -37,19 +40,44 @@ export default function CommentConfig({
       onComplete();
     }
   }
+
+  function onFormCancel() {
+    if (onCancel) {
+      onCancel();
+    }
+  }
   return (
     <form onSubmit={formSubmit}>
-      <h2 className="text-3xl font-bold my-4">New comment</h2>
+      <h2 className="text-3xl font-bold my-4">Add comment to conversation</h2>
+      <p>Add help hints here for creating a comment </p>
+      <hgroup>
+        <h3 className="text-2xl font-bold my-4">{conversation.name}</h3>
+        <p>{conversation.description}</p>
+      </hgroup>
       <textarea
-        className="border-gray-500 border-2"
+        className="border-gray-500 border-2 w-full rounded-md p-2 min-h-40"
         name="description"
         id="description"
+        title="description"
         value={comment}
+        placeholder="Enter a comment..."
         onChange={(event) => setComment(event.target.value)}
       ></textarea>
-      <button className="border-2 px-2 py-2 rounded-xl flex flex-row items-center gap-x-2 ml-auto">
-        Submit
-      </button>
+      <div className="flex gap-2 my-4 flex-wrap">
+        <button
+          type="button"
+          className="p-2 border-2 rounded-md hover:bg-red-800 hover:border-red-800 hover:text-white grow-1"
+          onClick={onFormCancel}
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          className="p-2 bg-gray-500 hover:bg-secondary text-white rounded-md grow-1"
+        >
+          Add Comment
+        </button>
+      </div>
     </form>
   );
 }

@@ -5,9 +5,8 @@ import {
   Conversation,
   ParticipationComment,
 } from "../../app/core/dashboard";
-import CommentConfig from "../admin/comments/CommentConfig";
 import { VotingSection } from "./VotingSection";
-import { PlusIcon } from "@heroicons/react/24/solid";
+import { NewCommentDialog } from "../admin/comments/CommentDialog";
 
 export const ParticipationSpa = ({
   conversation,
@@ -22,8 +21,8 @@ export const ParticipationSpa = ({
     num_votes: number;
   };
   comments?: Comment[];
-  onVoteComplete: Function;
-  onComplete: Function;
+  onVoteComplete: () => void;
+  onComplete: (event?: React.FormEvent<HTMLFormElement>) => void;
 }) => {
   const [dialog, setDialog] = useState<HTMLDialogElement | null>(null);
 
@@ -47,7 +46,7 @@ export const ParticipationSpa = ({
       onVoteComplete(commentId, vote);
     }
   };
-  const onFormComplete = (event: React.FormEvent<HTMLFormElement>) => {
+  const onFormComplete = (event?: React.FormEvent<HTMLFormElement>) => {
     handleEditClick(false);
 
     if (onComplete) {
@@ -73,12 +72,12 @@ export const ParticipationSpa = ({
             >
               Active Comments
             </h2>
-            <button
-              onClick={() => handleEditClick(true)}
-              className="flex mb-4 bg-white border border-gray-300 p-2 w-min whitespace-nowrap items-center justify-center gap-x-2 rounded-xl"
-            >
-              <PlusIcon height={30} width={30} /> Add Comment
-            </button>
+            {!!conversation && (
+              <NewCommentDialog
+                conversation={conversation}
+                onComplete={onFormComplete}
+              />
+            )}
           </div>
 
           {currentComment ? (
@@ -97,24 +96,6 @@ export const ParticipationSpa = ({
           </p>
         </section>
       </main>
-      {!!conversation?.id && (
-        <dialog
-          id="comment-dialog"
-          className="m-[revert] p-[revert] border-2 backdrop:bg-primary backdrop:opacity-80"
-        >
-          <button
-            className="border-2 px-2 py-2 rounded-xl flex flex-row items-center gap-x-2 ml-auto"
-            autoFocus
-            onClick={() => handleEditClick(false)}
-          >
-            Close
-          </button>
-          <CommentConfig
-            onComplete={onFormComplete}
-            conversationId={conversation.id}
-          />
-        </dialog>
-      )}
     </CoreBase>
   );
 };
