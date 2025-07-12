@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { postApi, putApi } from "../../api/base";
+import { postApi } from "../../api/base";
 import { Conversation } from "../../../app/core/dashboard";
 
 export default function CommentConfig({

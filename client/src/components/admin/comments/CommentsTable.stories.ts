@@ -15,14 +15,38 @@ type Story = StoryObj<typeof meta>;
 
 export const NoComment: Story = {
   args: {
-    conversationId: "d035d428-90c1-4ea9-99de-1d7c1f81a939",
+    conversation: {
+      name: "test title",
+      id: "test-uuid",
+      description: "test description",
+      author: {
+        id: "",
+        username: "",
+      },
+      num_participants: 0,
+      date_created: "",
+      is_active: false,
+      display_unmoderated: true,
+    },
     comments: [],
   },
 };
 
 export const SomeComments: Story = {
   args: {
-    conversationId: "d035d428-90c1-4ea9-99de-1d7c1f81a939",
+    conversation: {
+      name: "test title",
+      id: "test-uuid",
+      description: "test description",
+      author: {
+        id: "",
+        username: "",
+      },
+      num_participants: 0,
+      date_created: "",
+      is_active: false,
+      display_unmoderated: true,
+    },
     comments: [
       {
         id: "fbeec989-d824-410d-9577-2f235e688b01",

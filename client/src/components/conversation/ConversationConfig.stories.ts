@@ -31,6 +31,7 @@ export const EditConversation: Story = {
       id: "test-uuid",
       description: "test description",
       author: {
+        id: "",
         username: "",
       },
       num_participants: 0,
