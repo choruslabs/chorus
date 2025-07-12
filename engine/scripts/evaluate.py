@@ -17,6 +17,14 @@ def evaluate_consensus(
         consensus_target = json.load(f)
     consensus_target = {int(k): v for k, v in consensus_target.items()}
 
+    common_indices = set(consensus_pred.keys()).intersection(
+        set(consensus_target.keys())
+    )
+    consensus_pred = {k: v for k, v in consensus_pred.items() if k in common_indices}
+    consensus_target = {
+        k: v for k, v in consensus_target.items() if k in common_indices
+    }
+
     mean_consensus_pred = np.mean(list(consensus_pred.values()))
     mean_consensus_target = np.mean(list(consensus_target.values()))
 
@@ -50,16 +58,23 @@ def evaluate_consensus(
     print(f"Mean Squared Error: {mse}")
     print(f"Correlation: {corr}")
 
-    indices = np.argsort(
-        np.mean(np.stack((normalized_pred, normalized_target), axis=0), axis=0)
-    )
+    indices = np.argsort(normalized_target)
     sorted_normalized_pred = np.array(normalized_pred)[indices]
     sorted_normalized_target = np.array(normalized_target)[indices]
+    
+    plt_indices = np.arange(len(sorted_normalized_pred))
 
     plt.figure(figsize=(7, 7))
-    plt.plot(sorted_normalized_pred, label="Predicted Consensus", marker="o")
-    plt.plot(sorted_normalized_target, label="Target Consensus", marker="x")
-    plt.xlabel("Comment Index")
+    plt.scatter(plt_indices, sorted_normalized_pred, label="Predicted Consensus", marker="o")
+    plt.scatter(plt_indices, sorted_normalized_target, label="Target Consensus", marker="x")
+    for i in range(len(sorted_normalized_pred)):
+        plt.plot(
+            [plt_indices[i], plt_indices[i]],
+            [sorted_normalized_pred[i], sorted_normalized_target[i]],
+            color="gray",
+            linestyle="--",
+        )
+    plt.xlabel("Index (Sorted by Target Consensus)")
     plt.ylabel("Normalized Consensus Score")
     plt.title("Consensus Scores Comparison")
     plt.legend()
