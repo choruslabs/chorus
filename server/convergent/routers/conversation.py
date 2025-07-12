@@ -180,6 +180,13 @@ async def create_conversation(
         link = link.replace(" ", "-").lower()
         conversation.user_friendly_link = urllib.parse.quote(link)
 
+        if db.query(models.Conversation).filter(
+            models.Conversation.user_friendly_link == conversation.user_friendly_link
+        ).first():
+            raise HTTPException(
+                status_code=409, detail="User friendly link already exists"
+            )
+
     db_conversation = models.Conversation(
         **conversation.model_dump(), author=current_user
     )

@@ -17,7 +17,7 @@ class Conversation(Base):
     date_created: Mapped[datetime] = mapped_column(server_default=func.now())
     is_active: Mapped[bool] = mapped_column(default=True)
     user_friendly_link: Mapped[Optional[str]] = mapped_column(
-        String(100), nullable=True
+        String(100), unique=True, nullable=True
     )
 
     author = relationship("User")
