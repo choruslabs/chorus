@@ -2,6 +2,7 @@ from pathlib import Path
 import json
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
 
 
 def evaluate_consensus(
@@ -48,6 +49,22 @@ def evaluate_consensus(
 
     print(f"Mean Squared Error: {mse}")
     print(f"Correlation: {corr}")
+
+    indices = np.argsort(
+        np.mean(np.stack((normalized_pred, normalized_target), axis=0), axis=0)
+    )
+    sorted_normalized_pred = np.array(normalized_pred)[indices]
+    sorted_normalized_target = np.array(normalized_target)[indices]
+
+    plt.figure(figsize=(10, 5))
+    plt.plot(sorted_normalized_pred, label="Predicted Consensus", marker="o")
+    plt.plot(sorted_normalized_target, label="Target Consensus", marker="x")
+    plt.xlabel("Comment Index")
+    plt.ylabel("Normalized Consensus Score")
+    plt.title("Consensus Scores Comparison")
+    plt.legend()
+    plt.grid()
+    plt.savefig(report_dir / "consensus_comparison.png")
 
     return {
         "mean_consensus_pred": mean_consensus_pred,
