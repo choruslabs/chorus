@@ -25,7 +25,7 @@ def cluster_users(
 ):
     best_silhouette = -1
     best_kmeans = None
-    for n_clusters in range(2, min(6, len(reduced))):
+    for n_clusters in range(2, min(4, len(reduced))):
         kmeans = KMeans(n_clusters=n_clusters, random_state=random_state, n_init=n_init)
         kmeans.fit(reduced)
         silhouette = silhouette_score(
