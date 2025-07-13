@@ -11,6 +11,8 @@ export type Conversation = {
   date_created: string;
   is_active: boolean;
   display_unmoderated: boolean;
+  show_charts?: boolean; // placeholder
+  allow_votes?: boolean; // placeholder
 };
 
 export type Comment = {

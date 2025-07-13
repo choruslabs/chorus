@@ -21,7 +21,10 @@ export const ParticipationSpa = ({
     num_votes: number;
   };
   comments?: Comment[];
-  onVoteComplete: () => void;
+  onVoteComplete: (
+    commentId: string,
+    vote: "agree" | "disagree" | "skip"
+  ) => void;
   onComplete: (event?: React.FormEvent<HTMLFormElement>) => void;
 }) => {
   const [dialog, setDialog] = useState<HTMLDialogElement | null>(null);
