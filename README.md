@@ -32,11 +32,18 @@ To run the API (in auto-reload mode):
 uvicorn convergent.main:app --reload
 ```
 
-Go to http://localhost:8000/docs to check if it works: you should see a Swagger page.
+Go to `http://localhost:8000/docs` to check if it works: you should see a Swagger page.
 
 #### Using Docker
 
-To build the server image using Docker:
+To build & run locally via docker compose:
+
+```bash
+docker-compose build engine
+docker-compose up --build
+```
+
+Or, to build the server image using Docker:
 
 ```bash
 cd server
@@ -49,13 +56,13 @@ To run it on port 8000:
 docker run -p 8000:8000 convergent.server
 ```
 
-Go to http://localhost:8000/docs to check if it works: you should see a Swagger page.
+Go to `http://localhost:8000/docs` to check if it works: you should see a Swagger page.
 
 ### Frontend
 
 The frontend requires [https://nodejs.org/en](https://nodejs.org/en) to run and is written in [Vite](https://vite.dev/).
 
-Installation using Node (Windows and Linux):
+Installation using Node:
 
 ```bash
 cd client
@@ -66,4 +73,10 @@ To run the frontend (in development mode):
 
 ```bash
 npm run dev
+```
+
+To run in storybook mode:
+
+```bash
+npm run storybook
 ```
