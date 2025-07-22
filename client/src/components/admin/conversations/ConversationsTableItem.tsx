@@ -17,7 +17,9 @@ export const ConversationsTableItem = ({
         <Input type="checkbox" className="h-5 w-5" />
       </td>
       <td className="p-5">
-        <strong>{conversation.name}</strong>
+        <a href={viewLink}>
+          <strong>{conversation.name}</strong>
+        </a>
         <br />
         {conversation.description}
       </td>
@@ -33,11 +35,8 @@ export const ConversationsTableItem = ({
       </td>
       <td className="p-5">
         <div className="flex gap-4">
-          <a href={viewLink} className="text-gray-800 hover:underline">
-            View
-          </a>
           <a href={editLink} className="text-gray-800 hover:underline">
-            Edit
+            View
           </a>
         </div>
       </td>
