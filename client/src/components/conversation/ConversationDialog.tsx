@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import type { Conversation } from "../../app/core/dashboard";
-import ConversationConfig from "./ConversationConfig";
-import { useNavigate } from "react-router";
 import { useQuery } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+import type { Conversation } from "../../app/core/dashboard";
 import { deleteApi } from "../api/base";
+import ConversationConfig from "./ConversationConfig";
 
 export default function ConversationDialog({
   onComplete,
@@ -70,7 +70,9 @@ function DeleteConfig({ conversation }: { conversation: Conversation }) {
   useEffect(() => {
     // const editButton = document.getElementById("edit-button");
     setDialog(
-      document.getElementById("delete-conversation-dialog") as HTMLDialogElement
+      document.getElementById(
+        "delete-conversation-dialog",
+      ) as HTMLDialogElement,
     );
   }, []);
   const handleEditClick = (state: boolean) => {

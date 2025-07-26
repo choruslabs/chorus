@@ -1,8 +1,8 @@
+import { ArrowLeftIcon } from "@heroicons/react/24/outline";
+import { PlusIcon } from "@heroicons/react/24/solid";
 import { useEffect, useState } from "react";
 import type { Conversation } from "../../../app/core/dashboard";
 import CommentConfig from "./CommentConfig";
-import { ArrowLeftIcon } from "@heroicons/react/24/outline";
-import { PlusIcon } from "@heroicons/react/24/solid";
 
 export function NewCommentDialog({
   conversation,

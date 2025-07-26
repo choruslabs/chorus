@@ -1,7 +1,7 @@
 import { useContext, useEffect } from "react";
-import Logo from "../../components/ui/logo";
-import { AuthContext } from "../../components/context/AuthContext";
 import { useNavigate } from "react-router";
+import { AuthContext } from "../../components/context/AuthContext";
+import Logo from "../../components/ui/logo";
 import { UserDropdown } from "../auth/UserDropdown";
 
 const AppBar = ({ children }: { children: React.ReactNode }) => (

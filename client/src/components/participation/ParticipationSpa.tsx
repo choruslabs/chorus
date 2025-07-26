@@ -5,8 +5,8 @@ import type {
   Conversation,
   ParticipationComment,
 } from "../../app/core/dashboard";
-import { VotingSection } from "./VotingSection";
 import { NewCommentDialog } from "../admin/comments/CommentDialog";
+import { VotingSection } from "./VotingSection";
 
 export const ParticipationSpa = ({
   conversation,

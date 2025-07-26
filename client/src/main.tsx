@@ -1,15 +1,14 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createBrowserRouter, RouterProvider } from "react-router";
-
 import LoginPage from "./app/auth/login";
 import RegisterPage from "./app/auth/register";
+import ConversationConfigPage from "./app/core/ConversationConfigPage";
+import ConversationPage from "./app/core/conversation";
 import DashboardPage from "./app/core/dashboard";
 import { AuthProvider } from "./components/context/AuthProvider";
-import ConversationPage from "./app/core/conversation";
-import ConversationConfigPage from "./app/core/ConversationConfigPage";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ManageComments from "./components/conversation/ManageComments";
 
 const queryClient = new QueryClient();

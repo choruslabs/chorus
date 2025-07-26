@@ -1,5 +1,5 @@
-import CoreBase from "./base";
 import ConversationsList from "../../components/conversation/ConversationsList";
+import CoreBase from "./base";
 
 // see server\convergent\routers\conversation.py
 export type Conversation = {

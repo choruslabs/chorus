@@ -1,5 +1,5 @@
-import { createContext } from "react";
 import type { UseQueryResult } from "@tanstack/react-query";
+import { createContext } from "react";
 import type { User } from "./AuthProvider";
 
 export const AuthContext = createContext<{

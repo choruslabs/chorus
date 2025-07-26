@@ -1,7 +1,6 @@
 import type { Preview } from "@storybook/react-vite";
-
-import { initialize, mswLoader } from "msw-storybook-addon";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { initialize, mswLoader } from "msw-storybook-addon";
 
 import "../src/index.css"; // tailwind CSS etc
 

@@ -1,8 +1,8 @@
 import { Input } from "@headlessui/react";
-import type { ModerationComment } from "../../../app/core/dashboard";
-import { StatusPill } from "../../ui/StatusPill";
 import { useQuery } from "@tanstack/react-query";
+import type { ModerationComment } from "../../../app/core/dashboard";
 import { putApi } from "../../api/base";
+import { StatusPill } from "../../ui/StatusPill";
 
 export const CommentsTableItem = ({
   comment,

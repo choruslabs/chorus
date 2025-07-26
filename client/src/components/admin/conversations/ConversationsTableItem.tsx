@@ -1,6 +1,6 @@
 import { Input } from "@headlessui/react";
-import type { Conversation } from "../../../app/core/dashboard";
 import dayjs from "dayjs";
+import type { Conversation } from "../../../app/core/dashboard";
 import { StatusPill } from "../../ui/StatusPill";
 
 export const ConversationsTableItem = ({

@@ -1,11 +1,11 @@
 // For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
-import storybook from "eslint-plugin-storybook";
 
 import js from "@eslint/js";
-import globals from "globals";
+import eslint from "@eslint/js";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
-import eslint from "@eslint/js";
+import storybook from "eslint-plugin-storybook";
+import globals from "globals";
 import tseslint from "typescript-eslint";
 
 export default tseslint.config(

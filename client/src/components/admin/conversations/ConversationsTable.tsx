@@ -1,8 +1,8 @@
 import { Input } from "@headlessui/react";
+import dayjs from "dayjs";
+import { useEffect, useMemo, useState } from "react";
 import type { Conversation } from "../../../app/core/dashboard";
 import { ConversationsTableItem } from "./ConversationsTableItem";
-import { useEffect, useMemo, useState } from "react";
-import dayjs from "dayjs";
 
 export const ConversationsTable = ({
   conversations,

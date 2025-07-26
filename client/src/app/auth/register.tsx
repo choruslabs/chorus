@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { postRegister } from "../../components/api/auth";
 import { Input } from "@headlessui/react";
+import { useState } from "react";
 import { useNavigate } from "react-router";
+import { postRegister } from "../../components/api/auth";
 import CoreBase from "../core/base";
 
 const RegisterPage = () => {

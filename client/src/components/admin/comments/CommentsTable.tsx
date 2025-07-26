@@ -1,11 +1,12 @@
+import { FunnelIcon } from "@heroicons/react/24/outline";
 import { useMemo, useState } from "react";
 import type {
   Conversation,
   ModerationComment,
 } from "../../../app/core/dashboard";
-import { CommentsTableItem } from "./CommentsTableItem";
-import { FunnelIcon } from "@heroicons/react/24/outline";
 import { NewCommentDialog } from "./CommentDialog";
+import { CommentsTableItem } from "./CommentsTableItem";
+
 const mappedState = new Map([
   ["unmoderated", null],
   ["approved", true],

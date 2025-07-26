@@ -1,11 +1,11 @@
-import { Outlet, useParams } from "react-router";
-import ConversationConfig from "../../components/conversation/ConversationConfig";
-import CoreBase from "./base";
 import { useQuery } from "@tanstack/react-query";
 import { useCallback, useEffect } from "react";
+import { Outlet, useParams } from "react-router";
 import { getApi } from "../../components/api/base";
-import type { Conversation } from "./dashboard";
+import ConversationConfig from "../../components/conversation/ConversationConfig";
 import ManageConversation from "../../components/conversation/ManageConversation";
+import CoreBase from "./base";
+import type { Conversation } from "./dashboard";
 
 const ConversationConfigPage = () => {
   const params = useParams();
