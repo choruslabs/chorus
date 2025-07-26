@@ -6,7 +6,7 @@ import {
   getNextComment,
 } from "../../components/api/conversation";
 import { useCallback, useEffect, useMemo } from "react";
-import { Conversation, ParticipationComment } from "./dashboard";
+import type { Conversation, ParticipationComment } from "./dashboard";
 import { useQuery } from "@tanstack/react-query";
 import { getApi } from "../../components/api/base";
 import { ParticipationSpa } from "../../components/participation/ParticipationSpa";

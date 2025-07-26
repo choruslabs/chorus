@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import CoreBase from "../../app/core/base";
-import {
+import type {
   Comment,
   Conversation,
   ParticipationComment,

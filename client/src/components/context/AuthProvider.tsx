@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import { getUserMe, postLogin, postLogout } from "../api/auth";
 import { AuthContext } from "./AuthContext";
 

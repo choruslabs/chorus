@@ -1,5 +1,5 @@
 import { Input } from "@headlessui/react";
-import { type Conversation } from "../../../app/core/dashboard";
+import type { Conversation } from "../../../app/core/dashboard";
 import dayjs from "dayjs";
 import { StatusPill } from "../../ui/StatusPill";
 

@@ -1,5 +1,5 @@
 import { CheckIcon, ForwardIcon, XMarkIcon } from "@heroicons/react/24/solid";
-import { ParticipationComment } from "../../app/core/dashboard";
+import type { ParticipationComment } from "../../app/core/dashboard";
 
 export const VotingSection = ({
   comment,

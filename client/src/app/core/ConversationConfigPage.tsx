@@ -4,7 +4,7 @@ import CoreBase from "./base";
 import { useQuery } from "@tanstack/react-query";
 import { useCallback, useEffect } from "react";
 import { getApi } from "../../components/api/base";
-import { Conversation } from "./dashboard";
+import type { Conversation } from "./dashboard";
 import ManageConversation from "../../components/conversation/ManageConversation";
 
 const ConversationConfigPage = () => {

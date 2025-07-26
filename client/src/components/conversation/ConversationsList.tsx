@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { Conversation } from "../../app/core/dashboard";
+import type { Conversation } from "../../app/core/dashboard";
 import { getApi } from "../api/base";
 import { ConversationsTable } from "../admin/conversations/ConversationsTable";
 

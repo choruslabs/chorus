@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { Conversation, ModerationComment } from "../../app/core/dashboard";
+import type { Conversation, ModerationComment } from "../../app/core/dashboard";
 import { NavLink } from "react-router";
 import BreadCrumb from "../ui/BreadCrumb";
 import { useQuery } from "@tanstack/react-query";

@@ -2,7 +2,7 @@ import { Input, Textarea } from "@headlessui/react";
 import { postApi, putApi } from "../api/base";
 import { useNavigate } from "react-router";
 import { useState } from "react";
-import { Conversation } from "../../app/core/dashboard";
+import type { Conversation } from "../../app/core/dashboard";
 import { ArrowLeftIcon } from "@heroicons/react/24/solid";
 
 export default function ConversationConfig({

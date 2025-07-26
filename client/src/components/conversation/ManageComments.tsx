@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getApi } from "../api/base";
 import { useOutletContext, useParams } from "react-router";
 import CommentsTable from "../admin/comments/CommentsTable";
-import { Conversation, ModerationComment } from "../../app/core/dashboard";
+import type { Conversation, ModerationComment } from "../../app/core/dashboard";
 
 export default function ManageComments() {
   const params = useParams();

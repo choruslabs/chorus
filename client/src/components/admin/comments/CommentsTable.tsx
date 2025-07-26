@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
-import {
-  type Conversation,
-  type ModerationComment,
+import type {
+  Conversation,
+  ModerationComment,
 } from "../../../app/core/dashboard";
 import { CommentsTableItem } from "./CommentsTableItem";
 import { FunnelIcon } from "@heroicons/react/24/outline";

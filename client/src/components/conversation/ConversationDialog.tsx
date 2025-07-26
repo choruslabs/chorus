@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Conversation } from "../../app/core/dashboard";
+import type { Conversation } from "../../app/core/dashboard";
 import ConversationConfig from "./ConversationConfig";
 import { useNavigate } from "react-router";
 import { useQuery } from "@tanstack/react-query";
