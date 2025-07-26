@@ -1,29 +1,42 @@
-import { useParams } from "react-router";
+import { useParams } from 'react-router';
 import {
   createVote,
   getConversation,
+  getConversationIdByFriendlyName,
   getNextComment,
-} from "../../components/api/conversation";
-import { useCallback, useEffect, useMemo } from "react";
-import { Conversation, ParticipationComment } from "./dashboard";
-import { useQuery } from "@tanstack/react-query";
-import { getApi } from "../../components/api/base";
-import { ParticipationSpa } from "../../components/participation/ParticipationSpa";
+} from '../../components/api/conversation';
+import { useCallback, useEffect, useMemo } from 'react';
+import { Conversation, ParticipationComment } from './dashboard';
+import { useQuery } from '@tanstack/react-query';
+import { getApi } from '../../components/api/base';
+import { ParticipationSpa } from '../../components/participation/ParticipationSpa';
 
 const ConversationPage = () => {
-  const { conversationId } = useParams<{ conversationId: string }>();
+  const params = useParams<{ conversationId: string }>();
+
+  const friendlyId = useQuery({
+    queryKey: ['conversation-id', params.conversationId || ''],
+    queryFn: () => getConversationIdByFriendlyName(params.conversationId || ''),
+    retry: false,
+    enabled: !!params.conversationId,
+  });
+
+  const conversationId = useMemo(() => {
+    return friendlyId.data || params.conversationId;
+  }, [friendlyId.data, params.conversationId]);
 
   const conversation = useQuery<Conversation>({
-    queryKey: ["current-conversation", conversationId],
-    queryFn: () => getConversation(conversationId ?? ""),
+    queryKey: ['current-conversation', conversationId],
+    queryFn: () => getConversation(conversationId ?? ''),
+    retry: false,
   });
 
   const currentComment = useQuery<{
     comment: ParticipationComment;
     num_votes: number;
   }>({
-    queryKey: ["current-comment", conversationId],
-    queryFn: () => getNextComment(conversationId ?? ""),
+    queryKey: ['current-comment', conversationId],
+    queryFn: () => getNextComment(conversationId ?? ''),
     retry: false,
   });
 
@@ -39,14 +52,6 @@ const ConversationPage = () => {
   }, [conversationId, conversation]);
 
   // dialog logic
-  useEffect(() => {
-    const fetchData = async () => {
-      await fetchConversation();
-      await nextComment();
-    };
-    fetchData();
-  }, [fetchConversation, nextComment]);
-
   const onFormComplete = () => {
     comments.refetch();
   };
@@ -54,9 +59,9 @@ const ConversationPage = () => {
 
   const onVote = async (
     commentId: string,
-    vote: "agree" | "disagree" | "skip"
+    vote: 'agree' | 'disagree' | 'skip'
   ) => {
-    const voteNum = vote === "agree" ? 1 : vote === "disagree" ? -1 : 0;
+    const voteNum = vote === 'agree' ? 1 : vote === 'disagree' ? -1 : 0;
 
     if (!conversationId) return;
     await createVote(commentId, voteNum);
