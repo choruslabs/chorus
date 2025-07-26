@@ -1,4 +1,4 @@
-import { getApi, postApi } from './base';
+import { getApi, postApi } from "./base";
 
 export const getConversation = async (conversationId: string) =>
   getApi(`/conversations/${conversationId}`);
@@ -14,7 +14,7 @@ export const createConversation = async (
   description: string,
   displayUnmoderated: boolean
 ) =>
-  postApi('/conversations', {
+  postApi("/conversations", {
     name,
     description,
     displayUnmoderated,
