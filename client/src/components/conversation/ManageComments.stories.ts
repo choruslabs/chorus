@@ -1,12 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-
+import { HttpResponse, http } from "msw";
 import {
-  withRouter,
   reactRouterParameters,
+  withRouter,
 } from "storybook-addon-remix-react-router";
-
 import ManageComments from "./ManageComments";
-import { http, HttpResponse } from "msw";
 
 const moderationCommentsResp = [
   {
@@ -57,7 +55,7 @@ export const WithComments: Story = {
           "http://localhost:8000/moderation/conversations/d035d428-90c1-4ea9-99de-1d7c1f81a939/comments",
           async () => {
             return HttpResponse.json(moderationCommentsResp);
-          }
+          },
         ),
       ],
     },

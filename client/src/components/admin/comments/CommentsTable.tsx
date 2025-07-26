@@ -1,11 +1,12 @@
-import { useMemo, useState } from "react";
-import {
-  type Conversation,
-  type ModerationComment,
-} from "../../../app/core/dashboard";
-import { CommentsTableItem } from "./CommentsTableItem";
 import { FunnelIcon } from "@heroicons/react/24/outline";
+import { useMemo, useState } from "react";
+import type {
+  Conversation,
+  ModerationComment,
+} from "../../../app/core/dashboard";
 import { NewCommentDialog } from "./CommentDialog";
+import { CommentsTableItem } from "./CommentsTableItem";
+
 const mappedState = new Map([
   ["unmoderated", null],
   ["approved", true],
@@ -36,14 +37,14 @@ export default function CommentsTable({
   const filteredComments = useMemo(() => {
     // if (filter.length === 0) return comments;
     const filteredModes = filter.map((item) =>
-      mappedState.get(item)?.toString()
+      mappedState.get(item)?.toString(),
     );
 
     return comments
       .filter((item) =>
         filteredModes.length === 0
           ? true
-          : filteredModes.includes(item.approved?.toString())
+          : filteredModes.includes(item.approved?.toString()),
       )
       .sort((a, b) => {
         if (a.approved === null && b.approved === null) {

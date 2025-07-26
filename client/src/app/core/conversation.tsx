@@ -1,15 +1,15 @@
+import { useQuery } from "@tanstack/react-query";
+import { useCallback, useEffect, useMemo } from "react";
 import { useParams } from "react-router";
+import { getApi } from "../../components/api/base";
 import {
   createVote,
   getConversation,
   getConversationIdByFriendlyName,
   getNextComment,
 } from "../../components/api/conversation";
-import { useCallback, useEffect, useMemo } from "react";
-import { Conversation, ParticipationComment } from "./dashboard";
-import { useQuery } from "@tanstack/react-query";
-import { getApi } from "../../components/api/base";
 import { ParticipationSpa } from "../../components/participation/ParticipationSpa";
+import type { Conversation, ParticipationComment } from "./dashboard";
 
 const ConversationPage = () => {
   const params = useParams<{ conversationId: string }>();
@@ -58,6 +58,7 @@ const ConversationPage = () => {
   }, [conversationId, conversation]);
 
   // dialog logic
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Run on load
   useEffect(() => {
     const fetchData = async () => {
       await fetchConversation();
@@ -73,7 +74,7 @@ const ConversationPage = () => {
 
   const onVote = async (
     commentId: string,
-    vote: "agree" | "disagree" | "skip"
+    vote: "agree" | "disagree" | "skip",
   ) => {
     const voteNum = vote === "agree" ? 1 : vote === "disagree" ? -1 : 0;
 

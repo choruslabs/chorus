@@ -12,7 +12,7 @@ export const getConversationComments = async (conversationId: string) =>
 export const createConversation = async (
   name: string,
   description: string,
-  displayUnmoderated: boolean
+  displayUnmoderated: boolean,
 ) =>
   postApi("/conversations", {
     name,
@@ -24,7 +24,7 @@ export const updateConversation = async (
   conversationId: string,
   name: string | null,
   description: string | null,
-  displayUnmoderated: boolean | null
+  displayUnmoderated: boolean | null,
 ) =>
   postApi(`/conversations/${conversationId}`, {
     name,

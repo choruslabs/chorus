@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
 import CoreBase from "../../app/core/base";
-import {
+import type {
   Comment,
   Conversation,
   ParticipationComment,
 } from "../../app/core/dashboard";
-import { VotingSection } from "./VotingSection";
 import { NewCommentDialog } from "../admin/comments/CommentDialog";
+import { VotingSection } from "./VotingSection";
 
 export const ParticipationSpa = ({
   conversation,
@@ -23,7 +23,7 @@ export const ParticipationSpa = ({
   comments?: Comment[];
   onVoteComplete: (
     commentId: string,
-    vote: "agree" | "disagree" | "skip"
+    vote: "agree" | "disagree" | "skip",
   ) => void;
   onComplete: (event?: React.FormEvent<HTMLFormElement>) => void;
 }) => {

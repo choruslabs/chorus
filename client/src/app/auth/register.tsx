@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { postRegister } from "../../components/api/auth";
 import { Input } from "@headlessui/react";
+import { useState } from "react";
 import { useNavigate } from "react-router";
+import { postRegister } from "../../components/api/auth";
 import CoreBase from "../core/base";
 
 const RegisterPage = () => {
@@ -16,7 +16,7 @@ const RegisterPage = () => {
       await postRegister(email, password);
       navigate("/login");
     } catch (error: any) {
-      if (error.status == 409) {
+      if (error.status === 409) {
         setError("Email already in use. Please sign in.");
       } else {
         setError("An error occurred. Please try again.");
@@ -56,7 +56,10 @@ const RegisterPage = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button className="mb-8 p-2 bg-gray-500 hover:bg-secondary text-white rounded-md">
+          <button
+            type="submit"
+            className="mb-8 p-2 bg-gray-500 hover:bg-secondary text-white rounded-md"
+          >
             Register
           </button>
           <p>

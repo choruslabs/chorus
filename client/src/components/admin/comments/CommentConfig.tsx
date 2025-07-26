@@ -1,6 +1,6 @@
 import { useState } from "react";
+import type { Conversation } from "../../../app/core/dashboard";
 import { postApi } from "../../api/base";
-import { Conversation } from "../../../app/core/dashboard";
 
 export default function CommentConfig({
   conversation,
@@ -24,7 +24,7 @@ export default function CommentConfig({
       // new conversation
       await postApi(
         `/conversations/${conversation.id}/comments`,
-        newConversationRequestBody
+        newConversationRequestBody,
       );
       setComment("");
     } else {

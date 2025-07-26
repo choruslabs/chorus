@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-
+import { HttpResponse, http } from "msw";
 import { reactRouterParameters } from "storybook-addon-remix-react-router";
-import { http, HttpResponse } from "msw";
 import ConversationsList from "./ConversationsList";
 
 const conversationResp = [

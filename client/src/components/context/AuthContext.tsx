@@ -1,6 +1,6 @@
+import type { UseQueryResult } from "@tanstack/react-query";
 import { createContext } from "react";
-import { type UseQueryResult } from "@tanstack/react-query";
-import { type User } from "./AuthProvider";
+import type { User } from "./AuthProvider";
 
 export const AuthContext = createContext<{
   userStatus: UseQueryResult<User, Error> | null;

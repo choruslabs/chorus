@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "lint": "eslint .",
+    "lint": "biome check",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
@@ -25,8 +25,8 @@
     "recharts": "^3.0.2"
   },
   "devDependencies": {
+    "@biomejs/biome": "2.1.2",
     "@chromatic-com/storybook": "^4.0.1",
-    "@eslint/js": "^9.13.0",
     "@storybook/addon-a11y": "^9.0.14",
     "@storybook/addon-docs": "^9.0.14",
     "@storybook/addon-onboarding": "^9.0.14",
@@ -38,10 +38,6 @@
     "@vitejs/plugin-react": "^4.5.2",
     "@vitest/browser": "^3.2.4",
     "@vitest/coverage-v8": "^3.2.4",
-    "eslint": "^9.29.0",
-    "eslint-plugin-react-hooks": "^5.2.0",
-    "eslint-plugin-react-refresh": "^0.4.20",
-    "eslint-plugin-storybook": "^9.0.14",
     "globals": "^15.11.0",
     "msw": "^2.10.3",
     "msw-storybook-addon": "^2.0.5",
@@ -51,7 +47,6 @@
     "storybook-addon-remix-react-router": "^5.0.0",
     "tailwindcss": "^4.1.10",
     "typescript": "~5.6.2",
-    "typescript-eslint": "^8.35.1",
     "vite": "^6.3.5",
     "vitest": "^3.2.4"
   },

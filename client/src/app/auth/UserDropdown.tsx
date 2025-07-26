@@ -1,5 +1,5 @@
-import { type User } from "../../components/context/AuthProvider";
 import { UserCircleIcon } from "@heroicons/react/24/solid";
+import type { User } from "../../components/context/AuthProvider";
 
 export const UserDropdown = ({
   user,

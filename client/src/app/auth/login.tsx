@@ -1,5 +1,5 @@
-import { useContext, useState } from "react";
 import { Input } from "@headlessui/react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router";
 import { AuthContext } from "../../components/context/AuthContext";
 import CoreBase from "../core/base";
@@ -18,7 +18,7 @@ const LoginPage = () => {
       await login(email, password);
       navigate("/dashboard");
     } catch (error: any) {
-      if (error.status == 401) {
+      if (error.status === 401) {
         setError("Invalid email or password.");
       } else {
         setError("An error occurred. Please try again.");
@@ -59,6 +59,7 @@ const LoginPage = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <button
+            type="submit"
             className="mb-8 p-2 bg-gray-500 hover:bg-secondary text-white rounded-md"
             onClick={() => handleLogin(email, password)}
           >

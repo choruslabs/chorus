@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import { Conversation } from "../../app/core/dashboard";
-import { getApi } from "../api/base";
+import type { Conversation } from "../../app/core/dashboard";
 import { ConversationsTable } from "../admin/conversations/ConversationsTable";
+import { getApi } from "../api/base";
 
 export default function ConversationsList() {
   const conversations = useQuery<Conversation[]>({
