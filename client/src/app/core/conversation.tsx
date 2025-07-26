@@ -12,10 +12,14 @@ import { ParticipationSpa } from "../../components/participation/ParticipationSp
 
 const ConversationPage = () => {
   const { conversationId } = useParams<{ conversationId: string }>();
+  // This controls max. time (in s) the user need to wait before they can see the new comment(s)
+  // TODO: make it configurable (server level? conversation level?)
+  const autoRefetchInterval = 15;
 
   const conversation = useQuery<Conversation>({
     queryKey: ["current-conversation", conversationId],
     queryFn: () => getConversation(conversationId ?? ""),
+    refetchInterval: autoRefetchInterval * 1000,
   });
 
   const currentComment = useQuery<{
@@ -25,6 +29,7 @@ const ConversationPage = () => {
     queryKey: ["current-comment", conversationId],
     queryFn: () => getNextComment(conversationId ?? ""),
     retry: false,
+    refetchInterval: autoRefetchInterval * 1000,
   });
 
   const nextComment = useCallback(async () => {
@@ -45,7 +50,7 @@ const ConversationPage = () => {
       await nextComment();
     };
     fetchData();
-  }, [fetchConversation, nextComment]);
+  }, []);
 
   const onFormComplete = () => {
     comments.refetch();
