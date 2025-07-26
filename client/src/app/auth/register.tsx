@@ -15,7 +15,7 @@ const RegisterPage = () => {
     try {
       await postRegister(email, password);
       navigate("/login");
-    } catch (error) {
+    } catch (error: any) {
       if (error.status === 409) {
         setError("Email already in use. Please sign in.");
       } else {
