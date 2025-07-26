@@ -4,7 +4,7 @@ import {
   getConversation,
   getNextComment,
 } from "../../components/api/conversation";
-import { useEffect } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { Conversation, ParticipationComment } from "./dashboard";
 import { useQuery } from "@tanstack/react-query";
 import { getApi } from "../../components/api/base";
@@ -26,16 +26,16 @@ const ConversationPage = () => {
     queryFn: () => getNextComment(conversationId ?? ""),
   });
 
-  const nextComment = async () => {
+  const nextComment = useCallback(async () => {
     if (!conversationId) return;
 
     await currentComment.refetch();
-  };
+  }, [conversationId, currentComment]);
 
-  const fetchConversation = async () => {
+  const fetchConversation = useCallback(async () => {
     if (!conversationId) return;
     await conversation.refetch();
-  };
+  }, [conversationId, conversation]);
 
   // dialog logic
   useEffect(() => {
@@ -44,7 +44,7 @@ const ConversationPage = () => {
       await nextComment();
     };
     fetchData();
-  }, [conversationId]);
+  }, [fetchConversation, nextComment]);
 
   const onFormComplete = () => {
     comments.refetch();
@@ -62,6 +62,10 @@ const ConversationPage = () => {
     await nextComment();
   };
 
+  const allCommentsVoted = useMemo(() => {
+    return !!currentComment.error?.message;
+  }, [currentComment]);
+
   const comments = useQuery<[]>({
     queryKey: [`comment-query-${conversationId}`],
     queryFn: () => getApi(`/conversations/${conversationId}/comments`),
@@ -69,7 +73,7 @@ const ConversationPage = () => {
   return (
     <ParticipationSpa
       conversation={conversation.data}
-      currentComment={currentComment.data}
+      currentComment={allCommentsVoted ? undefined : currentComment.data}
       comments={comments.data}
       onVoteComplete={onVote}
       onComplete={onFormComplete}

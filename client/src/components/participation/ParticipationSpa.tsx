@@ -94,9 +94,11 @@ export const ParticipationSpa = ({
               <p className="text-gray-500">No more comments to review.</p>
             </div>
           )}
-          <p className="text-center pt-6">
-            {amountOfVotedComments + 1} of {comments?.length} comments
-          </p>
+          {!!currentComment && (
+            <p className="text-center pt-6">
+              {amountOfVotedComments + 1} of {comments?.length} comments
+            </p>
+          )}
         </section>
       </main>
     </CoreBase>

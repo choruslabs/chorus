@@ -9,7 +9,8 @@ export const fetchApi = async (url: string, options: RequestInit = {}) => {
   });
 
   if (!res.ok) {
-    return Promise.reject(res);
+    const errorBody = await res.json();
+    throw new Error(errorBody.detail ?? "unknown error");
   }
 
   return res.json();
