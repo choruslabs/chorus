@@ -95,14 +95,14 @@ export const ConversationsTable = ({
             id="conversation-filtering-control"
             className="filter-row flex bg-gray-50 p-4 rounded-xl my-2 gap-2 w-full justify-between items-center-safe flex-wrap"
           >
-            <search className="h-full">
-              <form className="h-full">
+            <search className="h-min">
+              <form className="h-min">
                 <input
                   type="search"
                   id="conversation-query"
                   name="conversation"
                   placeholder="Search for Conversations"
-                  className="bg-white border-2 rounded-md px-2 h-full"
+                  className="bg-white border-2 rounded-md p-2 h-min"
                   onInput={onSearchQueryChange}
                 />
               </form>
@@ -124,9 +124,12 @@ export const ConversationsTable = ({
           </div>
           {filteredConversations && (
             <div className="border border-gray-200 rounded-2xl shadow-lg w-full min-w-min">
-              <table id="conversation-table" className="w-full border-collapse">
+              <table
+                id="conversation-table"
+                className="w-full border-collapse min-w-3xl"
+              >
                 <thead>
-                  <tr className="text-gray-500 items-center bottom-2 border-b-gray-200 border-b">
+                  <tr className="text-gray-500 bottom-2 border-b-gray-200 border-b items-center grid grid-cols-[3em_2.25fr_1fr_1fr_1fr_1fr_0.6fr]">
                     <th className="text-left p-5">
                       <Input type="checkbox" className="h-5 w-5" />
                     </th>
