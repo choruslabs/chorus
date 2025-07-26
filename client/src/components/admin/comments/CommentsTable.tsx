@@ -34,14 +34,29 @@ export default function CommentsTable({
   };
 
   const filteredComments = useMemo(() => {
-    if (filter.length === 0) return comments;
+    // if (filter.length === 0) return comments;
     const filteredModes = filter.map((item) =>
       mappedState.get(item)?.toString()
     );
 
-    return comments.filter((item) =>
-      filteredModes.includes(item.approved?.toString())
-    );
+    return comments
+      .filter((item) =>
+        filteredModes.length === 0
+          ? true
+          : filteredModes.includes(item.approved?.toString())
+      )
+      .sort((a, b) => {
+        if (a.approved === null && b.approved === null) {
+          return 0;
+        }
+        if (a.approved === null) {
+          return -1;
+        }
+        if (b.approved === null) {
+          return 1;
+        }
+        return 0;
+      });
   }, [comments, filter]);
 
   return (
