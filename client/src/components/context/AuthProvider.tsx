@@ -8,11 +8,12 @@ export type User = {
 };
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const userStatus = useQuery<User, Response>({
+  const userStatus = useQuery<User, Error>({
     queryKey: ["user"],
     queryFn: () => getUserMe(),
     retry: (failCount, error) => {
-      if (error?.status === 422 || error?.status === 401) return false;
+      if (error?.message.includes("422") || error?.message.includes("401"))
+        return false;
       return failCount < 3;
     },
   });
