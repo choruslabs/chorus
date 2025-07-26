@@ -2,6 +2,7 @@ import { useParams } from "react-router";
 import {
   createVote,
   getConversation,
+  getConversationIdByFriendlyName,
   getNextComment,
 } from "../../components/api/conversation";
 import { useCallback, useEffect, useMemo } from "react";
@@ -11,14 +12,27 @@ import { getApi } from "../../components/api/base";
 import { ParticipationSpa } from "../../components/participation/ParticipationSpa";
 
 const ConversationPage = () => {
-  const { conversationId } = useParams<{ conversationId: string }>();
+  const params = useParams<{ conversationId: string }>();
+
   // This controls max. time (in s) the user need to wait before they can see the new comment(s)
   // TODO: make it configurable (server level? conversation level?)
   const autoRefetchInterval = 15;
 
+  const friendlyId = useQuery({
+    queryKey: ["conversation-id", params.conversationId || ""],
+    queryFn: () => getConversationIdByFriendlyName(params.conversationId || ""),
+    retry: false,
+    enabled: !!params.conversationId,
+  });
+
+  const conversationId = useMemo(() => {
+    return friendlyId.data || params.conversationId;
+  }, [friendlyId.data, params.conversationId]);
+
   const conversation = useQuery<Conversation>({
     queryKey: ["current-conversation", conversationId],
     queryFn: () => getConversation(conversationId ?? ""),
+    retry: false,
     refetchInterval: autoRefetchInterval * 1000,
   });
 
