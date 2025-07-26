@@ -13,12 +13,12 @@ export const StatusPill = ({
             ? "bg-green-100 text-green-800"
             : "bg-red-100 text-red-800"
           : moderationStatus !== undefined
-          ? moderationStatus !== null
-            ? moderationStatus
-              ? "bg-green-100 text-green-800"
-              : "bg-red-100 text-red-800"
-            : "bg-gray-100"
-          : ""
+            ? moderationStatus !== null
+              ? moderationStatus
+                ? "bg-green-100 text-green-800"
+                : "bg-red-100 text-red-800"
+              : "bg-gray-100"
+            : ""
       }`}
     >
       &bull; &nbsp;
@@ -27,12 +27,12 @@ export const StatusPill = ({
           ? "Active"
           : "Inactive"
         : moderationStatus !== undefined
-        ? moderationStatus !== null
-          ? moderationStatus
-            ? "approved"
-            : "rejected"
-          : "unmoderated"
-        : ""}
+          ? moderationStatus !== null
+            ? moderationStatus
+              ? "approved"
+              : "rejected"
+            : "unmoderated"
+          : ""}
     </div>
   );
 };

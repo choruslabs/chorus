@@ -69,7 +69,9 @@ function DeleteConfig({ conversation }: { conversation: Conversation }) {
   useEffect(() => {
     // const editButton = document.getElementById("edit-button");
     setDialog(
-      document.getElementById("delete-conversation-dialog") as HTMLDialogElement
+      document.getElementById(
+        "delete-conversation-dialog",
+      ) as HTMLDialogElement,
     );
   }, []);
   const handleEditClick = (state: boolean) => {

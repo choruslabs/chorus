@@ -73,7 +73,7 @@ const ConversationPage = () => {
 
   const onVote = async (
     commentId: string,
-    vote: "agree" | "disagree" | "skip"
+    vote: "agree" | "disagree" | "skip",
   ) => {
     const voteNum = vote === "agree" ? 1 : vote === "disagree" ? -1 : 0;
 

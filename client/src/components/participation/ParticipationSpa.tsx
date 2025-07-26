@@ -23,7 +23,7 @@ export const ParticipationSpa = ({
   comments?: Comment[];
   onVoteComplete: (
     commentId: string,
-    vote: "agree" | "disagree" | "skip"
+    vote: "agree" | "disagree" | "skip",
   ) => void;
   onComplete: (event?: React.FormEvent<HTMLFormElement>) => void;
 }) => {

@@ -25,6 +25,7 @@
     "recharts": "^3.0.2"
   },
   "devDependencies": {
+    "@biomejs/biome": "2.1.2",
     "@chromatic-com/storybook": "^4.0.1",
     "@eslint/js": "^9.13.0",
     "@storybook/addon-a11y": "^9.0.14",

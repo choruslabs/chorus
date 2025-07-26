@@ -19,10 +19,10 @@ export default function ConversationConfig({
   // const [conversationId, setConversationId] = useState(editItem?.id ?? "");
 
   const [conversationName, setConversationName] = useState(
-    editItem?.name ?? ""
+    editItem?.name ?? "",
   );
   const [conversationDescription, setConversationDescription] = useState(
-    editItem?.description ?? ""
+    editItem?.description ?? "",
   );
 
   const [
@@ -31,11 +31,11 @@ export default function ConversationConfig({
   ] = useState(editItem?.display_unmoderated ?? false);
 
   const [conversationShowCharts, setConversationShowCharts] = useState(
-    editItem?.show_charts ?? false
+    editItem?.show_charts ?? false,
   ); // TODO: placeholder; change to correct value later
 
   const [conversationAllowVotes, setConversationAllowVotes] = useState(
-    editItem?.allow_votes ?? false
+    editItem?.allow_votes ?? false,
   ); // TODO: placeholder; change to correct value later
   // const [updated, setUpdated] = useState(0);
 
@@ -59,7 +59,7 @@ export default function ConversationConfig({
       // edit conversation
       await putApi(
         `/conversations/${editItem?.id}`,
-        newConversationRequestBody
+        newConversationRequestBody,
       );
       // .then(
       //   (resp) => {

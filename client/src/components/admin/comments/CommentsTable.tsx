@@ -36,14 +36,14 @@ export default function CommentsTable({
   const filteredComments = useMemo(() => {
     // if (filter.length === 0) return comments;
     const filteredModes = filter.map((item) =>
-      mappedState.get(item)?.toString()
+      mappedState.get(item)?.toString(),
     );
 
     return comments
       .filter((item) =>
         filteredModes.length === 0
           ? true
-          : filteredModes.includes(item.approved?.toString())
+          : filteredModes.includes(item.approved?.toString()),
       )
       .sort((a, b) => {
         if (a.approved === null && b.approved === null) {

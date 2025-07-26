@@ -51,19 +51,19 @@ export const ConversationsTable = ({
         (startDate
           ? dayjs(item.date_created).isAfter(
               dayjs(startDate).subtract(1, "day"),
-              "day"
+              "day",
             )
           : true) &&
         (endDate
           ? dayjs(item.date_created).isBefore(
               dayjs(endDate).add(1, "day"),
-              "day"
+              "day",
             )
           : true) &&
         (searchQuery
           ? item.name.includes(searchQuery) ||
             item.description.includes(searchQuery)
-          : true)
+          : true),
     );
   }, [startDate, endDate, searchQuery, conversations]);
 

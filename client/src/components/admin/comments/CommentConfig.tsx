@@ -24,7 +24,7 @@ export default function CommentConfig({
       // new conversation
       await postApi(
         `/conversations/${conversation.id}/comments`,
-        newConversationRequestBody
+        newConversationRequestBody,
       );
       setComment("");
     } else {
