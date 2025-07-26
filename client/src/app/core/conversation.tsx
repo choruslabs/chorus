@@ -24,6 +24,7 @@ const ConversationPage = () => {
   }>({
     queryKey: ["current-comment", conversationId],
     queryFn: () => getNextComment(conversationId ?? ""),
+    retry: false,
   });
 
   const nextComment = useCallback(async () => {
