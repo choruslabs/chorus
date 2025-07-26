@@ -34,6 +34,7 @@ export default function ConversationDialog({
   return (
     <>
       <button
+        type="button"
         id="edit-button"
         className="border-2 px-2 py-2 rounded-xl flex flex-row items-center gap-x-2 h-min self-center-safe"
         onClick={() => handleEditClick(true)}
@@ -47,8 +48,8 @@ export default function ConversationDialog({
         <div className="top-bar flex justify-between">
           {editIdItem && <DeleteConfig conversation={editIdItem} />}
           <button
+            type="button"
             className="border-2 px-2 py-2 rounded-xl flex flex-row items-center gap-x-2 ml-auto"
-            autoFocus
             onClick={() => handleEditClick(false)}
           >
             Close
@@ -69,9 +70,7 @@ function DeleteConfig({ conversation }: { conversation: Conversation }) {
   useEffect(() => {
     // const editButton = document.getElementById("edit-button");
     setDialog(
-      document.getElementById(
-        "delete-conversation-dialog",
-      ) as HTMLDialogElement,
+      document.getElementById("delete-conversation-dialog") as HTMLDialogElement
     );
   }, []);
   const handleEditClick = (state: boolean) => {
@@ -104,6 +103,7 @@ function DeleteConfig({ conversation }: { conversation: Conversation }) {
   return (
     <>
       <button
+        type="button"
         className="w-min border-2 border-red-500 p-2 bg-red-200 hover:bg-red-500 hover:text-white rounded-xl"
         onClick={() => handleEditClick(true)}
       >
@@ -114,8 +114,8 @@ function DeleteConfig({ conversation }: { conversation: Conversation }) {
         className="m-[revert] p-[revert] border-2 backdrop:bg-primary backdrop:opacity-80 rounded-xl"
       >
         <button
+          type="button"
           className="border-2 px-2 py-2 rounded-xl flex flex-row items-center gap-x-2 ml-auto"
-          autoFocus
           onClick={() => handleEditClick(false)}
         >
           Close
@@ -132,12 +132,14 @@ function DeleteConfig({ conversation }: { conversation: Conversation }) {
 
         <div className="w-full flex justify-between">
           <button
+            type="button"
             className="border-2 border-red-500 p-2 bg-red-200 hover:bg-red-500 hover:text-white rounded-xl"
             onClick={onFormComplete}
           >
             Delete the conversation
           </button>
           <button
+            type="button"
             className="border-2 px-2 py-2 rounded-xl flex flex-row items-center gap-x-2 h-min self-center-safe"
             onClick={() => handleEditClick(false)}
           >

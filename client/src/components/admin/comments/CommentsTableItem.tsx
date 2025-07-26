@@ -54,6 +54,7 @@ export const CommentsTableItem = ({
         <div className="flex gap-4">
           {!comment.approved && (
             <button
+              type="button"
               className="border-2 px-2 py-2 rounded-xl flex flex-row items-center gap-x-2 h-min self-center-safe border-green-800 bg-green-100 hover:bg-green-800 hover:text-white"
               onClick={handleApprove}
             >
@@ -63,6 +64,7 @@ export const CommentsTableItem = ({
 
           {(comment.approved === null || !!comment.approved) && (
             <button
+              type="button"
               className="border-2 px-2 py-2 rounded-xl flex flex-row items-center gap-x-2 h-min self-center-safe border-red-800 bg-red-100 hover:bg-red-800 hover:text-white"
               onClick={handleReject}
             >

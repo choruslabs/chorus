@@ -15,8 +15,8 @@ const RegisterPage = () => {
     try {
       await postRegister(email, password);
       navigate("/login");
-    } catch (error: any) {
-      if (error.status == 409) {
+    } catch (error) {
+      if (error.status === 409) {
         setError("Email already in use. Please sign in.");
       } else {
         setError("An error occurred. Please try again.");
@@ -56,7 +56,10 @@ const RegisterPage = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button className="mb-8 p-2 bg-gray-500 hover:bg-secondary text-white rounded-md">
+          <button
+            type="submit"
+            className="mb-8 p-2 bg-gray-500 hover:bg-secondary text-white rounded-md"
+          >
             Register
           </button>
           <p>

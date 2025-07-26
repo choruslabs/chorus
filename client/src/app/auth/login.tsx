@@ -18,7 +18,7 @@ const LoginPage = () => {
       await login(email, password);
       navigate("/dashboard");
     } catch (error: any) {
-      if (error.status == 401) {
+      if (error.status === 401) {
         setError("Invalid email or password.");
       } else {
         setError("An error occurred. Please try again.");
@@ -59,6 +59,7 @@ const LoginPage = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <button
+            type="submit"
             className="mb-8 p-2 bg-gray-500 hover:bg-secondary text-white rounded-md"
             onClick={() => handleLogin(email, password)}
           >
