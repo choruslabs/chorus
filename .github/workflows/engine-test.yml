@@ -34,7 +34,7 @@ jobs:
           cd engine
           poetry config virtualenvs.create true --local
           poetry install --no-interaction --no-ansi
-          poetry run pip install pytest
+          poetry run pip install pytest mypy flake8 black isort
 
       # Run tests
       - name: Run tests
