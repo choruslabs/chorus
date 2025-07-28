@@ -64,31 +64,26 @@ def evaluate_consensus(
     print(f"Std Consensus Target: {std_consensus_target}")
     print()
 
-    normalized_pred = (consensus_pred - mean_consensus_pred) / std_consensus_pred
-    normalized_target = (
-        consensus_target - mean_consensus_target
-    ) / std_consensus_target
-
-    mse = np.mean((normalized_pred - normalized_target) ** 2)
-    corr = np.corrcoef(normalized_pred, normalized_target)[0, 1]
+    mse = np.mean((np.array(consensus_pred) - np.array(consensus_target)) ** 2)
+    corr = np.corrcoef(consensus_pred, consensus_target)[0, 1]
 
     print(f"Mean Squared Error: {mse}")
     print(f"Correlation: {corr}")
 
-    rank_pred = np.argsort(np.argsort(normalized_pred)[::-1]) + 1
-    rank_target = np.argsort(np.argsort(normalized_target)[::-1]) + 1
+    rank_pred = np.argsort(np.argsort(consensus_pred)[::-1]) + 1
+    rank_target = np.argsort(np.argsort(consensus_target)[::-1]) + 1
 
     rendered = pd.DataFrame(
         {
             "Index": common_indices,
             "Comment": comments,
-            "Predicted Consensus": normalized_pred,
-            "Target Consensus": normalized_target,
+            "Predicted Consensus": consensus_pred,
+            "Target Consensus": consensus_target,
             "Rank Predicted": rank_pred,
             "Rank Target": rank_target,
             "Difference (Consensus)": [
                 get_difference_symbol(pred, target)
-                for pred, target in zip(normalized_pred, normalized_target)
+                for pred, target in zip(consensus_pred, consensus_target)
             ],
             "Rank Difference": [
                 get_rank_symbol(rank_p, rank_t)
@@ -124,38 +119,38 @@ def evaluate_consensus(
     with open(rendered_path, "w") as f:
         f.write(f"<html><head>{css}</head><body>{html}</body></html>")
 
-    top5_pred = np.argsort(normalized_pred)[-5:][::-1]
-    top5_target = np.argsort(normalized_target)[-5:][::-1]
+    top5_pred = np.argsort(consensus_pred)[-5:][::-1]
+    top5_target = np.argsort(consensus_target)[-5:][::-1]
     top5_accuracy = np.mean([1 if i in top5_target else 0 for i in top5_pred])
     print(f"Top 5 Accuracy: {top5_accuracy:.2f}")
 
-    top10_pred = np.argsort(normalized_pred)[-10:][::-1]
-    top10_target = np.argsort(normalized_target)[-10:][::-1]
+    top10_pred = np.argsort(consensus_pred)[-10:][::-1]
+    top10_target = np.argsort(consensus_target)[-10:][::-1]
     top10_accuracy = np.mean([1 if i in top10_target else 0 for i in top10_pred])
     print(f"Top 10 Accuracy: {top10_accuracy:.2f}")
 
-    indices = np.argsort(normalized_target)
-    sorted_normalized_pred = np.array(normalized_pred)[indices]
-    sorted_normalized_target = np.array(normalized_target)[indices]
+    indices = np.argsort(consensus_target)
+    sorted_consensus_pred = np.array(consensus_pred)[indices]
+    sorted_consensus_target = np.array(consensus_target)[indices]
 
-    plt_indices = np.arange(len(sorted_normalized_pred))
+    plt_indices = np.arange(len(sorted_consensus_pred))
 
     plt.figure(figsize=(7, 7))
     plt.scatter(
-        plt_indices, sorted_normalized_pred, label="Predicted Consensus", marker="o"
+        plt_indices, sorted_consensus_pred, label="Predicted Consensus", marker="o"
     )
     plt.scatter(
-        plt_indices, sorted_normalized_target, label="Target Consensus", marker="x"
+        plt_indices, sorted_consensus_target, label="Target Consensus", marker="x"
     )
-    for i in range(len(sorted_normalized_pred)):
+    for i in range(len(sorted_consensus_pred)):
         plt.plot(
             [plt_indices[i], plt_indices[i]],
-            [sorted_normalized_pred[i], sorted_normalized_target[i]],
+            [sorted_consensus_pred[i], sorted_consensus_target[i]],
             color="gray",
             linestyle="--",
         )
     plt.xlabel("Index (Sorted by Target Consensus)")
-    plt.ylabel("Normalized Consensus Score")
+    plt.ylabel("Consensus Score")
     plt.title("Consensus Scores Comparison")
     plt.legend()
     plt.grid()

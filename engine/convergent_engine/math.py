@@ -44,6 +44,8 @@ def get_comment_consensus(
     cluster_labels: np.ndarray = None,
     kind="group_aware",
 ):
+    comment_votes = votes_matrix[:, comment_index]
+
     if kind == "group_aware":
         if cluster_labels is None:
             raise ValueError(
@@ -56,7 +58,7 @@ def get_comment_consensus(
             if cluster == -1:
                 continue
 
-            cluster_votes = votes_matrix[cluster_labels == cluster, comment_index]
+            cluster_votes = comment_votes[cluster_labels == cluster]
 
             if len(cluster_votes) == 0 or np.all(np.isnan(cluster_votes)):
                 cluster_agree_probs[cluster] = 0.5
@@ -72,12 +74,7 @@ def get_comment_consensus(
         return np.prod(cluster_agree_probs)
 
     elif kind == "simple":
-        agree_probs = np.zeros(votes_matrix.shape[0])
-
-        for i in range(votes_matrix.shape[0]):
-            agree_probs[i] = np.mean(votes_matrix[i, :] == 1)
-
-        return np.prod(agree_probs)
+        return np.nanmean(comment_votes == 1)
 
     else:
         raise ValueError(f"Unknown kind: {kind}. Use 'group_aware' or 'simple'.")
