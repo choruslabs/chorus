@@ -179,7 +179,7 @@ export default function ConversationConfig({
         </fieldset>
 
         <button
-          type="button"
+          type="submit"
           className="self-center border-2 border-gray-500 hover:border-green-500 p-2 bg-gray-500 hover:bg-green-500 text-white rounded-xl"
         >
           {editItem ? "Save" : "Create conversation"}
