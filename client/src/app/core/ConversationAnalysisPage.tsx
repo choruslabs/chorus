@@ -61,9 +61,9 @@ export default function ConversationAnalysisPage() {
 
   return (
     <CoreBase requiresLogin={true}>
-      <section className="xl:w-[90%] w-full mx-auto p-5">
-        <h1 className="text-3xl font-bold mb-2">{conversation.name}</h1>
-        <h2 className="text-xl font-semibold mb-8">Conversation Analysis</h2>
+      <section className="lg:w-[60%] w-full mx-auto p-5">
+        <h1 className="text-3xl font-bold mb-4">{conversation.name}</h1>
+        <h2 className="text-2xl font-bold mb-8">Conversation Analysis</h2>
         <div className="mb-4">
           <h2 className="text-xl font-semibold mb-2">Summary</h2>
           <p>
@@ -140,10 +140,10 @@ export default function ConversationAnalysisPage() {
                 <th className="border border-gray-300 px-4 py-2 text-left w-1/12">
                   Rank
                 </th>
-                <th className="border border-gray-300 px-4 py-2 text-left w-1/2">
+                <th className="border border-gray-300 px-4 py-2 text-left w-2/3">
                   Comment
                 </th>
-                <th className="border border-gray-300 px-4 py-2 text-left w-5/12">
+                <th className="border border-gray-300 px-4 py-2 text-left w-1/4">
                   Consensus Score
                 </th>
               </tr>
@@ -160,7 +160,7 @@ export default function ConversationAnalysisPage() {
                     </td>
                     <td className="border border-gray-300 px-4 py-2">
                       <div className="flex items-center">
-                        <div className="relative w-64 h-4 bg-gray-200 rounded">
+                        <div className="relative w-32 h-4 bg-gray-200 rounded">
                           <div
                             className={
                               "absolute top-0 left-0 h-full rounded bg-green-500"
