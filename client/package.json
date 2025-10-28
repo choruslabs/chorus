@@ -1,0 +1,60 @@
+{
+  "name": "convergent",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "biome check",
+    "preview": "vite preview",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "dependencies": {
+    "@headlessui/react": "^2.2.0",
+    "@heroicons/react": "^2.2.0",
+    "@tanstack/react-query": "^5.80.7",
+    "dayjs": "^1.11.13",
+    "plotly.js": "^2.35.2",
+    "plotly.js-dist": "^2.35.2",
+    "react": "^18.3.1",
+    "react-csv": "^2.2.2",
+    "react-dom": "^18.3.1",
+    "react-plotly.js": "^2.6.0",
+    "react-router": "^7.6.2",
+    "recharts": "^3.0.2"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.1.2",
+    "@chromatic-com/storybook": "^4.0.1",
+    "@storybook/addon-a11y": "^9.0.14",
+    "@storybook/addon-docs": "^9.0.14",
+    "@storybook/addon-onboarding": "^9.0.14",
+    "@storybook/addon-vitest": "^9.0.14",
+    "@storybook/react-vite": "^9.0.14",
+    "@tailwindcss/postcss": "^4.1.10",
+    "@types/react": "^18.3.11",
+    "@types/react-csv": "^1.1.10",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.5.2",
+    "@vitest/browser": "^3.2.4",
+    "@vitest/coverage-v8": "^3.2.4",
+    "globals": "^15.11.0",
+    "msw": "^2.10.3",
+    "msw-storybook-addon": "^2.0.5",
+    "playwright": "^1.53.2",
+    "postcss": "^8.4.49",
+    "storybook": "^9.0.14",
+    "storybook-addon-remix-react-router": "^5.0.0",
+    "tailwindcss": "^4.1.10",
+    "typescript": "~5.6.2",
+    "vite": "^6.3.5",
+    "vitest": "^3.2.4"
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
+  }
+}
