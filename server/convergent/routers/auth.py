@@ -6,10 +6,10 @@ from sqlalchemy.exc import IntegrityError
 import jwt
 from pydantic import BaseModel
 from passlib.context import CryptContext
-from convergent import models
-from convergent.database import Database
-from convergent.settings import Settings, SettingsDep
-from convergent.auth.user import CurrentUser
+from chorus import models
+from chorus.database import Database
+from chorus.settings import Settings, SettingsDep
+from chorus.auth.user import CurrentUser
 
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")

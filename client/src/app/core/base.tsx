@@ -11,7 +11,7 @@ const AppBar = ({ children }: { children: React.ReactNode }) => (
   >
     <div className="flex items-center">
       <Logo />
-      <h1 className="ml-3 mr-16 text-xl font-bold">Convergent</h1>
+      <h1 className="ml-3 mr-16 text-xl font-bold">Chorus</h1>
     </div>
     <div className="flex justify-end w-1/6">{children}</div>
   </div>

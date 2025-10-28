@@ -1,4 +1,4 @@
-# Convergent
+# Chorus
 
 This is an open-source web application implementing a polis-like algorithm for mapping high-dimensional opinion spaces.
 
@@ -29,7 +29,7 @@ replace:
 To run the API (in auto-reload mode):
 
 ```bash
-uvicorn convergent.main:app --reload
+uvicorn chorus.main:app --reload
 ```
 
 Go to `http://localhost:8000/docs` to check if it works: you should see a Swagger page.
@@ -47,13 +47,13 @@ Or, to build the server image using Docker:
 
 ```bash
 cd server
-docker build -t convergent.server .
+docker build -t chorus.server .
 ```
 
 To run it on port 8000:
 
 ```bash
-docker run -p 8000:8000 convergent.server
+docker run -p 8000:8000 chorus.server
 ```
 
 Go to `http://localhost:8000/docs` to check if it works: you should see a Swagger page.

@@ -3,7 +3,7 @@ from typing import Optional
 from uuid import uuid4, UUID
 from sqlalchemy import String, ForeignKey, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from convergent.database import Base
+from chorus.database import Base
 
 
 class Conversation(Base):

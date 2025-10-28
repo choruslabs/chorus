@@ -1,11 +1,11 @@
 import pytest
 from fastapi.testclient import TestClient
-from convergent.main import app
+from chorus.main import app
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from convergent.database import Base, get_db
-from convergent.models import *
+from chorus.database import Base, get_db
+from chorus.models import *
 from uuid import uuid4
 
 import logging

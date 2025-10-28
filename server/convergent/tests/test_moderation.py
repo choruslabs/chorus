@@ -1,7 +1,7 @@
 from pydantic import BaseModel, ConfigDict
 from uuid import UUID, uuid4
 from typing import Optional
-from convergent.models import Conversation
+from chorus.models import Conversation
 import pytest
 from datetime import datetime
 

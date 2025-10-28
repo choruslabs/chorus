@@ -2,9 +2,9 @@ from typing import Annotated
 from fastapi import Cookie, Depends, HTTPException
 import jwt
 from sqlalchemy.orm import Session
-from convergent import models
-from convergent.settings import SettingsDep
-from convergent.database import Database
+from chorus import models
+from chorus.settings import SettingsDep
+from chorus.database import Database
 
 
 def get_current_user(

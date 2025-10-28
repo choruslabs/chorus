@@ -1,7 +1,7 @@
 from uuid import uuid4, UUID
 from sqlalchemy import String
 from sqlalchemy.orm import Mapped, mapped_column
-from convergent.database import Base
+from chorus.database import Base
 
 
 class User(Base):

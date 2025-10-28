@@ -250,14 +250,14 @@ test = ["Pillow", "contourpy[test-no-images]", "matplotlib"]
 test-no-images = ["pytest", "pytest-cov", "pytest-rerunfailures", "pytest-xdist", "wurlitzer"]
 
 [[package]]
-name = "convergent-engine"
+name = "chorus-engine"
 version = "0.1.1"
 description = ""
 optional = false
 python-versions = ">=3.12"
 groups = ["main"]
 files = [
-    {file = "convergent_engine-0.1.1-py3-none-any.whl", hash = "sha256:1e149efbdcf1418fcdce245f962238dc3cef37e36dc950152b20f07695e9e717"},
+    {file = "chorus_engine-0.1.1-py3-none-any.whl", hash = "sha256:1e149efbdcf1418fcdce245f962238dc3cef37e36dc950152b20f07695e9e717"},
 ]
 
 [package.dependencies]
@@ -268,7 +268,7 @@ scikit-learn = ">=1.7.0,<2.0.0"
 
 [package.source]
 type = "file"
-url = "engine-dist/convergent_engine-0.1.1-py3-none-any.whl"
+url = "engine-dist/chorus_engine-0.1.1-py3-none-any.whl"
 
 [[package]]
 name = "cycler"

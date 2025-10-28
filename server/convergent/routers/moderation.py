@@ -1,11 +1,11 @@
 from uuid import UUID
 from fastapi import APIRouter, Depends, HTTPException
-from convergent import models
-from convergent.auth.user import CurrentUser
-from convergent.database import Database
+from chorus import models
+from chorus.auth.user import CurrentUser
+from chorus.database import Database
 from pydantic import BaseModel
 from typing import Optional
-from convergent.routers.conversation import Conversation, get_conversation_details
+from chorus.routers.conversation import Conversation, get_conversation_details
 
 router = APIRouter(prefix="/moderation")
 

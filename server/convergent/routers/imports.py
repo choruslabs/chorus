@@ -5,10 +5,10 @@ from uuid import UUID, uuid4
 from fastapi import APIRouter, HTTPException, UploadFile
 from sqlalchemy import false, true
 import urllib
-from convergent import models
-from convergent.auth.user import CurrentUser
-from convergent.database import Database
-from convergent.core.routines import update_conversation_analysis
+from chorus import models
+from chorus.auth.user import CurrentUser
+from chorus.database import Database
+from chorus.core.routines import update_conversation_analysis
 from pydantic import BaseModel
 
 

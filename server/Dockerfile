@@ -11,7 +11,7 @@ ENV PATH="${PATH}:/root/.local/bin"
 WORKDIR /app
 COPY . /app
 
-RUN pip install engine-dist/convergent_engine-0.1.1-py3-none-any.whl
+RUN pip install engine-dist/chorus_engine-0.1.1-py3-none-any.whl
 
 RUN poetry config virtualenvs.create false && \
     poetry install --no-interaction --no-ansi
@@ -25,4 +25,4 @@ RUN chmod +x /app/entrypoint.sh
 ENTRYPOINT ["/bin/sh", "/app/entrypoint.sh"]
 
 # Run uvicorn server
-CMD ["uvicorn", "convergent.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "chorus.main:app", "--host", "0.0.0.0", "--port", "8000"]

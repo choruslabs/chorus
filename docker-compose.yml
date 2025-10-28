@@ -1,12 +1,12 @@
 services:
   engine:
     build: engine/
-    image: convergent-engine:latest
+    image: chorus-engine:latest
 
   server:
     build: server/
     environment:
-      - DATABASE_URL=postgresql://user:password@db:5432/convergent
+      - DATABASE_URL=postgresql://user:password@db:5432/chorus
       - SECRET_KEY=your_secret_key
     depends_on:
       db:
@@ -22,7 +22,7 @@ services:
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: convergent
+      POSTGRES_DB: chorus
     ports:
       - "5432:5432"
     healthcheck:

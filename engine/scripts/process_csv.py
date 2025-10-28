@@ -1,7 +1,7 @@
 from pathlib import Path
 import numpy as np
 import pandas
-from convergent_engine import decompose_votes, cluster_users, get_comment_consensus
+from chorus_engine import decompose_votes, cluster_users, get_comment_consensus
 
 
 def process_csv(comments_csv: Path, votes_matrix_csv: Path, random_state: int):

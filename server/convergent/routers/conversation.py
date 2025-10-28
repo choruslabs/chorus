@@ -4,9 +4,9 @@ from uuid import UUID
 from fastapi import APIRouter, HTTPException
 from sqlalchemy import false, true
 import urllib
-from convergent import models
-from convergent.auth.user import CurrentUser
-from convergent.database import Database
+from chorus import models
+from chorus.auth.user import CurrentUser
+from chorus.database import Database
 from pydantic import BaseModel
 
 

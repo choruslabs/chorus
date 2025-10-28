@@ -1,6 +1,6 @@
 import random
 import string
-from convergent.models import User
+from chorus.models import User
 
 def generate_random_username(length=8):
     # Generate a random string of letters and digits of the given length

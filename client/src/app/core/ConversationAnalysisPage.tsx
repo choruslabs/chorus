@@ -394,7 +394,7 @@ export default function ConversationAnalysisPage() {
         <div className='bg-gray-50 px-16 py-10 border-t-2 border-gray-300'>
           <p className='text-gray-600 text-sm leading-relaxed mb-3'>
             <strong className='text-gray-900'>About This Report:</strong> This
-            report summarizes input gathered through Convergent, a platform for
+            report summarizes input gathered through Chorus, a platform for
             large-scale democratic dialogue. Data reflects responses from{' '}
             {conversationAnalysis.user_ids.length} participants who voted on{' '}
             {conversationAnalysis.comment_ids.length} statements.

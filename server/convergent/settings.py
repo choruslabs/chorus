@@ -4,7 +4,7 @@ from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
-    database_url: str = "sqlite:///convergent.db"
+    database_url: str = "sqlite:///chorus.db"
     client_origin: str = "http://localhost:5173"
     secret_key: str
     algorithm: str = "HS256"

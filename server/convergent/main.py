@@ -1,9 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from convergent.routers import conversation, auth, moderation, analysis, imports
-from convergent.settings import settings
-from convergent.database import db
-from convergent.models import *
+from chorus.routers import conversation, auth, moderation, analysis, imports
+from chorus.settings import settings
+from chorus.database import db
+from chorus.models import *
 
 
 app = FastAPI()

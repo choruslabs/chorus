@@ -15,6 +15,6 @@ COPY . /engine
 RUN poetry config virtualenvs.create false && \
     poetry install --no-interaction --no-ansi
 
-COPY . /tmp/convergent-engine
+COPY . /tmp/chorus-engine
 
-RUN pip install /tmp/convergent-engine
+RUN pip install /tmp/chorus-engine

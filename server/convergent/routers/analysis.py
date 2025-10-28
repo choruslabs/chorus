@@ -2,16 +2,16 @@ from dataclasses import dataclass
 from typing import Annotated
 from uuid import UUID
 from fastapi import APIRouter, Depends, HTTPException
-from convergent import models
-from convergent.auth.user import CurrentUser
-from convergent.database import Database
+from chorus import models
+from chorus.auth.user import CurrentUser
+from chorus.database import Database
 from pydantic import BaseModel
 import numpy as np
-from convergent_engine.math import (
+from chorus_engine.math import (
     get_comment_consensus,
     get_group_comment_representativeness,
 )
-from convergent.core.routines import get_vote_matrix, update_conversation_analysis
+from chorus.core.routines import get_vote_matrix, update_conversation_analysis
 
 
 router = APIRouter(prefix="/analysis")

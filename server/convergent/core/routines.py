@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
-from convergent import models
+from chorus import models
 import numpy as np
-from convergent_engine import decompose_votes, cluster_users
+from chorus_engine import decompose_votes, cluster_users
 
 
 def get_vote_matrix(conversation: models.Conversation):

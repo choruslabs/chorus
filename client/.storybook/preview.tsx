@@ -8,7 +8,7 @@ let options = {};
 if (location.hostname.includes("github.io")) {
   options = {
     serviceWorker: {
-      url: "/convergent/mockServiceWorker.js", // manually pointing msw config file
+      url: "/chorus/mockServiceWorker.js", // manually pointing msw config file
     },
   };
 }

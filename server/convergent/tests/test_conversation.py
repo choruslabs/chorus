@@ -3,7 +3,7 @@ from pydantic import BaseModel, ConfigDict
 from typing import Optional
 from datetime import datetime
 import pytest
-from convergent.models import Conversation, Comment
+from chorus.models import Conversation, Comment
 
 
 
