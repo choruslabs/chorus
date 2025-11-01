@@ -85,8 +85,12 @@ def get_conversation_details(
     return conversation
 
 
-@router.get("/conversations", response_model=list[Conversation])
-async def read_conversations(db: Database, current_user: CurrentUser):
+@router.get(
+    "/conversations",
+    response_model=list[Conversation],
+    summary="List all conversations",
+)
+async def list_conversations(db: Database, current_user: CurrentUser):
     conversations = db.query(models.Conversation).all()
 
     return [
@@ -170,24 +174,30 @@ async def read_comments(
     else:
         return comments
 
-def check_url_safety_and_uniqueness(conversation: ConversationCreate | ConversationUpdate, db: Database):
+
+def check_url_safety_and_uniqueness(
+    conversation: ConversationCreate | ConversationUpdate, db: Database
+):
     link = conversation.user_friendly_link.strip()
     link = link.replace(" ", "-").lower()
     conversation.user_friendly_link = urllib.parse.quote(link)
 
-    if db.query(models.Conversation).filter(
-        models.Conversation.user_friendly_link == conversation.user_friendly_link
-    ).first():
-        raise HTTPException(
-            status_code=409, detail="User friendly link already exists"
+    if (
+        db.query(models.Conversation)
+        .filter(
+            models.Conversation.user_friendly_link == conversation.user_friendly_link
         )
+        .first()
+    ):
+        raise HTTPException(status_code=409, detail="User friendly link already exists")
+
 
 @router.post("/conversations")
 async def create_conversation(
     conversation: ConversationCreate, db: Database, current_user: CurrentUser
 ):
     if conversation.user_friendly_link:
-        check_url_safety_and_uniqueness(conversation,db)
+        check_url_safety_and_uniqueness(conversation, db)
 
     db_conversation = models.Conversation(
         **conversation.model_dump(), author=current_user
@@ -210,9 +220,9 @@ async def update_conversation(
         raise HTTPException(status_code=404, detail="Conversation not found")
     if conversation_db.author != current_user:
         raise HTTPException(status_code=403, detail="Not authorized")
-    
+
     if conversation.user_friendly_link:
-        check_url_safety_and_uniqueness(conversation,db)
+        check_url_safety_and_uniqueness(conversation, db)
 
     for key, value in conversation.model_dump(exclude_unset=True).items():
         setattr(conversation_db, key, value)
@@ -305,6 +315,25 @@ async def delete_conversation(
         raise HTTPException(status_code=404, detail="Conversation not found")
     if conversation.author != current_user:
         raise HTTPException(status_code=403, detail="Not authorized")
+
+    db.query(models.UserPca).filter(
+        models.UserPca.conversation_id == conversation.id
+    ).delete(synchronize_session=False)
+    db.query(models.UserCluster).filter(
+        models.UserCluster.conversation_id == conversation.id
+    ).delete(synchronize_session=False)
+
+    db.query(models.Vote).filter(
+        models.Vote.comment_id.in_(
+            db.query(models.Comment.id).filter(
+                models.Comment.conversation_id == conversation.id
+            )
+        )
+    ).delete(synchronize_session=False)
+
+    db.query(models.Comment).filter(
+        models.Comment.conversation_id == conversation.id
+    ).delete(synchronize_session=False)
 
     db.delete(conversation)
     db.commit()

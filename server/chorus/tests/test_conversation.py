@@ -552,6 +552,28 @@ class TestDeleteConversation:
         get_response = authenticated_client.get(f"/conversations/{conversation_id}")
         assert get_response.status_code == 404
     
+    def test_can_delete_own_conversation_with_comments(self, authenticated_client, create_conversation):
+        """
+        Test the successful deletion of a conversation by the user that created the conversation
+        Expected Behavior:
+        - The API returns a 200 status code
+        - The response JSON contains an "detail" field with the description "Conversation deleted successfully" and the conversation's id
+        """
+        conversation_id = create_conversation(authenticated_client).json()["id"]
+
+        # Create a comment in the conversation
+        authenticated_client.post(
+            f"/conversations/{conversation_id}/comments",
+            json={"content": "This is a comment"}
+        )
+
+        response = authenticated_client.delete(f"/conversations/{conversation_id}")
+        assert response.status_code == 200
+        assert response.json() == {"detail": "Conversation deleted successfully", "id": conversation_id}
+
+        # double check the conversation is actually deleted
+        get_response = authenticated_client.get(f"/conversations/{conversation_id}")
+        assert get_response.status_code == 404
 
     def test_cannot_delete_anothers_conversation(self, create_conversation, authenticated_clients):
         """
