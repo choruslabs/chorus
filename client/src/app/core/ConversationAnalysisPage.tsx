@@ -22,7 +22,12 @@ interface CommentAnalysis {
 interface GroupAnalysis {
   group_id: number;
   users: string[];
-  representative_comments: CommentAnalysis[];
+  representative_comments: {
+    comment_id: string;
+    content: string;
+    agree_percentage: number;
+    representativeness: number;
+  }[];
 }
 
 interface ConversationAnalysis {
@@ -387,10 +392,9 @@ export default function ConversationAnalysisPage() {
                             layout={{
                               height: 20,
                               width: 100,
-                              bgcolor: "transparent",
+                              paper_bgcolor: "transparent",
                               margin: { t: 0, b: 0, l: 0, r: 0 },
                               barmode: "stack",
-                              orientation: "h",
                               showlegend: false,
                               xaxis: { visible: false, fixedrange: true },
                               yaxis: { visible: false, fixedrange: true },
