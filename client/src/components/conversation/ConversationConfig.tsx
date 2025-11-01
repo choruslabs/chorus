@@ -82,7 +82,7 @@ export default function ConversationConfig({
   }
 
   return (
-    <div className="flex flex-col items-start h-full py-4 w-[95%] max-w-3xl mx-auto">
+    <div className="flex flex-col items-start h-full py-4 w-[95%] max-w-3xl mx-auto gap-6">
       <div className="flex flex-row w-full gap-4 items-center">
         {!editItem && (
           <a
@@ -98,7 +98,7 @@ export default function ConversationConfig({
           </a>
         )}
 
-        <hgroup>
+        <hgroup className="flex flex-col gap-2">
           <h1 className="text-5xl font-bold">
             {editItem ? "Edit conversation" : "Create conversation"}
           </h1>
@@ -136,12 +136,13 @@ export default function ConversationConfig({
             onChange={(event) => setConversationDescription(event.target.value)}
           ></Textarea>
         </fieldset>
+
         {!editItem && (
-          <div className="col-span-2 text-center">Seed Comment Placeholder</div>
+          <div className="col-span-2 text-center my-6">[Seed Comments Placeholder]</div>
         )}
 
-        <fieldset>
-          <legend className="font-bold text-2xl">Setup Permissions</legend>
+        <fieldset className="flex flex-col mx-auto w-full mb-4">
+          <legend className="font-bold text-2xl mb-2">Setup Permissions</legend>
           <label htmlFor="show-charts" className="flex gap-2 p-2">
             <Input
               className="border-gray-500 border-2 justify-self-start aspect-square h-6"
@@ -197,7 +198,7 @@ export default function ConversationConfig({
 
         <button
           type="submit"
-          className="self-center border-2 border-gray-500 hover:border-green-500 p-2 bg-gray-500 hover:bg-green-500 text-white rounded-xl"
+          className="self-center border-2 border-gray-500 hover:border-gray-600 p-2 bg-gray-500 hover:bg-gray-600 text-white rounded-xl"
         >
           {editItem ? "Save" : "Create conversation"}
         </button>
