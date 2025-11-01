@@ -137,7 +137,7 @@ optional = false
 python-versions = ">=3.12"
 groups = ["main"]
 files = [
-    {file = "chorus_engine-0.1.1-py3-none-any.whl", hash = "sha256:1e149efbdcf1418fcdce245f962238dc3cef37e36dc950152b20f07695e9e717"},
+    {file = "chorus_engine-0.1.1-py3-none-any.whl", hash = "sha256:2e3877db7ec3898cbd561f12c57aa2b2e985c2ab5f95f3c3da76931a6e696dd1"},
 ]
 
 [package.dependencies]
