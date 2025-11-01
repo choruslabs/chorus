@@ -138,7 +138,9 @@ export default function ConversationConfig({
         </fieldset>
 
         {!editItem && (
-          <div className="col-span-2 text-center my-6">[Seed Comments Placeholder]</div>
+          <div className="col-span-2 text-center my-6">
+            [Seed Comments Placeholder]
+          </div>
         )}
 
         <fieldset className="flex flex-col mx-auto w-full mb-4">
