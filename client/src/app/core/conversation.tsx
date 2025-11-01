@@ -12,7 +12,7 @@ import { ParticipationSpa } from "../../components/participation/ParticipationSp
 import type { Conversation, ParticipationComment } from "./dashboard";
 
 const ConversationPage = () => {
-  const params = useParams<{ conversationId: string;}>();
+  const params = useParams<{ conversationId: string }>();
   const conversationIdOrName = params.conversationId;
   // This controls max. time (in s) the user need to wait before they can see the new comment(s)
   // TODO: make it configurable (server level? conversation level?)

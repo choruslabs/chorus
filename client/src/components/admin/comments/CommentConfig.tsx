@@ -15,7 +15,7 @@ export default function CommentConfig({
 }) {
   const [comment, setComment] = useState("");
   const [isHovering, setIsHovering] = useState(false);
-  
+
   async function formSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     // const formData = new FormData(event.target as HTMLFormElement);
@@ -81,13 +81,13 @@ export default function CommentConfig({
           <button
             type="submit"
             className={`px-2 py-1 bg-gray-500 text-white rounded-md w-full ${comment.trim() === "" ? "cursor-default" : "bg-secondary"}`}
-            disabled={comment.trim() === ""} 
+            disabled={comment.trim() === ""}
           >
             Add Comment
           </button>
         </div>
         {comment.trim() === "" && isHovering && (
-          <div 
+          <div
             className="absolute -bottom-12 left-1/2 -translate-x-1/2 bg-white border border-gray-300 rounded-md shadow px-3 py-1 text-sm text-gray-700 z-50 transition-opacity duration-300 ease-in-out"
             role="tooltip"
             aria-live="polite"

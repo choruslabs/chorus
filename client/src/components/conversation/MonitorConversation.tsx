@@ -1,5 +1,5 @@
-import type { Conversation } from "../../app/core/dashboard";
 import { useOutletContext } from "react-router";
+import type { Conversation } from "../../app/core/dashboard";
 
 export default function MonitorConversation() {
   const { conversation } = useOutletContext<{ conversation: Conversation }>();
@@ -11,7 +11,10 @@ export default function MonitorConversation() {
         href={`/conversation/${conversation.id}/analysis`}
         className="underline"
       >
-        <button className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
+        <button
+          type="button"
+          className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
+        >
           View Analysis
         </button>
       </a>
