@@ -1,12 +1,12 @@
 import { FunnelIcon } from "@heroicons/react/24/outline";
 import { useMemo, useState } from "react";
+import { CSVLink } from "react-csv";
 import type {
   Conversation,
   ModerationComment,
 } from "../../../app/core/dashboard";
 import { NewCommentDialog } from "./CommentDialog";
 import { CommentsTableItem } from "./CommentsTableItem";
-import { CSVLink } from "react-csv";
 
 const mappedState = new Map([
   ["unmoderated", null],
@@ -24,11 +24,12 @@ export default function CommentsTable({
 }) {
   const [filter, setFilter] = useState<string[]>([]);
 
-  const transpose = comments.map(comment => [comment.user_id, comment.approved, comment.content]);
-  const dataCsv = [
-    ["UserID", "ModerationState", "Content"],
-    ...transpose,
-  ];
+  const transpose = comments.map((comment) => [
+    comment.user_id,
+    comment.approved,
+    comment.content,
+  ]);
+  const dataCsv = [["UserID", "ModerationState", "Content"], ...transpose];
 
   const onFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const toggledValue = e.target.value;
@@ -70,7 +71,7 @@ export default function CommentsTable({
   return (
     <section className="w-[95%] max-w-4xl mx-auto">
       <div className="py-2 flex justify-between">
-        <div className='flex gap-x-4 items-center'>
+        <div className="flex gap-x-4 items-center">
           <details className="[&:open>summary]:rounded-b-none [&:open>summary]:border-b-transparent relative">
             <summary className="border-2 px-2 py-2 rounded-xl flex flex-row items-center gap-x-2 w-min cursor-pointer">
               Filter <FunnelIcon className="h-8 w-8" />
@@ -114,11 +115,19 @@ export default function CommentsTable({
               </label>
             </form>
           </details>
-          <CSVLink data={dataCsv} filename={"conversation.csv"} target="_blank">
-            <button className='p-2 bg-secondary text-white rounded-md'>
+          <CSVLink
+            type="button"
+            data={dataCsv}
+            filename={"conversation.csv"}
+            target="_blank"
+          >
+            <button
+              type="button"
+              className="p-2 bg-secondary text-white rounded-md"
+            >
               Export CSV
             </button>
-        </CSVLink>
+          </CSVLink>
         </div>
         {!!conversation && (
           <NewCommentDialog
@@ -127,8 +136,7 @@ export default function CommentsTable({
           />
         )}
       </div>
-      <div>
-      </div>
+      <div></div>
       {(filteredComments || []).map((item) => (
         <CommentsTableItem
           comment={item}
