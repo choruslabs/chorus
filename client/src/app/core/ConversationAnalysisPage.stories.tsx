@@ -1,13 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import analysisData from "../../../.storybook/mock_data/analysisData.json";
+import { HttpResponse, http } from "msw";
 
 import {
   reactRouterParameters,
   withRouter,
 } from "storybook-addon-remix-react-router";
-
+import analysisData from "../../../.storybook/mock_data/analysisData.json";
 import ConversationAnalysisPage from "./ConversationAnalysisPage";
-import { http, HttpResponse } from "msw";
 
 const meta = {
   title: "client/admin/Conversation Analysis",

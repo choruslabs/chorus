@@ -73,13 +73,11 @@ export default function CommentConfig({
         >
           Cancel
         </button>
-        <div
-          className="relative flex-1"
-          onMouseEnter={() => setIsHovering(true)}
-          onMouseLeave={() => setIsHovering(false)}
-        >
+        <div className="relative flex-1">
           <button
             type="submit"
+            onMouseEnter={() => setIsHovering(true)}
+            onMouseLeave={() => setIsHovering(false)}
             className={`px-2 py-1 bg-gray-500 text-white rounded-md w-full ${comment.trim() === "" ? "cursor-default" : "bg-secondary"}`}
             disabled={comment.trim() === ""}
           >
