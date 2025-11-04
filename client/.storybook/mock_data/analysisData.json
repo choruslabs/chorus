@@ -1,0 +1,1417 @@
+{
+  "conversation_id": "7c6b230d-a9e0-48b4-9ff8-6c1d47c63aea",
+  "comment_ids": [
+    "17563369-1e47-4f00-b2f0-d93076236b39",
+    "c4477cf7-6092-4bc3-9a53-8ecf464711c5",
+    "08ba929a-3b39-4093-b4be-fc7d295269b5",
+    "fc02648b-1107-4c8d-980c-780c61cc9e30",
+    "65381979-0d77-4ba5-8e8f-5f63043a7b71",
+    "2d255476-2bd5-4ef0-8c1b-a5416c364e9e",
+    "dc2d9d43-0164-4c67-9778-cca3580df124",
+    "a48ba342-c554-44b7-ac99-f0f0a1fac79f",
+    "c9b6db2e-4b87-4cb1-ab64-f9a6255af6e4",
+    "d9749855-35c6-425b-a424-6d9c85cd738e",
+    "f4df5853-3e52-4af0-b8df-d9b4a8f900d2",
+    "238105d7-c390-4cbd-95a1-693b1f89e5fe",
+    "e0a5dc78-c378-443e-be14-f5bf570780bf",
+    "c1fa591e-c0e9-4cde-a769-b488cbd3c527",
+    "98be4ad6-1175-459d-99ad-8b7f4692a91c",
+    "7cf8e8d0-1db3-4bf2-98f0-c09e493d4d26",
+    "c5d740c5-fb5b-412b-a289-ef62ac36cfdc",
+    "40a6bdf8-90a2-4f35-b921-b0550fadf808",
+    "74e93776-2419-4284-8211-c46dbbbedcaf",
+    "116f9b6c-8cf9-436d-9489-29aae852bd48",
+    "be6efd10-90e3-45d7-b495-30bad2835027",
+    "08684220-dc6d-4041-9f54-c509b0096547",
+    "ff551987-e40c-4981-b807-b58f4ca2fc9c",
+    "633f3bb7-fb47-44dd-8159-26aa8bbff920",
+    "95ace93f-c7ea-4e89-8245-4a939398e27c",
+    "6ab83cbc-8224-4b2a-9b68-7f9f76c84575",
+    "906de7b1-af8e-43a8-9304-1199bf0fd1ac",
+    "bc94bbf7-7122-487b-aebc-c275234d2ec5",
+    "2f4273a0-c8f9-484d-8989-8463f2373ae2",
+    "e7d46acc-defc-4e4f-b817-295aefb8327b",
+    "0da6cd90-50a3-46f7-8a02-a429a28a6a3d",
+    "22aca2d2-23c5-4930-9ef1-2abdc51cdfa6",
+    "0905e2d3-7d9e-4576-8ab5-1f5733352cfa",
+    "0bdb62bc-5e97-4269-ad6d-94167e85cb71",
+    "c71236bb-2f25-49d7-97d4-21924a9dc57b",
+    "4341b545-45e6-49ad-8cda-6e13cee9a942",
+    "2dc5a60c-f089-4cf9-b65c-90b0719bffb7",
+    "be145f66-bbe8-4b2f-9c1b-e8e43d348f1c",
+    "70d0b6ae-1fb4-40ec-932b-afdc33cd43b4",
+    "4a79ca12-7c23-41db-9390-ff5defe6681f",
+    "da44836c-65d5-482d-94cc-9900bdd33b99",
+    "1b9c0392-eee2-48ad-85c3-7b2c47fc4ce1",
+    "9d7bb70a-ada6-4cf8-acff-759519cd09fc",
+    "3a37e6de-6c77-4d95-b971-900fa1ab36ed",
+    "2261912b-bb14-4315-96e7-d6729b365cee",
+    "db1e69c3-8b22-48c9-ab1b-7805e23ce408",
+    "ee484f0d-47fc-4b1a-81a8-b4f03b961758",
+    "556060ec-422f-4cef-8d8c-5b3517d1c095",
+    "e72bac6f-85ae-4c47-9fc5-7adae65aa020",
+    "2d19a6fc-cce6-4771-85c5-ef0432c924c5",
+    "774bbbca-68f6-418b-82ee-6762f50fc1ea",
+    "b4248d43-050d-449e-9f86-517f8734c1c0",
+    "35dcfdda-0015-43ca-a35a-7c1637195abd",
+    "67d9c446-30d9-42d5-b98b-6a0ad0b84d7b",
+    "91c88a7f-bce5-4246-810a-ae5d63330490",
+    "8910a331-736a-4837-827d-b05f13a22a73",
+    "a731879b-f18f-41b3-a4e0-bcbdbe24a2c4",
+    "828c478d-977a-44cf-aaf9-12ee4506f1aa",
+    "b8420c1c-5c10-4cbc-b056-d9b14fd86c39",
+    "3c3acfb8-b024-4e8c-a685-9b36996b83e4",
+    "f4012ed8-48d8-4476-b051-6d7ae3fde675",
+    "813f1f3d-07b4-42ba-a92e-c878323e4509",
+    "bac7f33b-7e13-4e32-a1a1-59ff15c1ab4e",
+    "e2b71c81-f6b6-46c8-bcf5-ae5e00c93c07",
+    "829bedbd-5671-4d8b-a43d-c42d161bebaf",
+    "cadae2c1-d3df-4d1a-9b49-1b71fbaa76ce",
+    "ea398770-0a03-4139-a308-efddc8f7e38b",
+    "eb1668fb-a5bf-434d-8053-efc644cc3f84",
+    "b68c1d7b-3b43-47cf-ac69-4138bb7f0ab7",
+    "487cc15e-8beb-4bb5-9ddc-56e870d564b0",
+    "5d5f0756-b12f-4bfb-848f-27864f402799",
+    "c53f7447-02f1-4689-9939-2fe41a7c9257",
+    "e8f7be01-490d-412c-8b0f-cf4b1d27c33e",
+    "114c891e-502f-4fb4-a0be-5e3d2b3ebd25",
+    "966d787b-b774-4201-9718-f66ea5f6ddcc",
+    "4a459856-567d-442a-8723-a42cb4872fc6",
+    "86e7ec16-8ddf-4eb7-a88c-ed6628224f63",
+    "8d93f90e-1378-4744-a7c6-8dcc9915ac63",
+    "e99093a7-a42b-4bdc-b99f-e6d657400289",
+    "35d5737c-3943-4a51-9d47-6da3fd95ec70",
+    "076255ab-2123-41ce-bb1b-455d439baa17",
+    "f6ed0a1b-0fa8-497a-beb7-6249c71c2a32"
+  ],
+  "user_ids": [
+    "caf3e1c0-bd6c-4ead-b3d6-b2bb031baede",
+    "8221b4d4-dac1-4270-b0e1-3d1b3948b365",
+    "ef478991-d012-456a-bb19-8f3320b7a310",
+    "b76c782e-8c4a-458a-88b7-09b864073066",
+    "3781f0fd-6695-40e5-9be2-d6ae0136e498",
+    "aae6f378-9f64-46bd-8d8e-2887598d500d",
+    "cd9aebbe-2518-4da8-a7f9-558657feb7ce",
+    "a99df99e-e1f2-4f2c-ae03-435ea01d57e8",
+    "958a164c-a3d1-49b7-8c53-32bb78a7def3",
+    "e3ff68d7-a2c1-4a5e-99d5-c2838c49e0cf",
+    "543b8348-85aa-49ef-94f9-67c76bf1e1a3",
+    "08ede0e2-b4c1-48b4-9bbf-086cd950d065",
+    "ed75940b-2f67-4778-bccb-569cdde44e34",
+    "442a14ef-fca6-4ecc-84e3-8ec4c3b1d84c",
+    "8f795037-8ded-416e-b84e-ea6be543be5f",
+    "43f1d58c-c7f5-46dc-b0cb-2429449f5118",
+    "ac0483ff-982d-4302-9892-87a75d506759",
+    "4c6fce3e-61bc-423f-9370-f670617f7895",
+    "e52642df-799d-416e-8b08-7e2948ddd10f",
+    "aa289e9d-7bc5-4c71-acba-c28994c9706b",
+    "fbced34f-1c95-4ce7-8f32-62a1ea96da77",
+    "931bf03e-2c57-4753-8948-a4b3d21ff6a5",
+    "e1202f25-a51c-43f9-88c1-bcd39f3649dc",
+    "05da37de-c590-474b-aeac-d08ed459c358",
+    "285e7127-37db-4857-b334-333cfa807dcd",
+    "cf07f51b-ccc7-4f33-9497-3775ff12a31e",
+    "89abb7cd-c713-496a-8c68-69aa9878860b",
+    "547bb0b9-719d-43a3-bb72-6d3eb3dc3fe0",
+    "1c5ea91c-a593-483b-97c9-88b8651f8d6a",
+    "6f1a55a7-ef4e-4c7c-a8b3-aee9eeaed701",
+    "9b4aa5eb-5eb8-432d-a656-db0f894d6c25",
+    "51e658c9-cd7f-4b25-8047-9332d2b45b99",
+    "b80d06e7-3075-44fb-bc3f-d7ecbdd051d4",
+    "42f0a4d8-9295-49ff-b51e-9e18a55a1cda",
+    "c0c7b09c-7d8f-47c0-bcb3-5e53cfe550c0",
+    "ddf83683-c7bf-43b4-aa7a-237de6d78ced",
+    "9c6850cc-41e1-4800-b4d2-2ff30fcf9591",
+    "3186ae55-11ef-4123-991b-2e22b1c8e7cd",
+    "eed45cca-db88-4fec-9d31-e9a42db2d881",
+    "06a6b2b4-f11f-4d53-917a-d1078dda6dae",
+    "9f70e802-a0c9-4a98-b9d4-e666d6794312",
+    "1862e3f5-34af-47ac-a6a3-f2e4c84493a0",
+    "5e5b2c18-4f29-488c-84f8-f18b94d123a7",
+    "ac090e20-d9dd-4f33-a563-b01b8ca04704",
+    "d3eed33c-fa5a-4189-b3b3-fbb3c189b5f4",
+    "f68e5a9a-09c8-45dd-a874-2ce6c1bda820"
+  ],
+  "comments_by_consensus": [
+    {
+      "comment_id": "b4248d43-050d-449e-9f86-517f8734c1c0",
+      "content": "Effective cycling infrastructure requires a network, not isolated branches.",
+      "total_votes": 10,
+      "consensus": 0.7291666666666667,
+      "participation_rate": 0.21739130434782608,
+      "vote_probabilities": { "agree": 1.0, "disagree": 0.0, "skip": 0.0 },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 0.9523809523809524 },
+        { "group_id": 1, "representativeness": 1.05 }
+      ]
+    },
+    {
+      "comment_id": "3a37e6de-6c77-4d95-b971-900fa1ab36ed",
+      "content": "Toronto has adversarial dynamics between cars and bikes.",
+      "total_votes": 15,
+      "consensus": 0.7142857142857143,
+      "participation_rate": 0.32608695652173914,
+      "vote_probabilities": {
+        "agree": 0.9333333333333333,
+        "disagree": 0.0,
+        "skip": 0.06666666666666667
+      },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 1.0285714285714285 },
+        { "group_id": 1, "representativeness": 0.9722222222222223 }
+      ]
+    },
+    {
+      "comment_id": "c4477cf7-6092-4bc3-9a53-8ecf464711c5",
+      "content": "The province paying to remove bike lanes may discourage local efforts for safer cycling.",
+      "total_votes": 30,
+      "consensus": 0.6708333333333333,
+      "participation_rate": 0.6521739130434783,
+      "vote_probabilities": {
+        "agree": 0.9333333333333333,
+        "disagree": 0.06666666666666667,
+        "skip": 0.0
+      },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 0.7304347826086955 },
+        { "group_id": 1, "representativeness": 1.3690476190476193 }
+      ]
+    },
+    {
+      "comment_id": "86e7ec16-8ddf-4eb7-a88c-ed6628224f63",
+      "content": "Cycling improves health outcomes and quality of life for non-cyclists by improving air quality and reducing noise",
+      "total_votes": 7,
+      "consensus": 0.6666666666666667,
+      "participation_rate": 0.15217391304347827,
+      "vote_probabilities": { "agree": 1.0, "disagree": 0.0, "skip": 0.0 },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 1.0416666666666667 },
+        { "group_id": 1, "representativeness": 0.96 }
+      ]
+    },
+    {
+      "comment_id": "e72bac6f-85ae-4c47-9fc5-7adae65aa020",
+      "content": "Streets are for life, not just for passing through and bike lanes support local life.",
+      "total_votes": 9,
+      "consensus": 0.6666666666666666,
+      "participation_rate": 0.1956521739130435,
+      "vote_probabilities": { "agree": 1.0, "disagree": 0.0, "skip": 0.0 },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 0.84375 },
+        { "group_id": 1, "representativeness": 1.1851851851851851 }
+      ]
+    },
+    {
+      "comment_id": "2dc5a60c-f089-4cf9-b65c-90b0719bffb7",
+      "content": "Instead of continuing to comission studies, Toronto should expedite actions and learn from the successes & failures of other municipalities.",
+      "total_votes": 25,
+      "consensus": 0.6617647058823529,
+      "participation_rate": 0.5434782608695652,
+      "vote_probabilities": { "agree": 0.88, "disagree": 0.04, "skip": 0.08 },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 0.85 },
+        { "group_id": 1, "representativeness": 1.1764705882352942 }
+      ]
+    },
+    {
+      "comment_id": "774bbbca-68f6-418b-82ee-6762f50fc1ea",
+      "content": "Whether to remove bike lanes should be based on data, not politics, not assumptions.",
+      "total_votes": 12,
+      "consensus": 0.65625,
+      "participation_rate": 0.2608695652173913,
+      "vote_probabilities": {
+        "agree": 0.9166666666666666,
+        "disagree": 0.0,
+        "skip": 0.08333333333333333
+      },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 1.1666666666666667 },
+        { "group_id": 1, "representativeness": 0.8571428571428571 }
+      ]
+    },
+    {
+      "comment_id": "bac7f33b-7e13-4e32-a1a1-59ff15c1ab4e",
+      "content": "Suburban/out-of-city drivers should want more bike lanes and cyclists, because they clear the road for them",
+      "total_votes": 6,
+      "consensus": 0.6400000000000001,
+      "participation_rate": 0.13043478260869565,
+      "vote_probabilities": { "agree": 1.0, "disagree": 0.0, "skip": 0.0 },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 1.0 },
+        { "group_id": 1, "representativeness": 1.0 }
+      ]
+    },
+    {
+      "comment_id": "0905e2d3-7d9e-4576-8ab5-1f5733352cfa",
+      "content": "Cars shouldn't be the only transportation method",
+      "total_votes": 27,
+      "consensus": 0.631578947368421,
+      "participation_rate": 0.5869565217391305,
+      "vote_probabilities": {
+        "agree": 0.8888888888888888,
+        "disagree": 0.07407407407407407,
+        "skip": 0.037037037037037035
+      },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 0.7037037037037037 },
+        { "group_id": 1, "representativeness": 1.4210526315789473 }
+      ]
+    },
+    {
+      "comment_id": "829bedbd-5671-4d8b-a43d-c42d161bebaf",
+      "content": "Building more physically durable bike infrastructure, like the College bike lanes, also makes it more politically durable",
+      "total_votes": 6,
+      "consensus": 0.625,
+      "participation_rate": 0.13043478260869565,
+      "vote_probabilities": { "agree": 1.0, "disagree": 0.0, "skip": 0.0 },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 1.1111111111111112 },
+        { "group_id": 1, "representativeness": 0.8999999999999999 }
+      ]
+    },
+    {
+      "comment_id": "b68c1d7b-3b43-47cf-ac69-4138bb7f0ab7",
+      "content": "If Toronto continues to densify while relying on cars, traffic will become completely untenable",
+      "total_votes": 6,
+      "consensus": 0.625,
+      "participation_rate": 0.13043478260869565,
+      "vote_probabilities": { "agree": 1.0, "disagree": 0.0, "skip": 0.0 },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 1.1111111111111112 },
+        { "group_id": 1, "representativeness": 0.8999999999999999 }
+      ]
+    },
+    {
+      "comment_id": "e99093a7-a42b-4bdc-b99f-e6d657400289",
+      "content": "We need to increase the capacity of our existing road space by investing in more space efficient modes like transit and bike lanes",
+      "total_votes": 6,
+      "consensus": 0.625,
+      "participation_rate": 0.13043478260869565,
+      "vote_probabilities": { "agree": 1.0, "disagree": 0.0, "skip": 0.0 },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 1.1111111111111112 },
+        { "group_id": 1, "representativeness": 0.8999999999999999 }
+      ]
+    },
+    {
+      "comment_id": "4a79ca12-7c23-41db-9390-ff5defe6681f",
+      "content": "Removing bike lanes does not remove cyclists from the road. It just makes it less safe to bike.",
+      "total_votes": 21,
+      "consensus": 0.6066666666666667,
+      "participation_rate": 0.45652173913043476,
+      "vote_probabilities": {
+        "agree": 0.8571428571428571,
+        "disagree": 0.047619047619047616,
+        "skip": 0.09523809523809523
+      },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 0.8076923076923076 },
+        { "group_id": 1, "representativeness": 1.2380952380952381 }
+      ]
+    },
+    {
+      "comment_id": "0da6cd90-50a3-46f7-8a02-a429a28a6a3d",
+      "content": "prioritize getting people out of the single person auto and into other forms of transit",
+      "total_votes": 28,
+      "consensus": 0.606060606060606,
+      "participation_rate": 0.6086956521739131,
+      "vote_probabilities": {
+        "agree": 0.8928571428571429,
+        "disagree": 0.10714285714285714,
+        "skip": 0.0
+      },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 0.6681818181818182 },
+        { "group_id": 1, "representativeness": 1.4965986394557822 }
+      ]
+    },
+    {
+      "comment_id": "828c478d-977a-44cf-aaf9-12ee4506f1aa",
+      "content": "Bike infrastructure allows kids to learn to cycle early, making them more likely to be lifelong cyclists",
+      "total_votes": 5,
+      "consensus": 0.6000000000000001,
+      "participation_rate": 0.10869565217391304,
+      "vote_probabilities": { "agree": 1.0, "disagree": 0.0, "skip": 0.0 },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 0.9375 },
+        { "group_id": 1, "representativeness": 1.0666666666666667 }
+      ]
+    },
+    {
+      "comment_id": "487cc15e-8beb-4bb5-9ddc-56e870d564b0",
+      "content": "The rapid drop in battery size and cost will lead to e-bikes making cycling more accessible to wide swathes of the population",
+      "total_votes": 5,
+      "consensus": 0.6000000000000001,
+      "participation_rate": 0.10869565217391304,
+      "vote_probabilities": { "agree": 1.0, "disagree": 0.0, "skip": 0.0 },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 0.9375 },
+        { "group_id": 1, "representativeness": 1.0666666666666667 }
+      ]
+    },
+    {
+      "comment_id": "c53f7447-02f1-4689-9939-2fe41a7c9257",
+      "content": "Toronto is expensive and we should invest in low-cost transportation like biking and public transit to make our city accessible and fair",
+      "total_votes": 5,
+      "consensus": 0.6000000000000001,
+      "participation_rate": 0.10869565217391304,
+      "vote_probabilities": { "agree": 1.0, "disagree": 0.0, "skip": 0.0 },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 1.0666666666666667 },
+        { "group_id": 1, "representativeness": 0.9375 }
+      ]
+    },
+    {
+      "comment_id": "8d93f90e-1378-4744-a7c6-8dcc9915ac63",
+      "content": "The best way to reduce traffic is reducing the # of cars; the best way to do that is to build infrastructure for other forms of transport",
+      "total_votes": 5,
+      "consensus": 0.6000000000000001,
+      "participation_rate": 0.10869565217391304,
+      "vote_probabilities": { "agree": 1.0, "disagree": 0.0, "skip": 0.0 },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 0.9375 },
+        { "group_id": 1, "representativeness": 1.0666666666666667 }
+      ]
+    },
+    {
+      "comment_id": "35d5737c-3943-4a51-9d47-6da3fd95ec70",
+      "content": "Some major congestion in Toronto is caused by inefficient road design - street parking allowed on Bayview, Allen Road intersection, etc.",
+      "total_votes": 5,
+      "consensus": 0.6000000000000001,
+      "participation_rate": 0.10869565217391304,
+      "vote_probabilities": { "agree": 1.0, "disagree": 0.0, "skip": 0.0 },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 1.0666666666666667 },
+        { "group_id": 1, "representativeness": 0.9375 }
+      ]
+    },
+    {
+      "comment_id": "65381979-0d77-4ba5-8e8f-5f63043a7b71",
+      "content": "Bike lanes on busy roads promote eco-friendly transportation but require careful planning.",
+      "total_votes": 31,
+      "consensus": 0.5797101449275361,
+      "participation_rate": 0.6739130434782609,
+      "vote_probabilities": {
+        "agree": 0.8387096774193549,
+        "disagree": 0.0967741935483871,
+        "skip": 0.06451612903225806
+      },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 0.7666666666666666 },
+        { "group_id": 1, "representativeness": 1.3043478260869565 }
+      ]
+    },
+    {
+      "comment_id": "eb1668fb-a5bf-434d-8053-efc644cc3f84",
+      "content": "There is no way for Toronto to meet its climate goals without a significant transition away from driving",
+      "total_votes": 8,
+      "consensus": 0.5714285714285715,
+      "participation_rate": 0.17391304347826086,
+      "vote_probabilities": { "agree": 0.875, "disagree": 0.0, "skip": 0.125 },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 0.8928571428571428 },
+        { "group_id": 1, "representativeness": 1.12 }
+      ]
+    },
+    {
+      "comment_id": "22aca2d2-23c5-4930-9ef1-2abdc51cdfa6",
+      "content": "cars are the cause of traffic",
+      "total_votes": 27,
+      "consensus": 0.5714285714285714,
+      "participation_rate": 0.5869565217391305,
+      "vote_probabilities": {
+        "agree": 0.8888888888888888,
+        "disagree": 0.1111111111111111,
+        "skip": 0.0
+      },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 0.63 },
+        { "group_id": 1, "representativeness": 1.5873015873015872 }
+      ]
+    },
+    {
+      "comment_id": "2261912b-bb14-4315-96e7-d6729b365cee",
+      "content": "The province being adversarial with city means less incentive for city to run reversible pilots.",
+      "total_votes": 16,
+      "consensus": 0.5656565656565656,
+      "participation_rate": 0.34782608695652173,
+      "vote_probabilities": {
+        "agree": 0.8125,
+        "disagree": 0.0,
+        "skip": 0.1875
+      },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 1.0694444444444444 },
+        { "group_id": 1, "representativeness": 0.935064935064935 }
+      ]
+    },
+    {
+      "comment_id": "3c3acfb8-b024-4e8c-a685-9b36996b83e4",
+      "content": "No amount of additional car lanes will reduce traffic, because more car lanes lead to more people driving",
+      "total_votes": 4,
+      "consensus": 0.5625,
+      "participation_rate": 0.08695652173913043,
+      "vote_probabilities": { "agree": 1.0, "disagree": 0.0, "skip": 0.0 },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 1.0 },
+        { "group_id": 1, "representativeness": 1.0 }
+      ]
+    },
+    {
+      "comment_id": "e2b71c81-f6b6-46c8-bcf5-ae5e00c93c07",
+      "content": "Cities like Paris prove that rapid and positive changes in bike infrastructure are possible!",
+      "total_votes": 4,
+      "consensus": 0.5625,
+      "participation_rate": 0.08695652173913043,
+      "vote_probabilities": { "agree": 1.0, "disagree": 0.0, "skip": 0.0 },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 1.0 },
+        { "group_id": 1, "representativeness": 1.0 }
+      ]
+    },
+    {
+      "comment_id": "5d5f0756-b12f-4bfb-848f-27864f402799",
+      "content": "Not every car trip can be a bike trip. However, reducing the trips that do not need to be taken by car, can reduce traffic for trips that do",
+      "total_votes": 4,
+      "consensus": 0.5625,
+      "participation_rate": 0.08695652173913043,
+      "vote_probabilities": { "agree": 1.0, "disagree": 0.0, "skip": 0.0 },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 1.0 },
+        { "group_id": 1, "representativeness": 1.0 }
+      ]
+    },
+    {
+      "comment_id": "dc2d9d43-0164-4c67-9778-cca3580df124",
+      "content": "Removing bike lanes risks pushing cyclists into more dangerous traffic situations.",
+      "total_votes": 30,
+      "consensus": 0.5499999999999999,
+      "participation_rate": 0.6521739130434783,
+      "vote_probabilities": {
+        "agree": 0.8666666666666667,
+        "disagree": 0.13333333333333333,
+        "skip": 0.0
+      },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 0.6545454545454545 },
+        { "group_id": 1, "representativeness": 1.5277777777777777 }
+      ]
+    },
+    {
+      "comment_id": "556060ec-422f-4cef-8d8c-5b3517d1c095",
+      "content": "Cars should not park or stop on bike lanes as bikes should not park or stop on car lanes",
+      "total_votes": 13,
+      "consensus": 0.5454545454545454,
+      "participation_rate": 0.2826086956521739,
+      "vote_probabilities": {
+        "agree": 0.8461538461538461,
+        "disagree": 0.07692307692307693,
+        "skip": 0.07692307692307693
+      },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 0.8148148148148148 },
+        { "group_id": 1, "representativeness": 1.2272727272727275 }
+      ]
+    },
+    {
+      "comment_id": "35dcfdda-0015-43ca-a35a-7c1637195abd",
+      "content": "For bike lanes (cycle tracks) to be effective they need to be maintained, especially in winter.",
+      "total_votes": 10,
+      "consensus": 0.5333333333333333,
+      "participation_rate": 0.21739130434782608,
+      "vote_probabilities": { "agree": 0.9, "disagree": 0.1, "skip": 0.0 },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 0.675 },
+        { "group_id": 1, "representativeness": 1.4814814814814814 }
+      ]
+    },
+    {
+      "comment_id": "cadae2c1-d3df-4d1a-9b49-1b71fbaa76ce",
+      "content": "Downtown bike lanes have higher possible throughput than downtown car lanes",
+      "total_votes": 4,
+      "consensus": 0.5333333333333333,
+      "participation_rate": 0.08695652173913043,
+      "vote_probabilities": { "agree": 1.0, "disagree": 0.0, "skip": 0.0 },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 0.8333333333333333 },
+        { "group_id": 1, "representativeness": 1.2000000000000002 }
+      ]
+    },
+    {
+      "comment_id": "ea398770-0a03-4139-a308-efddc8f7e38b",
+      "content": "Bike infrastructure is easier and cheaper to maintain than car infrastructure, because bikes damage roads far less than cars",
+      "total_votes": 4,
+      "consensus": 0.5333333333333333,
+      "participation_rate": 0.08695652173913043,
+      "vote_probabilities": { "agree": 1.0, "disagree": 0.0, "skip": 0.0 },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 0.8333333333333333 },
+        { "group_id": 1, "representativeness": 1.2000000000000002 }
+      ]
+    },
+    {
+      "comment_id": "4a459856-567d-442a-8723-a42cb4872fc6",
+      "content": "correlation between bike lanes and traffic isn't straightforward. need ways to estimate the impact and test assumptions of how they interact",
+      "total_votes": 9,
+      "consensus": 0.525,
+      "participation_rate": 0.1956521739130435,
+      "vote_probabilities": {
+        "agree": 0.8888888888888888,
+        "disagree": 0.1111111111111111,
+        "skip": 0.0
+      },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 1.4583333333333335 },
+        { "group_id": 1, "representativeness": 0.6857142857142857 }
+      ]
+    },
+    {
+      "comment_id": "2d255476-2bd5-4ef0-8c1b-a5416c364e9e",
+      "content": "Cities should have full authority to decide on bike lanes based on local needs.",
+      "total_votes": 32,
+      "consensus": 0.5104166666666667,
+      "participation_rate": 0.6956521739130435,
+      "vote_probabilities": {
+        "agree": 0.8125,
+        "disagree": 0.09375,
+        "skip": 0.09375
+      },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 0.6666666666666667 },
+        { "group_id": 1, "representativeness": 1.5 }
+      ]
+    },
+    {
+      "comment_id": "8910a331-736a-4837-827d-b05f13a22a73",
+      "content": "Bike lanes only work/ are safe if planned across the city, connecting all streets. Without puts everyone in danger.",
+      "total_votes": 3,
+      "consensus": 0.5,
+      "participation_rate": 0.06521739130434782,
+      "vote_probabilities": { "agree": 1.0, "disagree": 0.0, "skip": 0.0 },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 0.8888888888888888 },
+        { "group_id": 1, "representativeness": 1.125 }
+      ]
+    },
+    {
+      "comment_id": "be145f66-bbe8-4b2f-9c1b-e8e43d348f1c",
+      "content": "Cars are space inefficient compared to cycling or mass public transit.",
+      "total_votes": 25,
+      "consensus": 0.4848484848484848,
+      "participation_rate": 0.5434782608695652,
+      "vote_probabilities": { "agree": 0.8, "disagree": 0.2, "skip": 0.0 },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 0.6136363636363636 },
+        { "group_id": 1, "representativeness": 1.6296296296296298 }
+      ]
+    },
+    {
+      "comment_id": "08ba929a-3b39-4093-b4be-fc7d295269b5",
+      "content": "Consulting the province before adding bike lanes could slow down important city-level changes.",
+      "total_votes": 33,
+      "consensus": 0.46,
+      "participation_rate": 0.717391304347826,
+      "vote_probabilities": {
+        "agree": 0.8181818181818182,
+        "disagree": 0.09090909090909091,
+        "skip": 0.09090909090909091
+      },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 0.5434782608695652 },
+        { "group_id": 1, "representativeness": 1.84 }
+      ]
+    },
+    {
+      "comment_id": "d9749855-35c6-425b-a424-6d9c85cd738e",
+      "content": "Efficient traffic flow for cars is important, but not at the cost of bike lane safety.",
+      "total_votes": 31,
+      "consensus": 0.45454545454545453,
+      "participation_rate": 0.6739130434782609,
+      "vote_probabilities": {
+        "agree": 0.7741935483870968,
+        "disagree": 0.16129032258064516,
+        "skip": 0.06451612903225806
+      },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 0.6545454545454544 },
+        { "group_id": 1, "representativeness": 1.527777777777778 }
+      ]
+    },
+    {
+      "comment_id": "67d9c446-30d9-42d5-b98b-6a0ad0b84d7b",
+      "content": "Municipal budgets go farther supporting cycle tracks than more automobile/truck lanes.",
+      "total_votes": 11,
+      "consensus": 0.4444444444444444,
+      "participation_rate": 0.2391304347826087,
+      "vote_probabilities": {
+        "agree": 0.8181818181818182,
+        "disagree": 0.09090909090909091,
+        "skip": 0.09090909090909091
+      },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 0.5625 },
+        { "group_id": 1, "representativeness": 1.7777777777777777 }
+      ]
+    },
+    {
+      "comment_id": "c9b6db2e-4b87-4cb1-ab64-f9a6255af6e4",
+      "content": "It’s critical that cities and the province work together to create safe transportation options.",
+      "total_votes": 31,
+      "consensus": 0.4358974358974359,
+      "participation_rate": 0.6739130434782609,
+      "vote_probabilities": {
+        "agree": 0.6774193548387096,
+        "disagree": 0.12903225806451613,
+        "skip": 0.1935483870967742
+      },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 1.0196078431372548 },
+        { "group_id": 1, "representativeness": 0.9807692307692308 }
+      ]
+    },
+    {
+      "comment_id": "c71236bb-2f25-49d7-97d4-21924a9dc57b",
+      "content": "Policies should be update to accommodate Bicycles and other mode of transportation",
+      "total_votes": 23,
+      "consensus": 0.4320987654320988,
+      "participation_rate": 0.5,
+      "vote_probabilities": {
+        "agree": 0.7391304347826086,
+        "disagree": 0.08695652173913043,
+        "skip": 0.17391304347826086
+      },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 0.7142857142857143 },
+        { "group_id": 1, "representativeness": 1.4 }
+      ]
+    },
+    {
+      "comment_id": "0bdb62bc-5e97-4269-ad6d-94167e85cb71",
+      "content": "Bicycles and other mode of transportation have just as much authority on roads as cars",
+      "total_votes": 24,
+      "consensus": 0.42780748663101603,
+      "participation_rate": 0.5217391304347826,
+      "vote_probabilities": {
+        "agree": 0.7916666666666666,
+        "disagree": 0.16666666666666666,
+        "skip": 0.041666666666666664
+      },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 0.48295454545454547 },
+        { "group_id": 1, "representativeness": 2.070588235294118 }
+      ]
+    },
+    {
+      "comment_id": "a48ba342-c554-44b7-ac99-f0f0a1fac79f",
+      "content": "City planning should prioritize reducing emissions by supporting safe bike infrastructure.",
+      "total_votes": 33,
+      "consensus": 0.4230769230769231,
+      "participation_rate": 0.717391304347826,
+      "vote_probabilities": {
+        "agree": 0.7878787878787878,
+        "disagree": 0.15151515151515152,
+        "skip": 0.06060606060606061
+      },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 0.5034965034965035 },
+        { "group_id": 1, "representativeness": 1.986111111111111 }
+      ]
+    },
+    {
+      "comment_id": "906de7b1-af8e-43a8-9304-1199bf0fd1ac",
+      "content": "Removing paid parking spaces on roads would have a greater impact improving traffic congestion than removing bike lanes.",
+      "total_votes": 28,
+      "consensus": 0.4106280193236715,
+      "participation_rate": 0.6086956521739131,
+      "vote_probabilities": {
+        "agree": 0.7142857142857143,
+        "disagree": 0.07142857142857142,
+        "skip": 0.21428571428571427
+      },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 0.7516339869281047 },
+        { "group_id": 1, "representativeness": 1.3304347826086955 }
+      ]
+    },
+    {
+      "comment_id": "70d0b6ae-1fb4-40ec-932b-afdc33cd43b4",
+      "content": "Bike lanes can reduce traffic by getting people onto bikes who would otherwise drive.",
+      "total_votes": 20,
+      "consensus": 0.40625,
+      "participation_rate": 0.43478260869565216,
+      "vote_probabilities": { "agree": 0.75, "disagree": 0.1, "skip": 0.15 },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 0.6153846153846154 },
+        { "group_id": 1, "representativeness": 1.625 }
+      ]
+    },
+    {
+      "comment_id": "f4012ed8-48d8-4476-b051-6d7ae3fde675",
+      "content": "Safety is the number one barrier for cycling adoption, and connected bike infrastructure is critical for cyclists feeling safe",
+      "total_votes": 5,
+      "consensus": 0.4,
+      "participation_rate": 0.10869565217391304,
+      "vote_probabilities": { "agree": 0.8, "disagree": 0.0, "skip": 0.2 },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 0.625 },
+        { "group_id": 1, "representativeness": 1.6 }
+      ]
+    },
+    {
+      "comment_id": "a731879b-f18f-41b3-a4e0-bcbdbe24a2c4",
+      "content": "Education on rules, responsibilities and regulation on biking within the city by all citizens to make it more effective and safer for all.",
+      "total_votes": 7,
+      "consensus": 0.39999999999999997,
+      "participation_rate": 0.15217391304347827,
+      "vote_probabilities": {
+        "agree": 0.7142857142857143,
+        "disagree": 0.14285714285714285,
+        "skip": 0.14285714285714285
+      },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 1.1111111111111112 },
+        { "group_id": 1, "representativeness": 0.9 }
+      ]
+    },
+    {
+      "comment_id": "e7d46acc-defc-4e4f-b817-295aefb8327b",
+      "content": "prioritize getting people out of the single person auto and into mass transit, and human powered vehicles, cars are the cause of traffic",
+      "total_votes": 2,
+      "consensus": 0.375,
+      "participation_rate": 0.043478260869565216,
+      "vote_probabilities": { "agree": 1.0, "disagree": 0.0, "skip": 0.0 },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 0.6666666666666666 },
+        { "group_id": 1, "representativeness": 1.5 }
+      ]
+    },
+    {
+      "comment_id": "4341b545-45e6-49ad-8cda-6e13cee9a942",
+      "content": "Bicycles and other mode of transportation have just as much authority on roads as cars, policies should be update to accomodate them",
+      "total_votes": 2,
+      "consensus": 0.375,
+      "participation_rate": 0.043478260869565216,
+      "vote_probabilities": { "agree": 1.0, "disagree": 0.0, "skip": 0.0 },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 0.6666666666666666 },
+        { "group_id": 1, "representativeness": 1.5 }
+      ]
+    },
+    {
+      "comment_id": "813f1f3d-07b4-42ba-a92e-c878323e4509",
+      "content": "Bike lanes can be maintained in winter just like car lanes are maintained",
+      "total_votes": 2,
+      "consensus": 0.375,
+      "participation_rate": 0.043478260869565216,
+      "vote_probabilities": { "agree": 1.0, "disagree": 0.0, "skip": 0.0 },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 0.6666666666666666 },
+        { "group_id": 1, "representativeness": 1.5 }
+      ]
+    },
+    {
+      "comment_id": "966d787b-b774-4201-9718-f66ea5f6ddcc",
+      "content": "Ebikes that can go beyond the regulated speed are dangerous for pedestrians and cars",
+      "total_votes": 4,
+      "consensus": 0.375,
+      "participation_rate": 0.08695652173913043,
+      "vote_probabilities": { "agree": 0.75, "disagree": 0.0, "skip": 0.25 },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 0.6666666666666666 },
+        { "group_id": 1, "representativeness": 1.5 }
+      ]
+    },
+    {
+      "comment_id": "fc02648b-1107-4c8d-980c-780c61cc9e30",
+      "content": "Major streets should accommodate both cars and bikes to improve mobility for everyone.",
+      "total_votes": 34,
+      "consensus": 0.3685897435897436,
+      "participation_rate": 0.7391304347826086,
+      "vote_probabilities": {
+        "agree": 0.7647058823529411,
+        "disagree": 0.17647058823529413,
+        "skip": 0.058823529411764705
+      },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 0.4710144927536232 },
+        { "group_id": 1, "representativeness": 2.123076923076923 }
+      ]
+    },
+    {
+      "comment_id": "91c88a7f-bce5-4246-810a-ae5d63330490",
+      "content": "bikes are the future",
+      "total_votes": 11,
+      "consensus": 0.3571428571428571,
+      "participation_rate": 0.2391304347826087,
+      "vote_probabilities": {
+        "agree": 0.6363636363636364,
+        "disagree": 0.2727272727272727,
+        "skip": 0.09090909090909091
+      },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 0.9142857142857143 },
+        { "group_id": 1, "representativeness": 1.09375 }
+      ]
+    },
+    {
+      "comment_id": "da44836c-65d5-482d-94cc-9900bdd33b99",
+      "content": "My experience is that for some reason Toronto has really adversarial dynamics between cars and bikes, worse than other cities.",
+      "total_votes": 1,
+      "consensus": 0.3333333333333333,
+      "participation_rate": 0.021739130434782608,
+      "vote_probabilities": { "agree": 1.0, "disagree": 0.0, "skip": 0.0 },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 0.75 },
+        { "group_id": 1, "representativeness": 1.3333333333333333 }
+      ]
+    },
+    {
+      "comment_id": "1b9c0392-eee2-48ad-85c3-7b2c47fc4ce1",
+      "content": "The province being adversarial with city means less incentive for city to run reversible pilots, and so is bad for province's own goals",
+      "total_votes": 1,
+      "consensus": 0.3333333333333333,
+      "participation_rate": 0.021739130434782608,
+      "vote_probabilities": { "agree": 1.0, "disagree": 0.0, "skip": 0.0 },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 0.75 },
+        { "group_id": 1, "representativeness": 1.3333333333333333 }
+      ]
+    },
+    {
+      "comment_id": "bc94bbf7-7122-487b-aebc-c275234d2ec5",
+      "content": "Existing bike lanes should remain in place.",
+      "total_votes": 30,
+      "consensus": 0.31620553359683795,
+      "participation_rate": 0.6521739130434783,
+      "vote_probabilities": {
+        "agree": 0.7333333333333333,
+        "disagree": 0.2,
+        "skip": 0.06666666666666667
+      },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 0.4181818181818182 },
+        { "group_id": 1, "representativeness": 2.391304347826087 }
+      ]
+    },
+    {
+      "comment_id": "ee484f0d-47fc-4b1a-81a8-b4f03b961758",
+      "content": "Bike lanes infrastructure and usage is dependant on weather conditions and seasons",
+      "total_votes": 12,
+      "consensus": 0.3125,
+      "participation_rate": 0.2608695652173913,
+      "vote_probabilities": { "agree": 0.5, "disagree": 0.5, "skip": 0.0 },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 1.7999999999999998 },
+        { "group_id": 1, "representativeness": 0.5555555555555556 }
+      ]
+    },
+    {
+      "comment_id": "9d7bb70a-ada6-4cf8-acff-759519cd09fc",
+      "content": "I'm open to consideration of losing some designated bike lanes if new meaningfully cross-cutting side-streets go bike-only.",
+      "total_votes": 17,
+      "consensus": 0.3076923076923077,
+      "participation_rate": 0.3695652173913043,
+      "vote_probabilities": {
+        "agree": 0.5882352941176471,
+        "disagree": 0.29411764705882354,
+        "skip": 0.11764705882352941
+      },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 0.8125 },
+        { "group_id": 1, "representativeness": 1.2307692307692308 }
+      ]
+    },
+    {
+      "comment_id": "95ace93f-c7ea-4e89-8245-4a939398e27c",
+      "content": "Expanding bike infrastructure removes cars from the road making our cities quieter.",
+      "total_votes": 32,
+      "consensus": 0.28846153846153844,
+      "participation_rate": 0.6956521739130435,
+      "vote_probabilities": {
+        "agree": 0.8125,
+        "disagree": 0.1875,
+        "skip": 0.0
+      },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 0.312 },
+        { "group_id": 1, "representativeness": 3.2051282051282053 }
+      ]
+    },
+    {
+      "comment_id": "17563369-1e47-4f00-b2f0-d93076236b39",
+      "content": "Reducing car lanes for bike lanes can make roads safer for cyclists and drivers alike.",
+      "total_votes": 31,
+      "consensus": 0.28205128205128205,
+      "participation_rate": 0.6739130434782609,
+      "vote_probabilities": {
+        "agree": 0.7419354838709677,
+        "disagree": 0.16129032258064516,
+        "skip": 0.0967741935483871
+      },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 0.3939393939393939 },
+        { "group_id": 1, "representativeness": 2.5384615384615388 }
+      ]
+    },
+    {
+      "comment_id": "c1fa591e-c0e9-4cde-a769-b488cbd3c527",
+      "content": "Car lanes are essential for emergency services and public transit to move efficiently in busy areas.",
+      "total_votes": 29,
+      "consensus": 0.24347826086956526,
+      "participation_rate": 0.6304347826086957,
+      "vote_probabilities": {
+        "agree": 0.4482758620689655,
+        "disagree": 0.4827586206896552,
+        "skip": 0.06896551724137931
+      },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 2.6285714285714286 },
+        { "group_id": 1, "representativeness": 0.3804347826086957 }
+      ]
+    },
+    {
+      "comment_id": "2f4273a0-c8f9-484d-8989-8463f2373ae2",
+      "content": "Making road congestion in the hope that people choose other forms of transportation is the wrong approach to take",
+      "total_votes": 29,
+      "consensus": 0.23809523809523808,
+      "participation_rate": 0.6304347826086957,
+      "vote_probabilities": {
+        "agree": 0.4827586206896552,
+        "disagree": 0.20689655172413793,
+        "skip": 0.3103448275862069
+      },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 2.916666666666667 },
+        { "group_id": 1, "representativeness": 0.3428571428571428 }
+      ]
+    },
+    {
+      "comment_id": "7cf8e8d0-1db3-4bf2-98f0-c09e493d4d26",
+      "content": "Car lanes on major streets support local businesses by making it easier for customers to reach them.",
+      "total_votes": 33,
+      "consensus": 0.23076923076923078,
+      "participation_rate": 0.717391304347826,
+      "vote_probabilities": {
+        "agree": 0.45454545454545453,
+        "disagree": 0.5151515151515151,
+        "skip": 0.030303030303030304
+      },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 1.6410256410256412 },
+        { "group_id": 1, "representativeness": 0.609375 }
+      ]
+    },
+    {
+      "comment_id": "6ab83cbc-8224-4b2a-9b68-7f9f76c84575",
+      "content": "Where possible, the city should design bike lanes so that emergency vehicles can also use them.",
+      "total_votes": 31,
+      "consensus": 0.22799999999999998,
+      "participation_rate": 0.6739130434782609,
+      "vote_probabilities": {
+        "agree": 0.6451612903225806,
+        "disagree": 0.1935483870967742,
+        "skip": 0.16129032258064516
+      },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 0.39473684210526316 },
+        { "group_id": 1, "representativeness": 2.5333333333333337 }
+      ]
+    },
+    {
+      "comment_id": "076255ab-2123-41ce-bb1b-455d439baa17",
+      "content": "Bike lanes only work/ are safe if planned across the city, connecting all streets.",
+      "total_votes": 2,
+      "consensus": 0.2222222222222222,
+      "participation_rate": 0.043478260869565216,
+      "vote_probabilities": { "agree": 0.5, "disagree": 0.5, "skip": 0.0 },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 0.5 },
+        { "group_id": 1, "representativeness": 2.0 }
+      ]
+    },
+    {
+      "comment_id": "f6ed0a1b-0fa8-497a-beb7-6249c71c2a32",
+      "content": "Without a city spanning bike lane network everyone is put in danger.",
+      "total_votes": 2,
+      "consensus": 0.2222222222222222,
+      "participation_rate": 0.043478260869565216,
+      "vote_probabilities": { "agree": 0.5, "disagree": 0.5, "skip": 0.0 },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 0.5 },
+        { "group_id": 1, "representativeness": 2.0 }
+      ]
+    },
+    {
+      "comment_id": "b8420c1c-5c10-4cbc-b056-d9b14fd86c39",
+      "content": "Bike licensing and education (similar to car licensing) would legitimize cycling and make it safer",
+      "total_votes": 7,
+      "consensus": 0.2,
+      "participation_rate": 0.15217391304347827,
+      "vote_probabilities": {
+        "agree": 0.42857142857142855,
+        "disagree": 0.42857142857142855,
+        "skip": 0.14285714285714285
+      },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 1.25 },
+        { "group_id": 1, "representativeness": 0.8 }
+      ]
+    },
+    {
+      "comment_id": "e8f7be01-490d-412c-8b0f-cf4b1d27c33e",
+      "content": "More enforcement is needed to ensure ebikes are going at safe speeds",
+      "total_votes": 3,
+      "consensus": 0.16666666666666666,
+      "participation_rate": 0.06521739130434782,
+      "vote_probabilities": {
+        "agree": 0.3333333333333333,
+        "disagree": 0.3333333333333333,
+        "skip": 0.3333333333333333
+      },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 0.6666666666666666 },
+        { "group_id": 1, "representativeness": 1.5 }
+      ]
+    },
+    {
+      "comment_id": "238105d7-c390-4cbd-95a1-693b1f89e5fe",
+      "content": "We need more studies on how bike lanes on major roads affect traffic, safety, and businesses.",
+      "total_votes": 32,
+      "consensus": 0.1346153846153846,
+      "participation_rate": 0.6956521739130435,
+      "vote_probabilities": {
+        "agree": 0.3125,
+        "disagree": 0.5,
+        "skip": 0.1875
+      },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 1.8571428571428572 },
+        { "group_id": 1, "representativeness": 0.5384615384615384 }
+      ]
+    },
+    {
+      "comment_id": "ff551987-e40c-4981-b807-b58f4ca2fc9c",
+      "content": "Car lanes are essential for suburban commuters who depend on driving into the city for work.",
+      "total_votes": 32,
+      "consensus": 0.1309090909090909,
+      "participation_rate": 0.6956521739130435,
+      "vote_probabilities": {
+        "agree": 0.3125,
+        "disagree": 0.59375,
+        "skip": 0.09375
+      },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 2.2727272727272725 },
+        { "group_id": 1, "representativeness": 0.44 }
+      ]
+    },
+    {
+      "comment_id": "114c891e-502f-4fb4-a0be-5e3d2b3ebd25",
+      "content": "More enforcement is needed to ensure ebikes and scooters are following the rules of the road",
+      "total_votes": 4,
+      "consensus": 0.125,
+      "participation_rate": 0.08695652173913043,
+      "vote_probabilities": { "agree": 0.25, "disagree": 0.75, "skip": 0.0 },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 0.5 },
+        { "group_id": 1, "representativeness": 2.0 }
+      ]
+    },
+    {
+      "comment_id": "2d19a6fc-cce6-4771-85c5-ef0432c924c5",
+      "content": "Anything - including bike lanes -that slows down traffic is good for safety and city life.",
+      "total_votes": 11,
+      "consensus": 0.12,
+      "participation_rate": 0.2391304347826087,
+      "vote_probabilities": {
+        "agree": 0.45454545454545453,
+        "disagree": 0.18181818181818182,
+        "skip": 0.36363636363636365
+      },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 0.33333333333333337 },
+        { "group_id": 1, "representativeness": 2.9999999999999996 }
+      ]
+    },
+    {
+      "comment_id": "be6efd10-90e3-45d7-b495-30bad2835027",
+      "content": "Roadways with more car lanes support the large number of drivers who rely on their vehicles daily.",
+      "total_votes": 30,
+      "consensus": 0.11666666666666665,
+      "participation_rate": 0.6521739130434783,
+      "vote_probabilities": {
+        "agree": 0.3,
+        "disagree": 0.6666666666666666,
+        "skip": 0.03333333333333333
+      },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 4.2 },
+        { "group_id": 1, "representativeness": 0.2380952380952381 }
+      ]
+    },
+    {
+      "comment_id": "40a6bdf8-90a2-4f35-b921-b0550fadf808",
+      "content": "Car traffic on major roads should be prioritized for commuters and public transit flow.",
+      "total_votes": 30,
+      "consensus": 0.11111111111111112,
+      "participation_rate": 0.6521739130434783,
+      "vote_probabilities": {
+        "agree": 0.26666666666666666,
+        "disagree": 0.43333333333333335,
+        "skip": 0.3
+      },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 2.7777777777777777 },
+        { "group_id": 1, "representativeness": 0.36 }
+      ]
+    },
+    {
+      "comment_id": "98be4ad6-1175-459d-99ad-8b7f4692a91c",
+      "content": "Removing bike lanes may make driving through high-traffic areas smoother and safer for everyone.",
+      "total_votes": 29,
+      "consensus": 0.105,
+      "participation_rate": 0.6304347826086957,
+      "vote_probabilities": {
+        "agree": 0.27586206896551724,
+        "disagree": 0.6896551724137931,
+        "skip": 0.034482758620689655
+      },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 7.291666666666667 },
+        { "group_id": 1, "representativeness": 0.13714285714285715 }
+      ]
+    },
+    {
+      "comment_id": "f4df5853-3e52-4af0-b8df-d9b4a8f900d2",
+      "content": "Provincial oversight may help ensure consistent standards for bike lanes on major roads.",
+      "total_votes": 29,
+      "consensus": 0.09259259259259259,
+      "participation_rate": 0.6304347826086957,
+      "vote_probabilities": {
+        "agree": 0.2413793103448276,
+        "disagree": 0.5517241379310345,
+        "skip": 0.20689655172413793
+      },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 3.3333333333333335 },
+        { "group_id": 1, "representativeness": 0.3 }
+      ]
+    },
+    {
+      "comment_id": "08684220-dc6d-4041-9f54-c509b0096547",
+      "content": "Reducing bike lanes on busy roads can improve traffic flow and reduce driver frustration.",
+      "total_votes": 31,
+      "consensus": 0.0909090909090909,
+      "participation_rate": 0.6739130434782609,
+      "vote_probabilities": {
+        "agree": 0.25806451612903225,
+        "disagree": 0.6774193548387096,
+        "skip": 0.06451612903225806
+      },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 3.2727272727272725 },
+        { "group_id": 1, "representativeness": 0.3055555555555556 }
+      ]
+    },
+    {
+      "comment_id": "e0a5dc78-c378-443e-be14-f5bf570780bf",
+      "content": "Preserving car lanes on major streets can help reduce traffic congestion and travel times.",
+      "total_votes": 30,
+      "consensus": 0.0875,
+      "participation_rate": 0.6521739130434783,
+      "vote_probabilities": {
+        "agree": 0.26666666666666666,
+        "disagree": 0.5666666666666667,
+        "skip": 0.16666666666666666
+      },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 5.6 },
+        { "group_id": 1, "representativeness": 0.17857142857142858 }
+      ]
+    },
+    {
+      "comment_id": "633f3bb7-fb47-44dd-8159-26aa8bbff920",
+      "content": "Keeping major roads clear of bike lanes may allow for smoother public transit routes and bus flow.",
+      "total_votes": 32,
+      "consensus": 0.08727272727272727,
+      "participation_rate": 0.6956521739130435,
+      "vote_probabilities": {
+        "agree": 0.28125,
+        "disagree": 0.625,
+        "skip": 0.09375
+      },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 6.060606060606061 },
+        { "group_id": 1, "representativeness": 0.16499999999999998 }
+      ]
+    },
+    {
+      "comment_id": "74e93776-2419-4284-8211-c46dbbbedcaf",
+      "content": "Major streets are critical for car travel, and bike lanes are better suited to quieter side streets.",
+      "total_votes": 32,
+      "consensus": 0.06923076923076923,
+      "participation_rate": 0.6956521739130435,
+      "vote_probabilities": {
+        "agree": 0.21875,
+        "disagree": 0.71875,
+        "skip": 0.0625
+      },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 5.199999999999999 },
+        { "group_id": 1, "representativeness": 0.19230769230769232 }
+      ]
+    },
+    {
+      "comment_id": "db1e69c3-8b22-48c9-ab1b-7805e23ce408",
+      "content": "Bikes are recreational things only - not major commuter tools",
+      "total_votes": 12,
+      "consensus": 0.05,
+      "participation_rate": 0.2608695652173913,
+      "vote_probabilities": {
+        "agree": 0.16666666666666666,
+        "disagree": 0.8333333333333334,
+        "skip": 0.0
+      },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 5.0 },
+        { "group_id": 1, "representativeness": 0.2 }
+      ]
+    },
+    {
+      "comment_id": "116f9b6c-8cf9-436d-9489-29aae852bd48",
+      "content": "Removing bike lanes from busy streets could help relieve bottlenecks and reduce idling emissions.",
+      "total_votes": 31,
+      "consensus": 0.03260869565217391,
+      "participation_rate": 0.6739130434782609,
+      "vote_probabilities": {
+        "agree": 0.25806451612903225,
+        "disagree": 0.6774193548387096,
+        "skip": 0.06451612903225806
+      },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 17.25 },
+        { "group_id": 1, "representativeness": 0.057971014492753624 }
+      ]
+    },
+    {
+      "comment_id": "c5d740c5-fb5b-412b-a289-ef62ac36cfdc",
+      "content": "Maintaining more car lanes could reduce the likelihood of accidents between cars and bikes.",
+      "total_votes": 34,
+      "consensus": 0.017857142857142856,
+      "participation_rate": 0.7391304347826086,
+      "vote_probabilities": {
+        "agree": 0.14705882352941177,
+        "disagree": 0.7352941176470589,
+        "skip": 0.11764705882352941
+      },
+      "representativeness": [
+        { "group_id": 0, "representativeness": 10.285714285714286 },
+        { "group_id": 1, "representativeness": 0.09722222222222222 }
+      ]
+    }
+  ],
+  "groups": [
+    {
+      "group_id": 2,
+      "users": [
+        "caf3e1c0-bd6c-4ead-b3d6-b2bb031baede",
+        "ef478991-d012-456a-bb19-8f3320b7a310",
+        "b76c782e-8c4a-458a-88b7-09b864073066",
+        "3781f0fd-6695-40e5-9be2-d6ae0136e498",
+        "aae6f378-9f64-46bd-8d8e-2887598d500d",
+        "543b8348-85aa-49ef-94f9-67c76bf1e1a3",
+        "8f795037-8ded-416e-b84e-ea6be543be5f",
+        "4c6fce3e-61bc-423f-9370-f670617f7895",
+        "e52642df-799d-416e-8b08-7e2948ddd10f",
+        "931bf03e-2c57-4753-8948-a4b3d21ff6a5",
+        "e1202f25-a51c-43f9-88c1-bcd39f3649dc",
+        "285e7127-37db-4857-b334-333cfa807dcd",
+        "cf07f51b-ccc7-4f33-9497-3775ff12a31e",
+        "547bb0b9-719d-43a3-bb72-6d3eb3dc3fe0",
+        "9b4aa5eb-5eb8-432d-a656-db0f894d6c25",
+        "b80d06e7-3075-44fb-bc3f-d7ecbdd051d4",
+        "42f0a4d8-9295-49ff-b51e-9e18a55a1cda",
+        "c0c7b09c-7d8f-47c0-bcb3-5e53cfe550c0",
+        "9c6850cc-41e1-4800-b4d2-2ff30fcf9591",
+        "3186ae55-11ef-4123-991b-2e22b1c8e7cd",
+        "eed45cca-db88-4fec-9d31-e9a42db2d881",
+        "06a6b2b4-f11f-4d53-917a-d1078dda6dae",
+        "5e5b2c18-4f29-488c-84f8-f18b94d123a7",
+        "ac090e20-d9dd-4f33-a563-b01b8ca04704"
+      ],
+      "representative_comments": [
+        {
+          "group_id": 1,
+          "comment_id": "95ace93f-c7ea-4e89-8245-4a939398e27c",
+          "content": "Expanding bike infrastructure removes cars from the road making our cities quieter.",
+          "agree_percentage": 1.0,
+          "representativeness": 3.2051282051282053
+        },
+        {
+          "group_id": 1,
+          "comment_id": "2d19a6fc-cce6-4771-85c5-ef0432c924c5",
+          "content": "Anything - including bike lanes -that slows down traffic is good for safety and city life.",
+          "agree_percentage": 0.20833333333333334,
+          "representativeness": 2.9999999999999996
+        },
+        {
+          "group_id": 1,
+          "comment_id": "17563369-1e47-4f00-b2f0-d93076236b39",
+          "content": "Reducing car lanes for bike lanes can make roads safer for cyclists and drivers alike.",
+          "agree_percentage": 0.875,
+          "representativeness": 2.5384615384615388
+        }
+      ]
+    },
+    {
+      "group_id": 1,
+      "users": [
+        "8221b4d4-dac1-4270-b0e1-3d1b3948b365",
+        "cd9aebbe-2518-4da8-a7f9-558657feb7ce",
+        "a99df99e-e1f2-4f2c-ae03-435ea01d57e8",
+        "958a164c-a3d1-49b7-8c53-32bb78a7def3",
+        "e3ff68d7-a2c1-4a5e-99d5-c2838c49e0cf",
+        "08ede0e2-b4c1-48b4-9bbf-086cd950d065",
+        "ed75940b-2f67-4778-bccb-569cdde44e34",
+        "442a14ef-fca6-4ecc-84e3-8ec4c3b1d84c",
+        "43f1d58c-c7f5-46dc-b0cb-2429449f5118",
+        "ac0483ff-982d-4302-9892-87a75d506759",
+        "aa289e9d-7bc5-4c71-acba-c28994c9706b",
+        "fbced34f-1c95-4ce7-8f32-62a1ea96da77",
+        "05da37de-c590-474b-aeac-d08ed459c358",
+        "89abb7cd-c713-496a-8c68-69aa9878860b",
+        "1c5ea91c-a593-483b-97c9-88b8651f8d6a",
+        "6f1a55a7-ef4e-4c7c-a8b3-aee9eeaed701",
+        "51e658c9-cd7f-4b25-8047-9332d2b45b99",
+        "ddf83683-c7bf-43b4-aa7a-237de6d78ced",
+        "9f70e802-a0c9-4a98-b9d4-e666d6794312",
+        "1862e3f5-34af-47ac-a6a3-f2e4c84493a0",
+        "d3eed33c-fa5a-4189-b3b3-fbb3c189b5f4",
+        "f68e5a9a-09c8-45dd-a874-2ce6c1bda820"
+      ],
+      "representative_comments": [
+        {
+          "group_id": 0,
+          "comment_id": "116f9b6c-8cf9-436d-9489-29aae852bd48",
+          "content": "Removing bike lanes from busy streets could help relieve bottlenecks and reduce idling emissions.",
+          "agree_percentage": 0.36363636363636365,
+          "representativeness": 17.25
+        },
+        {
+          "group_id": 0,
+          "comment_id": "c5d740c5-fb5b-412b-a289-ef62ac36cfdc",
+          "content": "Maintaining more car lanes could reduce the likelihood of accidents between cars and bikes.",
+          "agree_percentage": 0.22727272727272727,
+          "representativeness": 10.285714285714286
+        },
+        {
+          "group_id": 0,
+          "comment_id": "98be4ad6-1175-459d-99ad-8b7f4692a91c",
+          "content": "Removing bike lanes may make driving through high-traffic areas smoother and safer for everyone.",
+          "agree_percentage": 0.2727272727272727,
+          "representativeness": 7.291666666666667
+        }
+      ]
+    }
+  ]
+}
