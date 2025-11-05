@@ -164,8 +164,10 @@ async def read_comments(
 
     comments = conversation.comments
 
-    if not conversation.display_unmoderated:
-        comments = list(filter(lambda c: c.approved, comments))
+    if conversation.display_unmoderated:
+        comments = list(filter(lambda c: c.approved is True or c.approved is None, comments))
+    else:
+        comments = list(filter(lambda c: c.approved is True, comments))
 
     if include_user_info:
         return [
@@ -265,16 +267,20 @@ async def get_next_remaining_comment(
     user_votes = db.query(models.Vote).filter(models.Vote.user == current_user).all()
     user_voted_comments = {vote.comment_id for vote in user_votes}
 
-    remaining_comment = (
-        db.query(models.Comment)
-        .filter(
-            models.Comment.conversation == conversation,
-            models.Comment.approved,
-            models.Comment.user != current_user,
-            models.Comment.id.notin_(user_voted_comments),
-        )
-        .first()
+    query = db.query(models.Comment).filter(
+        models.Comment.conversation == conversation,
+        models.Comment.user != current_user,
+        models.Comment.id.notin_(user_voted_comments),
     )
+    
+    if conversation.display_unmoderated:
+        query = query.filter(
+            (models.Comment.approved == True) | (models.Comment.approved == None)
+        )
+    else:
+        query = query.filter(models.Comment.approved == True)
+    
+    remaining_comment = query.first()
 
     if remaining_comment is None:
         raise HTTPException(status_code=404, detail="No remaining comments found")

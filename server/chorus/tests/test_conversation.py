@@ -974,6 +974,49 @@ class TestReadComments:
         assert len(comments) == 1
         assert comments[0]["content"] == approved_comment
 
+    def test_can_see_and_vote_on_unmoderated_comments_when_display_unmoderated_is_true(
+        self,
+        authenticated_clients, 
+        create_conversation, 
+        create_comment
+    ):
+        clients = authenticated_clients(3)               
+        conversation_owner = clients["user1"]
+        user_2 = clients["user2"]
+        user_3 = clients["user3"]
+
+        conversation_id = create_conversation(
+            conversation_owner, 
+            {"display_unmoderated": True}
+        ).json()["id"]
+        
+        unmoderated_comment_content = "This is an unmoderated comment"
+        unmoderated_comment_id = create_comment(
+            user_2, 
+            conversation_id, 
+            unmoderated_comment_content
+        ).json()["id"]
+        
+        response = user_3.get(f"/conversations/{conversation_id}/comments")
+        assert response.status_code == 200
+        comments = response.json()
+        assert len(comments) == 1
+        assert comments[0]["content"] == unmoderated_comment_content
+        assert comments[0]["id"] == unmoderated_comment_id
+        
+        response = user_3.get(f"/conversations/{conversation_id}/comments/remaining")
+        assert response.status_code == 200
+        remaining_comment = response.json()
+        assert remaining_comment["comment"]["id"] == unmoderated_comment_id
+        assert remaining_comment["comment"]["content"] == unmoderated_comment_content
+        assert remaining_comment["num_votes"] == 0
+        
+        response = user_3.post(
+            f"/comments/{unmoderated_comment_id}/vote",
+            json={"value": 1}
+        )
+        assert response.status_code == 200
+        assert "id" in response.json()
 
 class TestVoteOnComment:
     def test_can_vote_on_another_users_comment_first_time(
