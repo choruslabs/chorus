@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { HttpResponse, http } from "msw";
 
 import CommentsTable from "./CommentsTable";
 
@@ -33,6 +34,23 @@ export const NoComment: Story = {
 };
 
 export const SomeComments: Story = {
+  parameters: {
+    msw: {
+      handlers: [
+        http.post(
+          "http://localhost:8000/conversations/test-uuid/comments",
+          async () => {
+            return HttpResponse.json({
+              id: "mock-success",
+            });
+          }
+        ),
+        http.get("http://localhost:8000/users/me", async () => {
+          return HttpResponse.json({ username: "storybook.test@example.com" });
+        }),
+      ],
+    },
+  },
   args: {
     conversation: {
       name: "test title",
