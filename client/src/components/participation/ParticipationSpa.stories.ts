@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { HttpResponse, http } from "msw";
 
 import {
   reactRouterParameters,
@@ -25,6 +26,23 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const ActiveConversation: Story = {
+  parameters: {
+    msw: {
+      handlers: [
+        http.post(
+          "http://localhost:8000/conversations/d035d428-90c1-4ea9-99de-1d7c1f81a939/comments",
+          async () => {
+            return HttpResponse.json({
+              id: "mock-success",
+            });
+          }
+        ),
+        http.get("http://localhost:8000/users/me", async () => {
+          return HttpResponse.json({ username: "storybook.test@example.com" });
+        }),
+      ],
+    },
+  },
   args: {
     conversation: {
       id: "d035d428-90c1-4ea9-99de-1d7c1f81a939",
