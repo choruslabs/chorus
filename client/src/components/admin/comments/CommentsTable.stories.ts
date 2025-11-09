@@ -43,7 +43,7 @@ export const SomeComments: Story = {
             return HttpResponse.json({
               id: "mock-success",
             });
-          }
+          },
         ),
         http.get("http://localhost:8000/users/me", async () => {
           return HttpResponse.json({ username: "storybook.test@example.com" });
