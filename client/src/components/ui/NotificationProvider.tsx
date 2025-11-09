@@ -1,8 +1,9 @@
-import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
+import React, { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
 
 type Notification = {
   message: string;
   type?: "success" | "error";
+  timeout?: number;
 };
 
 const NotificationContext = createContext<{ notify: (message: string, type?: "success" | "error", timeout?: number) => void }>({
@@ -11,24 +12,31 @@ const NotificationContext = createContext<{ notify: (message: string, type?: "su
 
 export const NotificationProvider = ({ children }: { children: React.ReactNode }) => {
   const [notification, setNotification] = useState<Notification | null>(null);
+  const timerRef = useRef<number>();
+
+  const clearTimer = useCallback(() => {
+    if (timerRef.current) {
+      window.clearTimeout(timerRef.current);
+      timerRef.current = undefined;
+    }
+  }, []);
+
+  const dismiss = useCallback(() => {
+    clearTimer();
+    setNotification(null);
+  }, [clearTimer]);
 
   useEffect(() => {
-    let timer: number | undefined;
+    clearTimer();
     if (notification) {
-      timer = window.setTimeout(() => setNotification(null), 5000);
+      const duration = notification.timeout ?? 5000;
+      timerRef.current = window.setTimeout(() => setNotification(null), duration);
     }
-    return () => {
-      if (timer) {
-        window.clearTimeout(timer);
-      }
-    };
-  }, [notification]);
+    return clearTimer;
+  }, [clearTimer, notification]);
 
   const notify = useCallback((message: string, type: "success" | "error" = "success", timeout = 5000) => {
-    setNotification({ message, type });
-    if (timeout !== 5000) {
-      window.setTimeout(() => setNotification(null), timeout);
-    }
+    setNotification({ message, type, timeout });
   }, []);
 
   return (
@@ -41,7 +49,17 @@ export const NotificationProvider = ({ children }: { children: React.ReactNode }
               notification.type === "success" ? "bg-green-600" : "bg-red-600"
             }`}
           >
-            {notification.message}
+            <div className="flex items-start gap-3">
+              <span>{notification.message}</span>
+              <button
+                type="button"
+                onClick={dismiss}
+                aria-label="Dismiss notification"
+                className="ml-auto text-white/80 hover:text-white focus:outline-none"
+              >
+                <span className="material-icons">close</span>
+              </button>
+            </div>
           </div>
         </div>
       )}
