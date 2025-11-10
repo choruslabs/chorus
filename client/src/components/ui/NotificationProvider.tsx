@@ -1,6 +1,7 @@
-import React, { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
+import React, { createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
 
 type Notification = {
+  id: string;
   message: string;
   type?: "success" | "error";
   timeout?: number;
@@ -10,57 +11,66 @@ const NotificationContext = createContext<{ notify: (message: string, type?: "su
   notify: () => {},
 });
 
+const createNotificationId = () =>
+  typeof crypto !== "undefined" && "randomUUID" in crypto ? crypto.randomUUID() : Math.random().toString(36).slice(2);
+
 export const NotificationProvider = ({ children }: { children: React.ReactNode }) => {
-  const [notification, setNotification] = useState<Notification | null>(null);
-  const timerRef = useRef<number>();
+  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const timeoutsRef = useRef<Set<number>>(new Set());
 
-  const clearTimer = useCallback(() => {
-    if (timerRef.current) {
-      window.clearTimeout(timerRef.current);
-      timerRef.current = undefined;
+  const dismiss = (id: string) => {
+    setNotifications((prev) => prev.filter((notification) => notification.id !== id));
+  };
+
+  const notify = (message: string, type: "success" | "error" = "success", timeout = 5000) => {
+    const id = createNotificationId();
+    setNotifications((prev) => [{ id, message, type, timeout }, ...prev]);
+
+    if (timeout > 0) {
+      const timeoutId = window.setTimeout(() => {
+        timeoutsRef.current.delete(timeoutId);
+        setNotifications((prev) => prev.filter((notification) => notification.id !== id));
+      }, timeout);
+
+      timeoutsRef.current.add(timeoutId);
     }
-  }, []);
-
-  const dismiss = useCallback(() => {
-    clearTimer();
-    setNotification(null);
-  }, [clearTimer]);
+  };
 
   useEffect(() => {
-    clearTimer();
-    if (notification) {
-      const duration = notification.timeout ?? 5000;
-      timerRef.current = window.setTimeout(() => setNotification(null), duration);
-    }
-    return clearTimer;
-  }, [clearTimer, notification]);
-
-  const notify = useCallback((message: string, type: "success" | "error" = "success", timeout = 5000) => {
-    setNotification({ message, type, timeout });
+    return () => {
+      timeoutsRef.current.forEach((timeoutId) => window.clearTimeout(timeoutId));
+      timeoutsRef.current.clear();
+    };
   }, []);
 
+  const contextValue = useMemo(() => ({ notify }), [notify]);
+
   return (
-    <NotificationContext.Provider value={{ notify }}>
+    <NotificationContext.Provider value={contextValue}>
       {children}
-      {notification && (
-        <div aria-live="polite" className="fixed top-4 left-1/2 -translate-x-1/2 z-50">
-          <div
-            className={`px-4 py-2 rounded shadow text-white ${
-              notification.type === "success" ? "bg-green-600" : "bg-red-600"
-            }`}
-          >
-            <div className="flex items-start gap-3">
-              <span>{notification.message}</span>
+      {notifications.length > 0 && (
+        <div
+          aria-live="polite"
+          className="fixed top-4 left-1/2 z-100 flex w-full max-w-md -translate-x-1/2 flex-col gap-3 px-4"
+        >
+          {notifications.map((notification) => (
+            <div
+              key={notification.id}
+              className={`flex items-start gap-3 rounded px-4 py-2 text-white shadow ${
+                notification.type === "success" ? "bg-green-600" : "bg-red-600"
+              }`}
+            >
+              <span className="flex-1">{notification.message}</span>
               <button
                 type="button"
-                onClick={dismiss}
+                onClick={() => dismiss(notification.id)}
                 aria-label="Dismiss notification"
-                className="ml-auto text-white/80 hover:text-white focus:outline-none"
+                className="text-white/80 hover:text-white focus:outline-none leading-none"
               >
-                <span className="material-icons">close</span>
+                <span className="material-icons text-base align-middle">close</span>
               </button>
             </div>
-          </div>
+          ))}
         </div>
       )}
     </NotificationContext.Provider>
