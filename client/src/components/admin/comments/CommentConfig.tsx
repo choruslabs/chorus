@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { Conversation } from "../../../app/core/dashboard";
 import { postApi } from "../../api/base";
+import { useNotification } from "../../ui/NotificationProvider";
 
 export default function CommentConfig({
   conversation,
@@ -15,6 +16,7 @@ export default function CommentConfig({
 }) {
   const [comment, setComment] = useState("");
   const [isHovering, setIsHovering] = useState(false);
+  const { notify } = useNotification();
 
   async function formSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -24,11 +26,24 @@ export default function CommentConfig({
     };
     if (!editId) {
       // new conversation
-      await postApi(
-        `/conversations/${conversation.id}/comments`,
-        newConversationRequestBody,
-      );
-      setComment("");
+      try {
+        await postApi(
+          `/conversations/${conversation.id}/comments`,
+          newConversationRequestBody,
+        );
+        setComment("");
+        notify(
+          "Your comment has been submitted. Other participants will start voting on it.",
+          "success"
+        );
+      } catch (error) {
+        notify(
+          "Failed to submit comment. Please try again.",
+          "error"
+        );
+        // Re-throw to prevent dialog from closing on error
+        throw error;
+      }
     } else {
       // edit conversation
       //   putApi(`/conversations/${editItem?.id}`, newConversationRequestBody).then(

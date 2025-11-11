@@ -13,6 +13,7 @@ import { AuthProvider } from "./components/context/AuthProvider";
 import ManageComments from "./components/conversation/ManageComments";
 import ManageDistribution from "./components/conversation/ManageDistribution";
 import MonitorConversation from "./components/conversation/MonitorConversation";
+import NotificationProvider from "./components/ui/NotificationProvider";
 
 const queryClient = new QueryClient();
 
@@ -73,7 +74,9 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <RouterProvider router={router} />
+        <NotificationProvider>
+          <RouterProvider router={router} />
+        </NotificationProvider>
       </AuthProvider>
     </QueryClientProvider>
   </StrictMode>,
