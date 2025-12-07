@@ -115,7 +115,7 @@ export default function ConversationConfig({
         className="w-full flex flex-col"
       >
         <fieldset className="flex flex-col mx-auto gap-2 w-full">
-          <label htmlFor="name">Conversation Heading</label>
+          <label htmlFor="name">Conversation title</label>
           <Input
             className="border-gray-500 border-2 rounded-md p-2"
             type="text"
@@ -156,7 +156,7 @@ export default function ConversationConfig({
                 setConversationShowCharts(event.target.checked)
               }
             ></Input>
-            Participants can see visualization
+            Participants can see opinion visualization
           </label>
           <label htmlFor="display-unmoderated" className="flex gap-2 p-2">
             <Input
@@ -169,7 +169,7 @@ export default function ConversationConfig({
                 setConversationAllowUnmoderatedComments(event.target.checked)
               }
             ></Input>
-            No comments shown without moderator approval
+            Hide comments pending moderator approval
           </label>
           <label htmlFor="allow-votes" className="flex gap-2 p-2">
             <Input
@@ -182,10 +182,10 @@ export default function ConversationConfig({
                 setConversationAllowVotes(event.target.checked)
               }
             ></Input>
-            Make Conversation Open
+            Enable voting on comments
           </label>
           <label htmlFor="user-friendly-link" className="flex gap-2 p-2">
-            Use Custom Link for Conversation
+            Custom conversation link:
             <Input
               className="border-gray-500 border-2 justify-self-start aspect-square h-6"
               name="user-friendly-link"
