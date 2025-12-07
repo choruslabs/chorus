@@ -1,3 +1,5 @@
+// TODO: design an actual logo!
+
 const Logo = ({ fill }: { fill?: string }) => (
   <svg
     width="20"
@@ -6,10 +8,7 @@ const Logo = ({ fill }: { fill?: string }) => (
     xmlns="http://www.w3.org/2000/svg"
   >
     <title>Logo</title>
-    <path
-      d="M44 0L87.3013 25V75L44 100L0.69873 75V25L44 0Z"
-      fill={fill ?? "black"}
-    ></path>
+    <circle cx="44" cy="50" r="15" fill={fill ?? "black"} />
   </svg>
 );
 
