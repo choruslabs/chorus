@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
+import type React from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 
 type Notification = {
   id: string;
@@ -7,29 +8,49 @@ type Notification = {
   timeout?: number;
 };
 
-const NotificationContext = createContext<{ notify: (message: string, type?: "success" | "error", timeout?: number) => void }>({
+const NotificationContext = createContext<{
+  notify: (
+    message: string,
+    type?: "success" | "error",
+    timeout?: number,
+  ) => void;
+}>({
   notify: () => {},
 });
 
 const createNotificationId = () =>
-  typeof crypto !== "undefined" && "randomUUID" in crypto ? crypto.randomUUID() : Math.random().toString(36).slice(2);
+  typeof crypto !== "undefined" && "randomUUID" in crypto
+    ? crypto.randomUUID()
+    : Math.random().toString(36).slice(2);
 
-export const NotificationProvider = ({ children }: { children: React.ReactNode }) => {
+export const NotificationProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const timeoutsRef = useRef<Set<number>>(new Set());
 
   const dismiss = (id: string) => {
-    setNotifications((prev) => prev.filter((notification) => notification.id !== id));
+    setNotifications((prev) =>
+      prev.filter((notification) => notification.id !== id),
+    );
   };
 
-  const notify = (message: string, type: "success" | "error" = "success", timeout = 5000) => {
+  const notify = (
+    message: string,
+    type: "success" | "error" = "success",
+    timeout = 5000,
+  ) => {
     const id = createNotificationId();
     setNotifications((prev) => [{ id, message, type, timeout }, ...prev]);
 
     if (timeout > 0) {
       const timeoutId = window.setTimeout(() => {
         timeoutsRef.current.delete(timeoutId);
-        setNotifications((prev) => prev.filter((notification) => notification.id !== id));
+        setNotifications((prev) =>
+          prev.filter((notification) => notification.id !== id),
+        );
       }, timeout);
 
       timeoutsRef.current.add(timeoutId);
@@ -38,15 +59,15 @@ export const NotificationProvider = ({ children }: { children: React.ReactNode }
 
   useEffect(() => {
     return () => {
-      timeoutsRef.current.forEach((timeoutId) => window.clearTimeout(timeoutId));
+      timeoutsRef.current.forEach((timeoutId) =>
+        window.clearTimeout(timeoutId),
+      );
       timeoutsRef.current.clear();
     };
   }, []);
 
-  const contextValue = useMemo(() => ({ notify }), [notify]);
-
   return (
-    <NotificationContext.Provider value={contextValue}>
+    <NotificationContext.Provider value={{ notify }}>
       {children}
       {notifications.length > 0 && (
         <div
@@ -67,7 +88,9 @@ export const NotificationProvider = ({ children }: { children: React.ReactNode }
                 aria-label="Dismiss notification"
                 className="text-white/80 hover:text-white focus:outline-none leading-none"
               >
-                <span className="material-icons text-base align-middle">close</span>
+                <span className="material-icons text-base align-middle">
+                  close
+                </span>
               </button>
             </div>
           ))}
