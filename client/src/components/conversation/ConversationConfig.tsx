@@ -157,6 +157,7 @@ export default function ConversationConfig({
               }
             ></Input>
             Participants can see opinion visualization
+            Participants can see opinion visualization
           </label>
           <label htmlFor="display-unmoderated" className="flex gap-2 p-2">
             <Input
@@ -170,6 +171,7 @@ export default function ConversationConfig({
               }
             ></Input>
             Hide comments pending moderator approval
+            Hide comments pending moderator approval
           </label>
           <label htmlFor="allow-votes" className="flex gap-2 p-2">
             <Input
@@ -182,6 +184,7 @@ export default function ConversationConfig({
                 setConversationAllowVotes(event.target.checked)
               }
             ></Input>
+            Enable voting on comments
             Enable voting on comments
           </label>
           <label htmlFor="user-friendly-link" className="flex gap-2 p-2">
