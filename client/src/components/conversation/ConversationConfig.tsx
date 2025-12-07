@@ -114,8 +114,8 @@ export default function ConversationConfig({
         id="conversation-form"
         className="w-full flex flex-col"
       >
-        <fieldset className="flex flex-col mx-auto gap-2 w-full">
-          <label htmlFor="name">Conversation title</label>
+        <fieldset className="flex flex-col mx-auto gap-2 w-full mb-4">
+          <label htmlFor="name">Conversation title </label>
           <Input
             className="border-gray-500 border-2 rounded-md p-2"
             type="text"
@@ -138,13 +138,13 @@ export default function ConversationConfig({
         </fieldset>
 
         {!editItem && (
-          <div className="col-span-2 text-center my-6">
+          <div className="col-span-2 text-center ,b-4">
             [Seed Comments Placeholder]
           </div>
         )}
 
         <fieldset className="flex flex-col mx-auto w-full mb-4">
-          <legend className="font-bold text-2xl mb-2">Setup Permissions</legend>
+          <legend className="font-bold text-2xl mb-2">Settings</legend>
           <label htmlFor="show-charts" className="flex gap-2 p-2">
             <Input
               className="border-gray-500 border-2 justify-self-start aspect-square h-6"
@@ -185,9 +185,9 @@ export default function ConversationConfig({
             Enable voting on comments
           </label>
           <label htmlFor="user-friendly-link" className="flex gap-2 p-2">
-            Custom conversation link:
+            Custom conversation link
             <Input
-              className="border-gray-500 border-2 justify-self-start aspect-square h-6"
+              className="border-gray-500 border-2 rounded justify-self-start aspect-square h-6"
               name="user-friendly-link"
               id="user-friendly-link"
               value={conversationFriendlyLink}
@@ -196,6 +196,12 @@ export default function ConversationConfig({
               }
             ></Input>
           </label>
+          <p className="text-sm text-gray-600 mt-1 m-2 p-2 bg-gray-100 rounded">
+            This will be used to generate a shareable link for the conversation.
+            For example, if you set this to <code>community-discussion</code>,
+            the link will be:{" "}
+            <code>{`${window.location.origin}/conversation/community-discussion`}</code>
+          </p>
         </fieldset>
 
         <button

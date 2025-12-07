@@ -1,15 +1,15 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { NotificationProvider, useNotification } from "./NotificationProvider";
 import { useState } from "react";
+import { NotificationProvider, useNotification } from "./NotificationProvider";
 
-function NotificationDemo({ 
+function NotificationDemo({
   title,
-  message, 
-  type 
-}: { 
+  message,
+  type,
+}: {
   title: string;
-  message: string; 
-  type: "success" | "error" 
+  message: string;
+  type: "success" | "error";
 }) {
   const { notify } = useNotification();
   const [count, setCount] = useState(0);
@@ -18,19 +18,22 @@ function NotificationDemo({
     <div className="space-y-4">
       <h3 className="text-lg font-medium">{title}</h3>
       <button
+        type="button"
         onClick={() => {
           notify(message, type);
-          setCount(c => c + 1);
+          setCount((c) => c + 1);
         }}
         className={`px-4 py-2 rounded-md text-white ${
-          type === 'success' ? 'bg-green-600 hover:bg-green-700' : 'bg-red-600 hover:bg-red-700'
+          type === "success"
+            ? "bg-green-600 hover:bg-green-700"
+            : "bg-red-600 hover:bg-red-700"
         }`}
       >
         Show Notification
       </button>
       {count > 0 && (
         <p className="text-sm text-gray-600">
-          Triggered {count} {count === 1 ? 'time' : 'times'}
+          Triggered {count} {count === 1 ? "time" : "times"}
         </p>
       )}
     </div>

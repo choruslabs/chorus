@@ -34,13 +34,10 @@ export default function CommentConfig({
         setComment("");
         notify(
           "Your comment has been submitted. Other participants will start voting on it.",
-          "success"
+          "success",
         );
       } catch (error) {
-        notify(
-          "Failed to submit comment. Please try again.",
-          "error"
-        );
+        notify("Failed to submit comment. Please try again.", "error");
         // Re-throw to prevent dialog from closing on error
         throw error;
       }

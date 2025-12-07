@@ -12,9 +12,7 @@ export function GroupStatementsList(props: {
     <div className="space-y-4">
       {group.topComments.map((comment) => (
         <div
-          key={
-            "group-" + group.group_id + "-representative-" + comment.comment_id
-          }
+          key={`group-${group.group_id}-representative-${comment.comment_id}`}
           className="bg-gray-50 border border-gray-300 rounded-lg p-6"
         >
           <p className="text-lg text-gray-900 leading-relaxed mb-3">
