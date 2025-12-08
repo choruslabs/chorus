@@ -13,12 +13,15 @@ class Conversation(Base):
     name: Mapped[str] = mapped_column(String(200), nullable=False)
     description: Mapped[str] = mapped_column()
     author_id: Mapped[UUID] = mapped_column(ForeignKey("users.id"))
-    display_unmoderated: Mapped[bool] = mapped_column(default=False)
     date_created: Mapped[datetime] = mapped_column(server_default=func.now())
-    is_active: Mapped[bool] = mapped_column(default=True)
     user_friendly_link: Mapped[Optional[str]] = mapped_column(
         String(100), unique=True, nullable=True
     )
+
+    is_active: Mapped[bool] = mapped_column(default=True)
+    display_unmoderated: Mapped[bool] = mapped_column(default=False)
+    allow_comments: Mapped[bool] = mapped_column(default=True)
+    allow_votes: Mapped[bool] = mapped_column(default=True)
 
     author = relationship("User")
     comments = relationship("Comment", backref="conversation")
