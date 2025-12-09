@@ -528,8 +528,10 @@ class TestUpdateConversation:
         )
         assert response1.status_code == 200
 
+        conversation_id2 = create_conversation(authenticated_client).json()["id"]
+
         response2 =authenticated_client.put(
-            f"/conversations/{conversation_id}",
+            f"/conversations/{conversation_id2}",
             json={"user_friendly_link": friendly_link}
         )
         assert response2.status_code == 409
