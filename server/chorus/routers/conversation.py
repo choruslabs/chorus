@@ -179,19 +179,27 @@ async def read_comments(
 
 
 def check_url_safety_and_uniqueness(
-    conversation: ConversationCreate | ConversationUpdate, db: Database
+    conversation: ConversationCreate | ConversationUpdate,
+    db: Database,
+    id: Optional[UUID] = None,
 ):
     link = conversation.user_friendly_link.strip()
     link = link.replace(" ", "-").lower()
     conversation.user_friendly_link = urllib.parse.quote(link)
 
-    if (
+    existing_link = (
         db.query(models.Conversation)
         .filter(
             models.Conversation.user_friendly_link == conversation.user_friendly_link
         )
         .first()
-    ):
+    )
+
+    if existing_link is not None:
+        if isinstance(conversation, ConversationUpdate):
+            if existing_link.id == id:
+                return
+
         raise HTTPException(status_code=409, detail="User friendly link already exists")
 
 
@@ -225,7 +233,7 @@ async def update_conversation(
         raise HTTPException(status_code=403, detail="Not authorized")
 
     if conversation.user_friendly_link:
-        check_url_safety_and_uniqueness(conversation, db)
+        check_url_safety_and_uniqueness(conversation, db, id=conversation_id)
 
     for key, value in conversation.model_dump(exclude_unset=True).items():
         setattr(conversation_db, key, value)
@@ -301,7 +309,7 @@ async def vote_on_comment(
     comment = db.query(models.Comment).get(comment_id)
     if comment is None:
         raise HTTPException(status_code=404, detail="Comment not found")
-    
+
     if not comment.conversation.allow_votes:
         raise HTTPException(
             status_code=403, detail="Voting is not allowed in this conversation"
