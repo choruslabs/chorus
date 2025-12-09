@@ -1,14 +1,16 @@
+import { Switch } from "@headlessui/react";
+import { useState } from "react";
 import { useOutletContext } from "react-router";
 import type { Conversation } from "../../app/core/dashboard";
 import { updateConversation } from "../api/conversation";
-import { useState } from "react";
-import { Switch } from "@headlessui/react";
 
 export default function MonitorConversation() {
   const { conversation } = useOutletContext<{ conversation: Conversation }>();
 
-  const [ allowComments, setAllowComments ] = useState(conversation.allow_comments);
-  const [ allowVotes, setAllowVotes ] = useState(conversation.allow_votes);
+  const [allowComments, setAllowComments] = useState(
+    conversation.allow_comments,
+  );
+  const [allowVotes, setAllowVotes] = useState(conversation.allow_votes);
 
   const toggleAllowComments = () => {
     updateConversation({
@@ -17,7 +19,7 @@ export default function MonitorConversation() {
     }).then(() => {
       setAllowComments(!allowComments);
     });
-  }
+  };
 
   const toggleAllowVotes = () => {
     updateConversation({
@@ -26,7 +28,7 @@ export default function MonitorConversation() {
     }).then(() => {
       setAllowVotes(!allowVotes);
     });
-  }
+  };
 
   return (
     <div className="[95%] max-w-4xl mx-auto flex flex-col items-start space-y-4 p-4">

@@ -1,9 +1,8 @@
-import { Input, Switch, Textarea } from "@headlessui/react";
+import { Input, Textarea } from "@headlessui/react";
 import { ArrowLeftIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import type { Conversation } from "../../app/core/dashboard";
-import { postApi, putApi } from "../api/base";
 import { createConversation, updateConversation } from "../api/conversation";
 
 export default function ConversationConfig({
