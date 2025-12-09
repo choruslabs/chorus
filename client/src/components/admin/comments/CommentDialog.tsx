@@ -34,10 +34,14 @@ export function NewCommentDialog({
     <>
       <button
         type="button"
+        disabled={!conversation.allow_comments}
         onClick={() => handleEditClick(true)}
-        className="flex mb-4 bg-white border-1 border-gray-300 px-3 py-2 w-min whitespace-nowrap items-center justify-center gap-x-2 rounded-xl"
+        className={`flex mb-4 ${conversation.allow_comments ? "bg-blue-500 text-white" : "bg-gray-200 border-gray-300"} border-1 px-3 py-2 w-min whitespace-nowrap items-center justify-center gap-x-2 rounded-xl`}
       >
         <PlusIcon height={24} width={24} /> Add Comment
+        {!conversation.allow_comments && (
+          <span className="text-sm italic">(comments disabled)</span>
+        )}
       </button>
 
       <dialog
