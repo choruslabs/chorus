@@ -13,7 +13,8 @@ export type Conversation = {
   display_unmoderated: boolean;
   user_friendly_link?: string;
   show_charts?: boolean; // placeholder
-  allow_votes?: boolean; // placeholder
+  allow_votes: boolean;
+  allow_comments: boolean;
 };
 
 export type Comment = {

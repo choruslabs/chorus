@@ -21,6 +21,8 @@ class ConversationResponse(BaseModel):
     date_created: datetime = None
     is_active: bool = True
     user_friendly_link: Optional[str] = None
+    allow_comments: bool = True
+    allow_votes: bool = True
 
     model_config = ConfigDict(extra='forbid')
 

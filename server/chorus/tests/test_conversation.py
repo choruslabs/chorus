@@ -21,6 +21,8 @@ class ConversationResponse(BaseModel):
     date_created: datetime = None
     is_active: bool = True
     user_friendly_link: Optional[str] = None
+    allow_comments: bool = True
+    allow_votes: bool = True
 
     model_config = ConfigDict(extra='forbid')
 
@@ -526,12 +528,65 @@ class TestUpdateConversation:
         )
         assert response1.status_code == 200
 
+        conversation_id2 = create_conversation(authenticated_client).json()["id"]
+
         response2 =authenticated_client.put(
-            f"/conversations/{conversation_id}",
+            f"/conversations/{conversation_id2}",
             json={"user_friendly_link": friendly_link}
         )
         assert response2.status_code == 409
         assert response2.json() == {"detail": "User friendly link already exists"}
+
+    
+    def test_update_conversation_allow_comments_and_votes(
+        self,
+        authenticated_client,
+        create_conversation
+    ):
+        """
+        Test a user can modify the allow_comments and allow_votes settings of a conversation they created
+        Expected Behavior:
+        - The API returns a 200 status code
+        - The response JSON contains an "id" field with the conversation's id
+        """
+        conversation_id = create_conversation(
+            authenticated_client, 
+            {"allow_comments": True, "allow_votes": True}
+        ).json()["id"]
+        
+        # Verify initial values for allow_comments and allow_votes
+        get_response = authenticated_client.get(f"/conversations/{conversation_id}")
+        assert get_response.status_code == 200
+        assert get_response.json()["allow_comments"]
+        assert get_response.json()["allow_votes"]
+
+        # Ensure comments can be added initially
+        response = authenticated_client.post(
+            f"/conversations/{conversation_id}/comments",
+            json={"content": "This is a comment"}
+        )
+        assert response.status_code == 200
+
+        # Update allow_comments and allow_votes to False
+        response = authenticated_client.put(
+            f"/conversations/{conversation_id}",
+            json={"allow_comments": False, "allow_votes": False},
+        ) 
+        assert response.status_code == 200
+        assert response.json() == {"id": conversation_id}
+
+        # Verify the update
+        get_response = authenticated_client.get(f"/conversations/{conversation_id}")
+        assert get_response.status_code == 200
+        assert not get_response.json()["allow_comments"]
+        assert not get_response.json()["allow_votes"]
+
+        # Verify that comments cannot be added
+        comment_response = authenticated_client.post(
+            f"/conversations/{conversation_id}/comments",
+            json={"content": "This comment should not be allowed."}
+        )
+        assert comment_response.status_code == 403
 
 
 class TestDeleteConversation:

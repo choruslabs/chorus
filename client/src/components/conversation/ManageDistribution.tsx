@@ -12,9 +12,9 @@ export default function ManageDistribution() {
   }, [conversation]);
 
   return (
-    <div className='[95%] max-w-4xl mx-auto p-5'>
+    <div className="[95%] max-w-4xl mx-auto p-5">
       <p>Copy the below link to share this conversation with participants:</p>
-      <div className='flex items-center justify-between mt-3 p-3 bg-gray-100 border-1 border-gray-400 rounded break-all'>
+      <div className="flex items-center justify-between mt-3 p-3 bg-gray-100 border-1 border-gray-400 rounded break-all">
         <a href={conversationLink}>{conversationLink}</a>
         <button
           type="button"

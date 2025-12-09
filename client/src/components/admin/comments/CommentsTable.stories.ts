@@ -28,6 +28,8 @@ export const NoComment: Story = {
       date_created: "",
       is_active: false,
       display_unmoderated: true,
+      allow_comments: true,
+      allow_votes: true,
     },
     comments: [],
   },
@@ -64,6 +66,8 @@ export const SomeComments: Story = {
       date_created: "",
       is_active: false,
       display_unmoderated: true,
+      allow_comments: true,
+      allow_votes: true,
     },
     comments: [
       {

@@ -3,7 +3,7 @@ import { ArrowLeftIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import type { Conversation } from "../../app/core/dashboard";
-import { postApi, putApi } from "../api/base";
+import { createConversation, updateConversation } from "../api/conversation";
 
 export default function ConversationConfig({
   editItem,
@@ -36,42 +36,34 @@ export default function ConversationConfig({
 
   const [conversationAllowVotes, setConversationAllowVotes] = useState(
     editItem?.allow_votes ?? false,
-  ); // TODO: placeholder; change to correct value later
-  // const [updated, setUpdated] = useState(0);
-
+  );
+  const [conversationAllowComments, setConversationAllowComments] = useState(
+    editItem?.allow_comments ?? true,
+  );
   const [conversationFriendlyLink, setConversationFriendlyLink] = useState(
     editItem?.user_friendly_link ?? "",
   );
 
   async function formSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const formData = new FormData(event.target as HTMLFormElement);
     const newConversationRequestBody = {
-      display_unmoderated: formData.get("display-unmoderated") === "on",
-      show_charts: formData.get("show-charts") === "on", // TODO: placeholder; change to correct value later
-      allow_votes: formData.get("allow-votes") === "on", // TODO: placeholder; change to correct value later
-      user_friendly_link: formData.get("user-friendly-link"), // TODO: placeholder; change to correct value later
-      name: formData.get("name"),
-      description: formData.get("description"),
+      name: conversationName,
+      description: conversationDescription,
+      // show_charts: conversationShowCharts,
+      displayUnmoderated: conversationAllowUnmoderatedComments,
+      allowVotes: conversationAllowVotes,
+      allowComments: conversationAllowComments,
+      userFriendlyLink: conversationFriendlyLink,
     };
     if (!editItem)
       // new conversation
-      await postApi("/conversations", newConversationRequestBody);
-    // .then((resp) => {
-    //   setConversationId(resp.id);
-    // });
+      await createConversation(newConversationRequestBody);
     else {
       // edit conversation
-      await putApi(
-        `/conversations/${editItem?.id}`,
-        newConversationRequestBody,
-      );
-      // .then(
-      //   (resp) => {
-      //     setUpdated(Date.now());
-      //     setConversationId(resp.id);
-      //   }
-      // );
+      await updateConversation({
+        conversationId: editItem.id,
+        ...newConversationRequestBody,
+      });
     }
     if (onComplete) {
       onComplete();
@@ -156,7 +148,7 @@ export default function ConversationConfig({
                 setConversationShowCharts(event.target.checked)
               }
             ></Input>
-            Participants can see opinion visualization
+            Show opinion visualizations to participants
           </label>
           <label htmlFor="display-unmoderated" className="flex gap-2 p-2">
             <Input
@@ -182,7 +174,20 @@ export default function ConversationConfig({
                 setConversationAllowVotes(event.target.checked)
               }
             ></Input>
-            Enable voting on comments
+            Allow participants to vote on comments
+          </label>
+          <label htmlFor="allow-comments" className="flex gap-2 p-2">
+            <Input
+              className="border-gray-500 border-2 justify-self-start aspect-square h-6"
+              type="checkbox"
+              name="allow-comments"
+              id="allow-comments"
+              checked={conversationAllowComments}
+              onChange={(event) =>
+                setConversationAllowComments(event.target.checked)
+              }
+            ></Input>
+            Allow participants to add comments
           </label>
           <label htmlFor="user-friendly-link" className="flex gap-2 p-2">
             Custom conversation link

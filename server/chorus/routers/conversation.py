@@ -18,23 +18,25 @@ class UserBasic(BaseModel):
     username: str
 
 
-class Conversation(BaseModel):
+class ConversationBase(BaseModel):
+    description: str = None
+    user_friendly_link: Optional[str] = None
+    is_active: bool = True
+    display_unmoderated: bool = False
+    allow_comments: bool = True
+    allow_votes: bool = True
+
+
+class Conversation(ConversationBase):
     id: UUID
     name: str
-    description: str = None
     author: UserBasic
-    num_participants: int = None
-    display_unmoderated: bool
-    date_created: datetime = None
-    is_active: bool = True
-    user_friendly_link: Optional[str] = None
+    num_participants: Optional[int] = None
+    date_created: Optional[datetime] = None
 
 
-class ConversationCreate(BaseModel):
+class ConversationCreate(ConversationBase):
     name: str
-    description: str = None
-    display_unmoderated: bool = False
-    user_friendly_link: Optional[str] = None
 
 
 class Comment(BaseModel):
@@ -62,11 +64,8 @@ class CommentWithUserInfo(CommentDetail):
     vote: Optional[int] = None
 
 
-class ConversationUpdate(BaseModel):
+class ConversationUpdate(ConversationBase):
     name: Optional[str] = None
-    description: Optional[str] = None
-    display_unmoderated: Optional[bool] = False
-    user_friendly_link: Optional[str] = None
 
 
 def get_conversation_details(
@@ -165,7 +164,9 @@ async def read_comments(
     comments = conversation.comments
 
     if conversation.display_unmoderated:
-        comments = list(filter(lambda c: c.approved is True or c.approved is None, comments))
+        comments = list(
+            filter(lambda c: c.approved is True or c.approved is None, comments)
+        )
     else:
         comments = list(filter(lambda c: c.approved is True, comments))
 
@@ -178,19 +179,27 @@ async def read_comments(
 
 
 def check_url_safety_and_uniqueness(
-    conversation: ConversationCreate | ConversationUpdate, db: Database
+    conversation: ConversationCreate | ConversationUpdate,
+    db: Database,
+    id: Optional[UUID] = None,
 ):
     link = conversation.user_friendly_link.strip()
     link = link.replace(" ", "-").lower()
     conversation.user_friendly_link = urllib.parse.quote(link)
 
-    if (
+    existing_link = (
         db.query(models.Conversation)
         .filter(
             models.Conversation.user_friendly_link == conversation.user_friendly_link
         )
         .first()
-    ):
+    )
+
+    if existing_link is not None:
+        if isinstance(conversation, ConversationUpdate):
+            if existing_link.id == id:
+                return
+
         raise HTTPException(status_code=409, detail="User friendly link already exists")
 
 
@@ -224,7 +233,7 @@ async def update_conversation(
         raise HTTPException(status_code=403, detail="Not authorized")
 
     if conversation.user_friendly_link:
-        check_url_safety_and_uniqueness(conversation, db)
+        check_url_safety_and_uniqueness(conversation, db, id=conversation_id)
 
     for key, value in conversation.model_dump(exclude_unset=True).items():
         setattr(conversation_db, key, value)
@@ -244,6 +253,11 @@ async def create_comment(
     conversation = db.query(models.Conversation).get(conversation_id)
     if conversation is None:
         raise HTTPException(status_code=404, detail="Conversation not found")
+
+    if not conversation.allow_comments:
+        raise HTTPException(
+            status_code=403, detail="Commenting is not allowed in this conversation"
+        )
 
     db_comment = models.Comment(
         **comment.model_dump(), conversation=conversation, user=current_user
@@ -272,14 +286,14 @@ async def get_next_remaining_comment(
         models.Comment.user != current_user,
         models.Comment.id.notin_(user_voted_comments),
     )
-    
+
     if conversation.display_unmoderated:
         query = query.filter(
             (models.Comment.approved == True) | (models.Comment.approved == None)
         )
     else:
         query = query.filter(models.Comment.approved == True)
-    
+
     remaining_comment = query.first()
 
     if remaining_comment is None:
@@ -295,6 +309,11 @@ async def vote_on_comment(
     comment = db.query(models.Comment).get(comment_id)
     if comment is None:
         raise HTTPException(status_code=404, detail="Comment not found")
+
+    if not comment.conversation.allow_votes:
+        raise HTTPException(
+            status_code=403, detail="Voting is not allowed in this conversation"
+        )
 
     db_vote = (
         db.query(models.Vote)
