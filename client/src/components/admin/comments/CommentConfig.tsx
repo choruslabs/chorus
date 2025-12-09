@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { Conversation } from "../../../app/core/dashboard";
 import { postApi } from "../../api/base";
+import { useNotification } from "../../ui/NotificationProvider";
 
 export default function CommentConfig({
   conversation,
@@ -15,7 +16,8 @@ export default function CommentConfig({
 }) {
   const [comment, setComment] = useState("");
   const [isHovering, setIsHovering] = useState(false);
-  
+  const { notify } = useNotification();
+
   async function formSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     // const formData = new FormData(event.target as HTMLFormElement);
@@ -24,11 +26,21 @@ export default function CommentConfig({
     };
     if (!editId) {
       // new conversation
-      await postApi(
-        `/conversations/${conversation.id}/comments`,
-        newConversationRequestBody,
-      );
-      setComment("");
+      try {
+        await postApi(
+          `/conversations/${conversation.id}/comments`,
+          newConversationRequestBody,
+        );
+        setComment("");
+        notify(
+          "Your comment has been submitted. Other participants will start voting on it.",
+          "success",
+        );
+      } catch (error) {
+        notify("Failed to submit comment. Please try again.", "error");
+        // Re-throw to prevent dialog from closing on error
+        throw error;
+      }
     } else {
       // edit conversation
       //   putApi(`/conversations/${editItem?.id}`, newConversationRequestBody).then(
@@ -73,21 +85,19 @@ export default function CommentConfig({
         >
           Cancel
         </button>
-        <div
-          className="relative flex-1"
-          onMouseEnter={() => setIsHovering(true)}
-          onMouseLeave={() => setIsHovering(false)}
-        >
+        <div className="relative flex-1">
           <button
             type="submit"
+            onMouseEnter={() => setIsHovering(true)}
+            onMouseLeave={() => setIsHovering(false)}
             className={`px-2 py-1 bg-gray-500 text-white rounded-md w-full ${comment.trim() === "" ? "cursor-default" : "bg-secondary"}`}
-            disabled={comment.trim() === ""} 
+            disabled={comment.trim() === ""}
           >
             Add Comment
           </button>
         </div>
         {comment.trim() === "" && isHovering && (
-          <div 
+          <div
             className="absolute -bottom-12 left-1/2 -translate-x-1/2 bg-white border border-gray-300 rounded-md shadow px-3 py-1 text-sm text-gray-700 z-50 transition-opacity duration-300 ease-in-out"
             role="tooltip"
             aria-live="polite"

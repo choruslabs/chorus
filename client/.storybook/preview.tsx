@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { initialize, mswLoader } from "msw-storybook-addon";
 
 import "../src/index.css"; // tailwind CSS etc
+import NotificationProvider from "../src/components/ui/NotificationProvider";
 
 let options = {};
 if (location.hostname.includes("github.io")) {
@@ -22,7 +23,9 @@ const preview: Preview = {
 
       return (
         <QueryClientProvider client={queryClient}>
-          <Story />
+          <NotificationProvider>
+            <Story />
+          </NotificationProvider>
         </QueryClientProvider>
       );
     },

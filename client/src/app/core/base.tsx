@@ -45,7 +45,7 @@ const CoreBase = ({
         </AppBar>
       </div>
       <div className="grow w-full overflow-y-auto pt-4">
-        {userStatus?.isLoading ? <>Loading...</> : children}
+        {userStatus?.isLoading ? "Loading..." : children}
       </div>
     </div>
   );

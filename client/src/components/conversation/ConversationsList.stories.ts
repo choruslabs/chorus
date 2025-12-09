@@ -16,6 +16,8 @@ const conversationResp = [
     date_created: "2025-07-04T04:38:18.318536",
     is_active: true,
     display_unmoderated: false,
+    allow_comments: true,
+    allow_votes: true,
   },
 ];
 

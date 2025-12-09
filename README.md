@@ -10,13 +10,13 @@ This is an open-source web application implementing a polis-like algorithm for m
 
 The web API is written in [FastAPI](https://fastapi.tiangolo.com/), a web framework for Python. You need to install Python before running the API.
 
-Installation for Windows (instructions are minimally changed for Linux):
+You also need to install [Poetry](https://python-poetry.org/) for Python, which is used for dependency management. Find installation instructions at https://python-poetry.org/docs/.
+
+After installing poetry, install the project.
 
 ```bash
 cd server
-python -m venv venv
-venv/Scripts/activate # (in Linux, use source venv/bin/activate)
-pip install -r requirements.txt
+poetry install
 ```
 
 Add an environment file `.env` in the `server` directory in the same format as `sample.env`, but
@@ -29,7 +29,7 @@ replace:
 To run the API (in auto-reload mode):
 
 ```bash
-uvicorn chorus.main:app --reload
+poetry run uvicorn chorus.main:app --reload
 ```
 
 Go to `http://localhost:8000/docs` to check if it works: you should see a Swagger page.
@@ -80,3 +80,5 @@ To run in storybook mode:
 ```bash
 npm run storybook
 ```
+
+There is also an online storybook instance at https://choruslabs.github.io/chorus.

@@ -3,7 +3,7 @@ import { ArrowLeftIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import type { Conversation } from "../../app/core/dashboard";
-import { postApi, putApi } from "../api/base";
+import { createConversation, updateConversation } from "../api/conversation";
 
 export default function ConversationConfig({
   editItem,
@@ -36,42 +36,34 @@ export default function ConversationConfig({
 
   const [conversationAllowVotes, setConversationAllowVotes] = useState(
     editItem?.allow_votes ?? false,
-  ); // TODO: placeholder; change to correct value later
-  // const [updated, setUpdated] = useState(0);
-
+  );
+  const [conversationAllowComments, setConversationAllowComments] = useState(
+    editItem?.allow_comments ?? true,
+  );
   const [conversationFriendlyLink, setConversationFriendlyLink] = useState(
     editItem?.user_friendly_link ?? "",
   );
 
   async function formSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const formData = new FormData(event.target as HTMLFormElement);
     const newConversationRequestBody = {
-      display_unmoderated: formData.get("display-unmoderated") === "on",
-      show_charts: formData.get("show-charts") === "on", // TODO: placeholder; change to correct value later
-      allow_votes: formData.get("allow-votes") === "on", // TODO: placeholder; change to correct value later
-      user_friendly_link: formData.get("user-friendly-link"), // TODO: placeholder; change to correct value later
-      name: formData.get("name"),
-      description: formData.get("description"),
+      name: conversationName,
+      description: conversationDescription,
+      // show_charts: conversationShowCharts,
+      displayUnmoderated: conversationAllowUnmoderatedComments,
+      allowVotes: conversationAllowVotes,
+      allowComments: conversationAllowComments,
+      userFriendlyLink: conversationFriendlyLink,
     };
     if (!editItem)
       // new conversation
-      await postApi("/conversations", newConversationRequestBody);
-    // .then((resp) => {
-    //   setConversationId(resp.id);
-    // });
+      await createConversation(newConversationRequestBody);
     else {
       // edit conversation
-      await putApi(
-        `/conversations/${editItem?.id}`,
-        newConversationRequestBody,
-      );
-      // .then(
-      //   (resp) => {
-      //     setUpdated(Date.now());
-      //     setConversationId(resp.id);
-      //   }
-      // );
+      await updateConversation({
+        conversationId: editItem.id,
+        ...newConversationRequestBody,
+      });
     }
     if (onComplete) {
       onComplete();
@@ -114,8 +106,8 @@ export default function ConversationConfig({
         id="conversation-form"
         className="w-full flex flex-col"
       >
-        <fieldset className="flex flex-col mx-auto gap-2 w-full">
-          <label htmlFor="name">Conversation Heading</label>
+        <fieldset className="flex flex-col mx-auto gap-2 w-full mb-4">
+          <label htmlFor="name">Conversation title </label>
           <Input
             className="border-gray-500 border-2 rounded-md p-2"
             type="text"
@@ -138,11 +130,13 @@ export default function ConversationConfig({
         </fieldset>
 
         {!editItem && (
-          <div className="col-span-2 text-center my-6">[Seed Comments Placeholder]</div>
+          <div className="col-span-2 text-center ,b-4">
+            [Seed Comments Placeholder]
+          </div>
         )}
 
         <fieldset className="flex flex-col mx-auto w-full mb-4">
-          <legend className="font-bold text-2xl mb-2">Setup Permissions</legend>
+          <legend className="font-bold text-2xl mb-2">Settings</legend>
           <label htmlFor="show-charts" className="flex gap-2 p-2">
             <Input
               className="border-gray-500 border-2 justify-self-start aspect-square h-6"
@@ -154,7 +148,7 @@ export default function ConversationConfig({
                 setConversationShowCharts(event.target.checked)
               }
             ></Input>
-            Participants can see visualization
+            Show opinion visualizations to participants
           </label>
           <label htmlFor="display-unmoderated" className="flex gap-2 p-2">
             <Input
@@ -167,7 +161,7 @@ export default function ConversationConfig({
                 setConversationAllowUnmoderatedComments(event.target.checked)
               }
             ></Input>
-            No comments shown without moderator approval
+            Hide comments pending moderator approval
           </label>
           <label htmlFor="allow-votes" className="flex gap-2 p-2">
             <Input
@@ -180,12 +174,25 @@ export default function ConversationConfig({
                 setConversationAllowVotes(event.target.checked)
               }
             ></Input>
-            Make Conversation Open
+            Allow participants to vote on comments
           </label>
-          <label htmlFor="user-friendly-link" className="flex gap-2 p-2">
-            Use Custom Link for Conversation
+          <label htmlFor="allow-comments" className="flex gap-2 p-2">
             <Input
               className="border-gray-500 border-2 justify-self-start aspect-square h-6"
+              type="checkbox"
+              name="allow-comments"
+              id="allow-comments"
+              checked={conversationAllowComments}
+              onChange={(event) =>
+                setConversationAllowComments(event.target.checked)
+              }
+            ></Input>
+            Allow participants to add comments
+          </label>
+          <label htmlFor="user-friendly-link" className="flex gap-2 p-2">
+            Custom conversation link
+            <Input
+              className="border-gray-500 border-2 rounded justify-self-start aspect-square h-6"
               name="user-friendly-link"
               id="user-friendly-link"
               value={conversationFriendlyLink}
@@ -194,6 +201,12 @@ export default function ConversationConfig({
               }
             ></Input>
           </label>
+          <p className="text-sm text-gray-600 mt-1 m-2 p-2 bg-gray-100 rounded">
+            This will be used to generate a shareable link for the conversation.
+            For example, if you set this to <code>community-discussion</code>,
+            the link will be:{" "}
+            <code>{`${window.location.origin}/conversation/community-discussion`}</code>
+          </p>
         </fieldset>
 
         <button
