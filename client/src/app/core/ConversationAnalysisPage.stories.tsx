@@ -9,7 +9,7 @@ import analysisData from "../../../.storybook/mock_data/analysisData.json";
 import ConversationAnalysisPage from "./ConversationAnalysisPage";
 
 const meta = {
-  title: "client/admin/Conversation Analysis",
+  title: "client/admin/Conversation/Analysis",
   component: ConversationAnalysisPage,
   decorators: [withRouter],
   argTypes: {
@@ -23,7 +23,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const NewConversation: Story = {
+export const SampleConversation: Story = {
   parameters: {
     reactRouter: reactRouterParameters({
       location: {
