@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { HttpResponse, http } from "msw";
 import { reactRouterParameters } from "storybook-addon-remix-react-router";
 import { mockRouter } from "../../../.storybook/preview";
-import ManageComments from "./ManageComments";
+import MonitorConversation from "./MonitorConversation";
 
 const moderationCommentsResp = [
   {
@@ -26,18 +26,18 @@ const moderationCommentsResp = [
 ];
 
 const meta = {
-  title: "client/query/Manage Comments",
-  component: ManageComments,
+  title: "client/query/Monitor Conversation",
+  component: MonitorConversation,
   decorators: [mockRouter],
   parameters: {
     reactRouter: reactRouterParameters({}),
   },
-} satisfies Meta<typeof ManageComments>;
+} satisfies Meta<typeof MonitorConversation>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const WithComments: Story = {
+export const SampleConversation: Story = {
   parameters: {
     reactRouter: reactRouterParameters({
       location: {

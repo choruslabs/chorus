@@ -4,7 +4,7 @@ import { HttpResponse, http } from "msw";
 import CommentsTable from "./CommentsTable";
 
 const meta = {
-  title: "client/admin/Comments Table",
+  title: "client/admin/Conversation/Moderate",
   component: CommentsTable,
   argTypes: {
     comments: { control: "object" },

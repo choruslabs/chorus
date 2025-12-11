@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { ConversationsTable } from "./ConversationsTable";
 
 const meta = {
-  title: "client/admin/Conversation Table",
+  title: "client/admin/Conversations/Dashboard",
   component: ConversationsTable,
   argTypes: {
     conversations: { control: "object" },
