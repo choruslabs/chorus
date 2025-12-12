@@ -5,10 +5,12 @@ export const VotingSection = ({
   comment,
   commentNumber,
   onVote,
+  isVotingDisabled,
 }: {
   comment: ParticipationComment | null;
   commentNumber?: number;
   onVote: (commentId: string, vote: "agree" | "disagree" | "skip") => void;
+  isVotingDisabled: boolean;
 }) => {
   return (
     comment && (
@@ -21,6 +23,7 @@ export const VotingSection = ({
         <div className="flex items-center gap-2 w-full flex-wrap">
           <button
             type="button"
+            disabled={isVotingDisabled}
             onClick={() => onVote(comment.id, "agree")}
             className="border hover:bg-primary hover:text-white px-2 py-2 rounded-xl flex flex-row items-center gap-x-2"
           >
@@ -29,6 +32,7 @@ export const VotingSection = ({
           </button>
           <button
             type="button"
+            disabled={isVotingDisabled}
             onClick={() => onVote(comment.id, "disagree")}
             className="border hover:bg-primary hover:text-white px-2 py-2 rounded-xl flex flex-row items-center gap-x-2"
           >
@@ -37,6 +41,7 @@ export const VotingSection = ({
           </button>
           <button
             type="button"
+            disabled={isVotingDisabled}
             onClick={() => onVote(comment.id, "skip")}
             className="bg-background px-2 py-2 rounded-xl flex flex-row items-center gap-x-2 border border-gray-300 text-gray-700 hover:bg-primary hover:text-white ml-auto"
           >

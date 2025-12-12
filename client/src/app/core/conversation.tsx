@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import { useCallback, useEffect, useMemo } from "react";
 import { useParams } from "react-router";
 import { getApi } from "../../components/api/base";
@@ -17,6 +17,7 @@ const ConversationPage = () => {
   // This controls max. time (in s) the user need to wait before they can see the new comment(s)
   // TODO: make it configurable (server level? conversation level?)
   const autoRefetchInterval = 15;
+  const queryClient = useQueryClient();
 
   const friendlyId = useQuery({
     queryKey: ["conversation-id-name", conversationIdOrName || ""],
@@ -33,7 +34,7 @@ const ConversationPage = () => {
     queryKey: ["current-conversation", conversationId],
     queryFn: () => getConversation(conversationId ?? ""),
     retry: false,
-    refetchInterval: autoRefetchInterval * 1000,
+    refetchInterval: process.env.NODE_ENV === "test" ? false : autoRefetchInterval * 1000,
   });
 
   const currentComment = useQuery<{
@@ -72,17 +73,38 @@ const ConversationPage = () => {
   };
   // end of dialog logic
 
-  const onVote = async (
-    commentId: string,
-    vote: "agree" | "disagree" | "skip",
-  ) => {
-    const voteNum = vote === "agree" ? 1 : vote === "disagree" ? -1 : 0;
+  // TODO: handle errors gracefully
+  const voteMutation = useMutation({
+    mutationFn: async ({
+      commentId,
+      vote
+    } : {
+      commentId: string,
+      vote: "agree" | "disagree" | "skip",
+    }) => {
+      try {
+        const voteNum = vote === "agree" ? 1 : vote === "disagree" ? -1 : 0;
+        return createVote(commentId, voteNum);
+      } catch (e) {
+        console.log("MUTATION ERROR:", e);
+      }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["current-comment", conversationId],
+      });
+    }
+  })
 
+  const onVote = async (commentId: string, vote: "agree" | "disagree" | "skip") => {
     if (!conversationId) return;
-    await createVote(commentId, voteNum);
-    await nextComment();
+    
+    await voteMutation.mutateAsync({commentId, vote})
   };
 
+  const isVotingDisabled = currentComment.isFetching || voteMutation.isPending;
+
+  // TODO: rewrite so as to not derive this state from an error
   const allCommentsVoted = useMemo(() => {
     return !!currentComment.error?.message;
   }, [currentComment]);
@@ -98,6 +120,7 @@ const ConversationPage = () => {
       comments={comments.data}
       onVoteComplete={onVote}
       onComplete={onFormComplete}
+      isVotingDisabled={isVotingDisabled}
     />
   );
 };
