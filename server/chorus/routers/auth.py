@@ -1,3 +1,4 @@
+from uuid import uuid4
 from datetime import datetime, timedelta, timezone
 from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException, Response, status
@@ -42,16 +43,17 @@ def authenticate_user(username: str, password: str, db: Database):
     return user
 
 
+def encode_access_token(data: dict, settings: Settings):
+    return jwt.encode(data, settings.secret_key, algorithm=settings.algorithm)
+
+
 def create_access_token(data: dict, settings: Settings):
     to_encode = data.copy()
     expire = datetime.now(timezone.utc) + timedelta(
         seconds=settings.expires_delta_seconds
     )
     to_encode.update({"exp": expire})
-    encoded_jwt = jwt.encode(
-        to_encode, settings.secret_key, algorithm=settings.algorithm
-    )
-    return encoded_jwt
+    return encode_access_token(to_encode, settings)
 
 
 @router.post("/token")
@@ -83,6 +85,12 @@ async def login(
 
 @router.post("/register")
 async def register(user: User, db: Database):
+    if len(user.username) == 0 or len(user.password) == 0:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Username and password cannot be empty",
+        )
+
     try:
         password_hash = get_password_hash(user.password)
         user = models.User(username=user.username, hashed_password=password_hash)
@@ -96,6 +104,18 @@ async def register(user: User, db: Database):
         )
 
     return {"username": user.username}
+
+
+@router.post("/register/anonymous")
+async def register_anonymous(db: Database, settings: SettingsDep):
+    anonymous_user = models.User(is_anonymous=True, session_id=uuid4())
+    db.add(anonymous_user)
+    db.commit()
+
+    access_token = encode_access_token(
+        {"sub": str(anonymous_user.session_id), "type": "anonymous"}, settings
+    )
+    return {"access_token": access_token, "token_type": "bearer"}
 
 
 @router.get("/users/me")
