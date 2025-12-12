@@ -3,10 +3,8 @@ import pandas as pd
 from typing import Optional
 from uuid import UUID, uuid4
 from fastapi import APIRouter, HTTPException, UploadFile
-from sqlalchemy import false, true
-import urllib
 from chorus import models
-from chorus.auth.user import CurrentUser
+from chorus.auth.user import RegisteredUser
 from chorus.database import Database
 from chorus.core.routines import update_conversation_analysis
 from pydantic import BaseModel
@@ -111,7 +109,7 @@ def process_votes_file(
 async def import_data(
     files: list[UploadFile],
     db: Database,
-    current_user: CurrentUser,
+    current_user: RegisteredUser,
     refresh_analysis: Optional[bool] = True,
 ):
     summary_file = None
@@ -173,7 +171,7 @@ async def import_data(
 
 @router.delete("/conversations/{conversation_id}/import")
 async def delete_imported_conversation(
-    conversation_id: UUID, db: Database, current_user: CurrentUser
+    conversation_id: UUID, db: Database, current_user: RegisteredUser
 ):
     conversation = db.query(models.Conversation).get(conversation_id)
     if conversation is None:
