@@ -47,7 +47,7 @@ const meta = {
     layout: "fullscreen",
   },
   decorators: [
-    (Story) => (
+    (Story: React.FC) => (
       <div className="p-8 space-y-8">
         <Story />
       </div>
