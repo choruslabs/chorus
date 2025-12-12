@@ -5,7 +5,7 @@ from fastapi import APIRouter, HTTPException
 from sqlalchemy import false, true
 import urllib
 from chorus import models
-from chorus.auth.user import CurrentUser
+from chorus.auth.user import CurrentUser, RegisteredUser
 from chorus.database import Database
 from pydantic import BaseModel
 
@@ -205,7 +205,7 @@ def check_url_safety_and_uniqueness(
 
 @router.post("/conversations")
 async def create_conversation(
-    conversation: ConversationCreate, db: Database, current_user: CurrentUser
+    conversation: ConversationCreate, db: Database, current_user: RegisteredUser
 ):
     if conversation.user_friendly_link:
         check_url_safety_and_uniqueness(conversation, db)
@@ -224,7 +224,7 @@ async def update_conversation(
     conversation_id: UUID,
     conversation: ConversationUpdate,
     db: Database,
-    current_user: CurrentUser,
+    current_user: RegisteredUser,
 ):
     conversation_db = db.query(models.Conversation).get(conversation_id)
     if conversation_db is None:

@@ -31,4 +31,15 @@ def get_current_user(
     return current_user
 
 
+def get_current_registered_user(
+    current_user: Annotated[models.User, Depends(get_current_user)],
+) -> models.User:
+    if current_user.is_anonymous:
+        raise HTTPException(
+            status_code=401, detail="Anonymous users cannot access this resource"
+        )
+    return current_user
+
+
 CurrentUser = Annotated[models.User, Depends(get_current_user)]
+RegisteredUser = Annotated[models.User, Depends(get_current_registered_user)]

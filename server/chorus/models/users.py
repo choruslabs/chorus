@@ -8,5 +8,8 @@ class User(Base):
     __tablename__ = "users"
 
     id: Mapped[UUID] = mapped_column(primary_key=True, default=uuid4)
-    username: Mapped[str] = mapped_column(String(50), unique=True, nullable=False)
-    hashed_password: Mapped[str] = mapped_column(nullable=False)
+    username: Mapped[str] = mapped_column(String(50), unique=True, nullable=True)
+    hashed_password: Mapped[str] = mapped_column(nullable=True)
+
+    session_id: Mapped[UUID] = mapped_column(nullable=True)
+    is_anonymous: Mapped[bool] = mapped_column(default=False, nullable=False)

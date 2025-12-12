@@ -1,7 +1,7 @@
 from uuid import UUID
 from fastapi import APIRouter, Depends, HTTPException
 from chorus import models
-from chorus.auth.user import CurrentUser
+from chorus.auth.user import RegisteredUser
 from chorus.database import Database
 from pydantic import BaseModel
 from typing import Optional
@@ -18,7 +18,7 @@ class Comment(BaseModel):
 
 
 @router.get("/conversations", response_model=list[Conversation])
-async def read_conversations(db: Database, current_user: CurrentUser):
+async def read_conversations(db: Database, current_user: RegisteredUser):
     conversations = (
         db.query(models.Conversation)
         .where(models.Conversation.author == current_user)
@@ -32,7 +32,9 @@ async def read_conversations(db: Database, current_user: CurrentUser):
 
 
 @router.get("/conversations/{conversation_id}/comments", response_model=list[Comment])
-async def read_comments(conversation_id: UUID, db: Database, current_user: CurrentUser):
+async def read_comments(
+    conversation_id: UUID, db: Database, current_user: RegisteredUser
+):
     conversation: models.Conversation | None = db.query(models.Conversation).get(
         conversation_id
     )
@@ -52,7 +54,7 @@ def get_comment(comment_id: UUID, db: Database):
 
 
 def get_comment_for_moderation(
-    comment_id: UUID, db: Database, current_user: CurrentUser
+    comment_id: UUID, db: Database, current_user: RegisteredUser
 ):
     comment = get_comment(comment_id, db)
     if comment.conversation.author != current_user:
@@ -61,7 +63,7 @@ def get_comment_for_moderation(
 
 
 @router.put("/comments/{comment_id}/approve")
-async def approve_comment(comment_id: UUID, db: Database, current_user: CurrentUser):
+async def approve_comment(comment_id: UUID, db: Database, current_user: RegisteredUser):
     comment_db = get_comment_for_moderation(comment_id, db, current_user)
     comment_db.approved = True
     db.commit()
@@ -69,7 +71,7 @@ async def approve_comment(comment_id: UUID, db: Database, current_user: CurrentU
 
 
 @router.put("/comments/{comment_id}/reject")
-async def reject_comment(comment_id: UUID, db: Database, current_user: CurrentUser):
+async def reject_comment(comment_id: UUID, db: Database, current_user: RegisteredUser):
     comment_db = get_comment_for_moderation(comment_id, db, current_user)
     comment_db.approved = False
     db.commit()
