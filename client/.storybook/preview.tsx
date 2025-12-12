@@ -19,7 +19,7 @@ initialize(options);
 
 const preview: Preview = {
   decorators: [
-    (Story) => {
+    (Story: React.FC) => {
       const queryClient = new QueryClient();
 
       return (
@@ -67,7 +67,7 @@ const sampleConversation = {
   allow_votes: true,
 };
 
-export const mockRouter = (Story) => (
+export const mockRouter = (Story: React.FC) => (
   <MemoryRouter>
     <Routes>
       <Route
