@@ -107,13 +107,13 @@ async def register(user: User, db: Database):
 
 
 @router.post("/register/anonymous")
-async def register_anonymous_user(db: Database, settings: SettingsDep):
+async def register_anonymous(db: Database, settings: SettingsDep):
     anonymous_user = models.User(is_anonymous=True, session_id=uuid4())
     db.add(anonymous_user)
     db.commit()
 
     access_token = encode_access_token(
-        {"sub": str(anonymous_user.id), "type": "anonymous"}, settings
+        {"sub": str(anonymous_user.session_id), "type": "anonymous"}, settings
     )
     return {"access_token": access_token, "token_type": "bearer"}
 

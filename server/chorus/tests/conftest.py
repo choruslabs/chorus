@@ -86,6 +86,16 @@ def authenticated_client(client: TestClient, unique_token):
     yield client
 
 @pytest.fixture(scope="function")
+def anonymous_client(client: TestClient):
+    client.cookies.clear()
+
+    response = client.post("/register/anonymous")
+    assert response.status_code == 200
+    access_token = response.json().get("access_token")
+    client.cookies.set("access_token", access_token)
+    yield client
+
+@pytest.fixture(scope="function")
 def authenticated_clients(db, create_token):
     def _create_clients(num_users):
         clients = {}

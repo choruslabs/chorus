@@ -217,3 +217,28 @@ class TestLogOut:
         assert response.status_code == 200
         assert response.json() == {"message": "Logged out"}
         assert "access_token" not in response.cookies
+
+
+class TestAnonymousUser:
+    def test_register_anonymous_user(self, client):
+        """
+        Test registering an anonymous user
+        Expected behaviour:
+        - The API should return a 200 status code
+        - The response should contain the registered anonymous username
+        - The user should be stored in the database
+        """
+        response = client.post("/register/anonymous")
+        assert response.status_code == 200
+        data = response.json()
+        assert "access_token" in data
+        assert data["token_type"] == "bearer"
+
+    def test_anonymous_user_user_me(self, anonymous_client):
+        """
+        Test accessing the /users/me endpoint as an anonymous user
+        Expected behaviour:
+        - The API should return a 401 status code
+        """
+        response = anonymous_client.get("/users/me")
+        assert response.status_code == 200
