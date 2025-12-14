@@ -62,7 +62,7 @@ export const ParticipationSpa = ({
 
   return (
     <CoreBase>
-      <main className="w-[95%] min-h-full mx-auto flex flex-col border border-green-500">
+      <main className="w-[95%] min-h-full mx-auto flex flex-col">
         <section className="p-8">
           <h1 className="text-3xl font-bold mb-4">{conversation?.name}</h1>
           <p className="mb-4">{conversation?.description}</p>
