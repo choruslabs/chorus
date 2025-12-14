@@ -14,6 +14,7 @@ export const ParticipationSpa = ({
   comments,
   onVoteComplete,
   onComplete,
+  isVotingDisabled,
 }: {
   conversation?: Conversation;
   currentComment?: {
@@ -26,16 +27,18 @@ export const ParticipationSpa = ({
     vote: "agree" | "disagree" | "skip",
   ) => void;
   onComplete: (event?: React.FormEvent<HTMLFormElement>) => void;
+  isVotingDisabled: boolean;
 }) => {
+
+  // storing an HTML dialog element in state
   const [dialog, setDialog] = useState<HTMLDialogElement | null>(null);
+  useEffect(() => {
+    setDialog(document.getElementById("comment-dialog") as HTMLDialogElement);
+  }, []);
 
   const amountOfVotedComments = useMemo(() => {
     return currentComment?.num_votes ?? 0;
   }, [currentComment]);
-
-  useEffect(() => {
-    setDialog(document.getElementById("comment-dialog") as HTMLDialogElement);
-  }, []);
 
   const handleEditClick = (state: boolean) => {
     if (state) {
@@ -89,6 +92,7 @@ export const ParticipationSpa = ({
                   comment={currentComment.comment}
                   commentNumber={amountOfVotedComments + 1}
                   onVote={onVote}
+                  isVotingDisabled={isVotingDisabled}
                 />
               ) : (
                 <div className="flex flex-col items-center justify-center p-4 bg-white rounded-xl">
