@@ -77,5 +77,6 @@ export const ActiveConversation: Story = {
     ],
     onVoteComplete: () => {},
     onComplete: () => {},
+    isVotingDisabled: false,
   },
 };
