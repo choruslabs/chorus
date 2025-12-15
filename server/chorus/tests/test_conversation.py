@@ -164,7 +164,7 @@ class TestCreateConversation:
 
 
 class TestReadConversations:
-    def test_read_conversations_returns_empty_list(self, authenticated_clients, unique_token):
+    def test_read_conversations_returns_empty_list(self, authenticated_clients):
         """
         Test that an empty list is returned when a user has not created a conversation
         Expected Behavior:
