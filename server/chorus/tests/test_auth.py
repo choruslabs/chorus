@@ -1,5 +1,6 @@
 import random
 import string
+import uuid
 from chorus.models import User
 
 def generate_random_username(length=8):
@@ -73,23 +74,19 @@ class TestToken:
         Test successful token retrieval
         Expected behaviour:
         - The API should return a 200 status code
-        - The response should contain an access token and token type
-        - The response should set a cookie with the access token
+        - The response should return a cookie with the access token
         - The access token should work for accessing a protected endpoint
         """
         username = generate_random_username()
         password = "securepassword"
         register_user(username, password)
 
-        # Request a token
+        # Log in
         response = client.post("/token", data={"username": username, "password": password})       
         assert response.status_code == 200
-        assert "access_token" in response.json()
-        assert response.json()["token_type"] == "bearer"
-        assert "set-cookie" in response.headers
+        assert response.json() == {"message": "Login successful"}
 
         # Verify that the token works by accessing a protected endpoint
-        client.cookies.set("access_token", response.json()["access_token"])
         me_response = client.get("/users/me")
         assert me_response.status_code == 200
         assert me_response.json() == {"username": username}
@@ -225,20 +222,22 @@ class TestAnonymousUser:
         Test registering an anonymous user
         Expected behaviour:
         - The API should return a 200 status code
-        - The response should contain the registered anonymous username
+        - The response should contain the user's session id as username
         - The user should be stored in the database
         """
         response = client.post("/register/anonymous")
         assert response.status_code == 200
+        
         data = response.json()
-        assert "access_token" in data
-        assert data["token_type"] == "bearer"
+        assert "username" in data
+        uuid_obj = uuid.UUID(data["username"])
+        assert str(uuid_obj) == data["username"]
 
     def test_anonymous_user_user_me(self, anonymous_client):
         """
         Test accessing the /users/me endpoint as an anonymous user
         Expected behaviour:
-        - The API should return a 401 status code
+        - The API should return a 200 status code
         """
         response = anonymous_client.get("/users/me")
         assert response.status_code == 200

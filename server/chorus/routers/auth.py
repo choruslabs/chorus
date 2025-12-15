@@ -77,10 +77,11 @@ async def login(
         key="access_token",
         value=access_token,
         httponly=True,
-        secure=True,
+        secure=settings.cookie_secure,
         samesite="none",
     )
-    return {"access_token": access_token, "token_type": "bearer"}
+
+    return {"message": "Login successful"}
 
 
 @router.post("/register")
@@ -107,7 +108,11 @@ async def register(user: User, db: Database):
 
 
 @router.post("/register/anonymous")
-async def register_anonymous(db: Database, settings: SettingsDep):
+async def register_anonymous(
+  db: Database, 
+  settings: SettingsDep, 
+  response: Response
+):
     anonymous_user = models.User(is_anonymous=True, session_id=uuid4())
     db.add(anonymous_user)
     db.commit()
@@ -115,7 +120,19 @@ async def register_anonymous(db: Database, settings: SettingsDep):
     access_token = encode_access_token(
         {"sub": str(anonymous_user.session_id), "type": "anonymous"}, settings
     )
-    return {"access_token": access_token, "token_type": "bearer"}
+
+    response.set_cookie(
+        key="access_token",
+        value=access_token,
+        httponly=True,
+        secure=settings.cookie_secure,
+        samesite="none",
+    )
+    
+    return {
+      "message": "Anonymous user created",
+      "username": anonymous_user.session_id
+    }
 
 
 @router.get("/users/me")
