@@ -1,3 +1,4 @@
+import os
 from typing import Annotated
 from fastapi import Depends
 from pydantic_settings import BaseSettings
@@ -9,9 +10,10 @@ class Settings(BaseSettings):
     secret_key: str
     algorithm: str = "HS256"
     expires_delta_seconds: int = 3600
+    cookie_secure: bool = True
 
     class Config:
-        env_file = ".env"
+        env_file = os.getenv("ENV_FILE", ".env")
 
 
 settings = Settings()

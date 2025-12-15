@@ -1,11 +1,15 @@
+import os
 import pytest
+
+os.environ["ENV_FILE"] = "test.env"
+
 from fastapi.testclient import TestClient
 from chorus.main import app
-
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from chorus.database import Base, get_db
 from chorus.models import *
+from chorus.settings import settings
 from uuid import uuid4
 
 import logging
@@ -49,8 +53,12 @@ def register_user(client: TestClient):
         return response
     return _register
 
+@pytest.fixture(scope="function", autouse=True)
+def test_settings(monkeypatch):
+    monkeypatch.setattr(settings, "cookie_secure", False)
+
 @pytest.fixture(scope="function")
-def unique_token(client: TestClient):
+def authenticated_client(client: TestClient):
     username = f"testuser{uuid4()}"
     password = "securepassword"
     payload = {
@@ -58,32 +66,9 @@ def unique_token(client: TestClient):
         "password": password,
     }
     client.post("/register", json=payload)
-    
-    response = client.post("/token", data=payload)
-    token = response.json().get("access_token")
-    
-    yield token
-
-@pytest.fixture(scope="function")
-def create_token(client: TestClient):
-    def _create_token(username: str):
-        password = "securepassword"
-        payload = {
-            "username": username,
-            "password": password,
-        }
-        client.post("/register", json=payload)
-        
-        response = client.post("/token", data=payload)
-        token = response.json().get("access_token")
-        
-        return token
-    return _create_token
-
-@pytest.fixture(scope="function")
-def authenticated_client(client: TestClient, unique_token):
-    client.cookies.set("access_token", unique_token)
+    client.post("/token", data=payload)
     yield client
+
 
 @pytest.fixture(scope="function")
 def anonymous_client(client: TestClient):
@@ -91,12 +76,10 @@ def anonymous_client(client: TestClient):
 
     response = client.post("/register/anonymous")
     assert response.status_code == 200
-    access_token = response.json().get("access_token")
-    client.cookies.set("access_token", access_token)
     yield client
 
 @pytest.fixture(scope="function")
-def authenticated_clients(db, create_token):
+def authenticated_clients(db):
     def _create_clients(num_users):
         clients = {}
 
@@ -110,10 +93,12 @@ def authenticated_clients(db, create_token):
 
         for i in range(num_users):
             username = f"user{i+1}"
-            token = create_token(username)
+            password = "securepassword"
 
             test_client = TestClient(app)
-            test_client.cookies.set("access_token", token)
+            
+            test_client.post("/register", json={"username": username, "password": password})
+            test_client.post("/token", data={"username": username, "password": password})
 
             clients[username] = test_client
         
