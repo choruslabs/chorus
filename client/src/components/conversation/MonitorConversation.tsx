@@ -84,7 +84,7 @@ export default function MonitorConversation() {
         </Switch>
         <span>Enable participants to vote</span>
       </div>
-      <h2 className="text-2xl font-bold">
+      <h2 className="text-2xl font-bold mt-4">
         Knowledge Base
         <span
           className={`${knowledgeBaseUnsaved ? "bg-amber-300" : "hidden"} px-2 py-0.5 text-sm rounded-sm mx-4`}
@@ -111,7 +111,7 @@ export default function MonitorConversation() {
           Save
         </button>
       </form>
-      <h2 className="text-2xl font-bold">Conversation Analysis</h2>
+      <h2 className="text-2xl font-bold mt-4">Conversation Analysis</h2>
       <a
         href={`/conversation/${conversation.id}/analysis`}
         className="underline"
