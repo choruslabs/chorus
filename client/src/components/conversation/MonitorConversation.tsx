@@ -97,15 +97,16 @@ export default function MonitorConversation() {
         markdown syntax.
       </h3>
       <form onSubmit={saveKnowledgeBase}>
-        <div className="container">
+        <div className="container mb-4">
           <MDEditor
+            data-color-mode="light"
             value={knowledgeBase}
             onChange={(val) => setKnowledgeBase(DOMPurify.sanitize(val || ""))}
           />
         </div>
         <button
           type="submit"
-          className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
+          className="bg-gray-500 text-white px-2 py-1 rounded-xl hover:bg-gray-600"
         >
           Save
         </button>
