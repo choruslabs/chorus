@@ -1,6 +1,9 @@
 import { Switch } from "@headlessui/react";
-import { useState } from "react";
+import MDEditor from "@uiw/react-md-editor";
+import DOMPurify from "dompurify";
+import { useMemo, useState } from "react";
 import { useOutletContext } from "react-router";
+
 import type { Conversation } from "../../app/core/dashboard";
 import { updateConversation } from "../api/conversation";
 
@@ -11,6 +14,9 @@ export default function MonitorConversation() {
     conversation.allow_comments,
   );
   const [allowVotes, setAllowVotes] = useState(conversation.allow_votes);
+  const [knowledgeBase, setKnowledgeBase] = useState(
+    conversation.knowledge_base || "",
+  );
 
   const toggleAllowComments = () => {
     updateConversation({
@@ -29,6 +35,17 @@ export default function MonitorConversation() {
       setAllowVotes(!allowVotes);
     });
   };
+
+  const saveKnowledgeBase = () => {
+    updateConversation({
+      conversationId: conversation.id,
+      knowledgeBase,
+    });
+  };
+
+  const knowledgeBaseUnsaved = useMemo(() => {
+    return (conversation.knowledge_base || "") !== knowledgeBase;
+  }, [conversation.knowledge_base, knowledgeBase]);
 
   return (
     <div className="[95%] max-w-4xl mx-auto flex flex-col items-start space-y-4 p-4">
@@ -67,7 +84,34 @@ export default function MonitorConversation() {
         </Switch>
         <span>Enable participants to vote</span>
       </div>
-      <h2 className="text-2xl font-bold">Conversation Analysis</h2>
+      <h2 className="text-2xl font-bold mt-4">
+        Knowledge Base
+        <span
+          className={`${knowledgeBaseUnsaved ? "bg-amber-300" : "hidden"} px-2 py-0.5 text-sm rounded-sm mx-4`}
+        >
+          Unsaved
+        </span>
+      </h2>
+      <h3>
+        Provides extra, optional information for conversation participants. Use
+        markdown syntax.
+      </h3>
+      <form onSubmit={saveKnowledgeBase}>
+        <div className="container mb-4">
+          <MDEditor
+            data-color-mode="light"
+            value={knowledgeBase}
+            onChange={(val) => setKnowledgeBase(DOMPurify.sanitize(val || ""))}
+          />
+        </div>
+        <button
+          type="submit"
+          className="bg-gray-500 text-white px-2 py-1 rounded-xl hover:bg-gray-600"
+        >
+          Save
+        </button>
+      </form>
+      <h2 className="text-2xl font-bold mt-4">Conversation Analysis</h2>
       <a
         href={`/conversation/${conversation.id}/analysis`}
         className="underline"
