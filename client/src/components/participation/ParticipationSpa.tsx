@@ -67,44 +67,53 @@ export const ParticipationSpa = ({
           <p className="mb-4">{conversation?.description}</p>
         </section>
         <div className="flex flex-col grow items-center mb-4">
-          <section
-            className="p-8 bg-gray-100 w-full xl:w-1/2 flex flex-col gap-4"
-            aria-labelledby="active-comment-header"
-          >
-            <div className="flex justify-between items-center">
-              <h2
-                id="active-comment-header"
-                className="font-semibold text-primary mb-4"
-              >
-                Active Comments
-              </h2>
-              {!!conversation && (
-                <NewCommentDialog
-                  conversation={conversation}
-                  onComplete={onFormComplete}
-                />
-              )}
-            </div>
-            <div className="grow flex flex-col justify-center">
-              {currentComment ? (
-                <VotingSection
-                  comment={currentComment.comment}
-                  commentNumber={amountOfVotedComments + 1}
-                  onVote={onVote}
-                  isVotingDisabled={isVotingDisabled}
-                />
-              ) : (
-                <div className="flex flex-col items-center justify-center p-4 bg-white rounded-xl">
-                  <p className="text-gray-500">No more comments to review.</p>
-                </div>
-              )}
-            </div>
-            {!!currentComment && (
-              <p className="text-center pt-6">
-                {amountOfVotedComments + 1} of {comments?.length} comments
+          {conversation?.is_active === false ? (
+            <div className="p-4 mb-4 bg-yellow-100 border border-yellow-300 rounded-lg w-full xl:w-1/2 text-center">
+              <p className="text-yellow-800">
+                This conversation is currently inactive and not accepting
+                participation.
               </p>
-            )}
-          </section>
+            </div>
+          ) : (
+            <section
+              className="p-8 bg-gray-100 w-full xl:w-1/2 flex flex-col gap-4"
+              aria-labelledby="active-comment-header"
+            >
+              <div className="flex justify-between items-center">
+                <h2
+                  id="active-comment-header"
+                  className="font-semibold text-primary mb-4"
+                >
+                  Active Comments
+                </h2>
+                {!!conversation && (
+                  <NewCommentDialog
+                    conversation={conversation}
+                    onComplete={onFormComplete}
+                  />
+                )}
+              </div>
+              <div className="grow flex flex-col justify-center">
+                {currentComment ? (
+                  <VotingSection
+                    comment={currentComment.comment}
+                    commentNumber={amountOfVotedComments + 1}
+                    onVote={onVote}
+                    isVotingDisabled={isVotingDisabled}
+                  />
+                ) : (
+                  <div className="flex flex-col items-center justify-center p-4 bg-white rounded-xl">
+                    <p className="text-gray-500">No more comments to review.</p>
+                  </div>
+                )}
+              </div>
+              {!!currentComment && (
+                <p className="text-center pt-6">
+                  {amountOfVotedComments + 1} of {comments?.length} comments
+                </p>
+              )}
+            </section>
+          )}
         </div>
       </main>
     </CoreBase>
