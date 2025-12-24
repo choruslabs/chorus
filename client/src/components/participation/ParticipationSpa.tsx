@@ -29,7 +29,6 @@ export const ParticipationSpa = ({
   onComplete: (event?: React.FormEvent<HTMLFormElement>) => void;
   isVotingDisabled: boolean;
 }) => {
-
   // storing an HTML dialog element in state
   const [dialog, setDialog] = useState<HTMLDialogElement | null>(null);
   useEffect(() => {

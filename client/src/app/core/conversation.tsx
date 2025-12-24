@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useCallback, useEffect, useMemo } from "react";
 import { useParams } from "react-router";
 import { getApi } from "../../components/api/base";
@@ -8,6 +8,7 @@ import {
   getConversationIdByFriendlyName,
   getNextComment,
 } from "../../components/api/conversation";
+import { ConversationNotFound } from "../../components/participation/ConversationNotFound";
 import { ParticipationSpa } from "../../components/participation/ParticipationSpa";
 import type { Conversation, ParticipationComment } from "./dashboard";
 
@@ -34,7 +35,8 @@ const ConversationPage = () => {
     queryKey: ["current-conversation", conversationId],
     queryFn: () => getConversation(conversationId ?? ""),
     retry: false,
-    refetchInterval: process.env.NODE_ENV === "test" ? false : autoRefetchInterval * 1000,
+    refetchInterval:
+      process.env.NODE_ENV === "test" ? false : autoRefetchInterval * 1000,
   });
 
   const currentComment = useQuery<{
@@ -77,10 +79,10 @@ const ConversationPage = () => {
   const voteMutation = useMutation({
     mutationFn: async ({
       commentId,
-      vote
-    } : {
-      commentId: string,
-      vote: "agree" | "disagree" | "skip",
+      vote,
+    }: {
+      commentId: string;
+      vote: "agree" | "disagree" | "skip";
     }) => {
       try {
         const voteNum = vote === "agree" ? 1 : vote === "disagree" ? -1 : 0;
@@ -93,13 +95,16 @@ const ConversationPage = () => {
       queryClient.invalidateQueries({
         queryKey: ["current-comment", conversationId],
       });
-    }
-  })
+    },
+  });
 
-  const onVote = async (commentId: string, vote: "agree" | "disagree" | "skip") => {
+  const onVote = async (
+    commentId: string,
+    vote: "agree" | "disagree" | "skip",
+  ) => {
     if (!conversationId) return;
-    
-    await voteMutation.mutateAsync({commentId, vote})
+
+    await voteMutation.mutateAsync({ commentId, vote });
   };
 
   const isVotingDisabled = currentComment.isFetching || voteMutation.isPending;
@@ -113,7 +118,9 @@ const ConversationPage = () => {
     queryKey: [`comment-query-${conversationId}`],
     queryFn: () => getApi(`/conversations/${conversationId}/comments`),
   });
-  return (
+  return conversation.data === undefined ? (
+    <ConversationNotFound />
+  ) : (
     <ParticipationSpa
       conversation={conversation.data}
       currentComment={allCommentsVoted ? undefined : currentComment.data}

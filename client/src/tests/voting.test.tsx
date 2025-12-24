@@ -1,11 +1,10 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { MemoryRouter, Routes, Route } from "react-router";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { MemoryRouter, Route, Routes } from "react-router";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import ConversationPage from "../app/core/conversation";
-
-import * as api from "../components/api/conversation";
 import * as baseApi from "../components/api/base";
+import * as api from "../components/api/conversation";
 
 describe("Voting behavior", () => {
   let queryClient: QueryClient;
@@ -16,22 +15,20 @@ describe("Voting behavior", () => {
   });
 
   it("disables buttons during vote mutation and fetches new comment", async () => {
-    vi.spyOn(api, "getConversationIdByFriendlyName")
-      .mockResolvedValue("123");
+    vi.spyOn(api, "getConversationIdByFriendlyName").mockResolvedValue("123");
 
-    vi.spyOn(api, "getConversation")
-      .mockResolvedValue({
-        id: "123",
-        name: "Mock Conversation",
-        description: "A mock",
-      });
+    vi.spyOn(api, "getConversation").mockResolvedValue({
+      id: "123",
+      name: "Mock Conversation",
+      description: "A mock",
+    });
 
     const getNextCommentMock = vi
       .spyOn(api, "getNextComment")
       .mockResolvedValue({
         comment: { id: "c1", content: "First comment" },
-        num_votes: 0
-      })
+        num_votes: 0,
+      });
 
     const createVoteMock = vi
       .spyOn(api, "createVote")
@@ -48,12 +45,12 @@ describe("Voting behavior", () => {
             <Route
               path="/conversation/:conversationId"
               element={<ConversationPage />}
-              />
+            />
           </Routes>
         </MemoryRouter>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
-    
+
     // First comment appears
     expect(await screen.findByText("First comment")).toBeInTheDocument();
 
