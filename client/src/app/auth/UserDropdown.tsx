@@ -10,7 +10,7 @@ export const UserDropdown = ({
 }) => {
   const isLoggedIn = !!user?.username;
   return (
-    <div className="flex items-center h-full gap-2">
+    <div className="flex items-center h-full gap-2 justify-end w-1/2">
       {!isLoggedIn && (
         <>
           <a

@@ -41,6 +41,7 @@ export const updateConversation = async ({
   allowComments,
   allowVotes,
   userFriendlyLink,
+  knowledgeBase,
 }: {
   conversationId: string;
   name?: string | null;
@@ -49,6 +50,7 @@ export const updateConversation = async ({
   allowComments?: boolean | null;
   allowVotes?: boolean | null;
   userFriendlyLink?: string | null;
+  knowledgeBase?: string | null;
 }) =>
   putApi(`/conversations/${conversationId}`, {
     name,
@@ -57,6 +59,7 @@ export const updateConversation = async ({
     allow_comments: allowComments,
     allow_votes: allowVotes,
     user_friendly_link: userFriendlyLink,
+    knowledge_base: knowledgeBase,
   });
 
 export const createComment = async (conversationId: string, content: string) =>

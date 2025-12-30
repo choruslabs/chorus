@@ -58,6 +58,8 @@ export const ActiveConversation: Story = {
       display_unmoderated: false,
       allow_comments: true,
       allow_votes: true,
+      knowledge_base:
+        "# What is signal priority?\n\n## Signal priority\n\nSignal priority is about green lights ...",
     },
     currentComment: {
       num_votes: 0,

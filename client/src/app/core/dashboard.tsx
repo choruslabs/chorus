@@ -15,6 +15,7 @@ export type Conversation = {
   show_charts?: boolean; // placeholder
   allow_votes: boolean;
   allow_comments: boolean;
+  knowledge_base?: string;
 };
 
 export type Comment = {

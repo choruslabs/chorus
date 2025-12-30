@@ -1,4 +1,6 @@
+import DOMPurify from "dompurify";
 import { useEffect, useMemo, useState } from "react";
+
 import CoreBase from "../../app/core/base";
 import type {
   Comment,
@@ -39,6 +41,10 @@ export const ParticipationSpa = ({
     return currentComment?.num_votes ?? 0;
   }, [currentComment]);
 
+  const knowledgeBaseContent = useMemo(() => {
+    return DOMPurify.sanitize(conversation?.knowledge_base || "");
+  }, [conversation?.knowledge_base]);
+
   const handleEditClick = (state: boolean) => {
     if (state) {
       dialog?.showModal();
@@ -60,7 +66,7 @@ export const ParticipationSpa = ({
   };
 
   return (
-    <CoreBase>
+    <CoreBase tabContent={{ knowledgeBaseContent }}>
       <main className="w-[95%] min-h-full mx-auto flex flex-col">
         <section className="p-8">
           <h1 className="text-3xl font-bold mb-4">{conversation?.name}</h1>
