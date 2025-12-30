@@ -4,7 +4,6 @@ import { NavLink } from "react-router";
 import type { Conversation, ModerationComment } from "../../app/core/dashboard";
 import { getApi } from "../api/base";
 import BreadCrumb from "../ui/BreadCrumb";
-import ConversationDialog from "./ConversationDialog";
 
 export default function ManageConversation({
   editIdItem,
@@ -34,17 +33,17 @@ export default function ManageConversation({
         <h1 className="text-4xl font-bold my-4">
           Conversation: {editIdItem.name}
         </h1>
-        <ConversationDialog
-          onComplete={onFormComplete}
-          editIdItem={editIdItem}
-        />
       </div>
 
-      {!!editIdItem.description && <p>{editIdItem.description}</p>}
-
-      <nav className="border-b-2 flex">
+      <nav className="border-b-1 flex">
         <NavLink
-          className="p-4 flex items-center gap-2 [&.active]:border-b-2"
+          className="p-4 flex items-center gap-2 [&.active]:border-b-1"
+          to="overview"
+        >
+          Overview
+        </NavLink>
+        <NavLink
+          className="p-4 flex items-center gap-2 [&.active]:border-b-1"
           to="moderate"
         >
           Moderate
@@ -53,13 +52,13 @@ export default function ManageConversation({
           </div>
         </NavLink>
         <NavLink
-          className="p-4 flex items-center gap-2 [&.active]:border-b-2"
+          className="p-4 flex items-center gap-2 [&.active]:border-b-1"
           to="monitor"
         >
           Monitor
         </NavLink>
         <NavLink
-          className="p-4 flex items-center gap-2 [&.active]:border-b-2"
+          className="p-4 flex items-center gap-2 [&.active]:border-b-1"
           to="distribute"
         >
           Distribute

@@ -1,84 +1,95 @@
-import { Switch } from "@headlessui/react";
-import { useState } from "react";
-import { useOutletContext } from "react-router";
-import type { Conversation } from "../../app/core/dashboard";
-import { updateConversation } from "../api/conversation";
+import { useState } from 'react';
+import { useOutletContext } from 'react-router';
+import type { Conversation } from '../../app/core/dashboard';
+import { updateConversation } from '../api/conversation';
+import { EditableSetting, SettingRow, ToggleSetting } from './Settings';
+
+function ViewConversationAnalysis({
+  conversationId,
+}: {
+  conversationId: string;
+}) {
+  return (
+    <SettingRow label="Conversation Report">
+      <a
+        href={`/conversation/${conversationId}/analysis`}
+        className="underline">
+        <button
+          type="button"
+          className="bg-blue-500 text-sm md:text-base text-white px-2 py-1 rounded-xl hover:bg-blue-600">
+          View Report
+        </button>
+      </a>
+    </SettingRow>
+  );
+}
 
 export default function MonitorConversation() {
   const { conversation } = useOutletContext<{ conversation: Conversation }>();
 
-  const [allowComments, setAllowComments] = useState(
-    conversation.allow_comments,
-  );
-  const [allowVotes, setAllowVotes] = useState(conversation.allow_votes);
+  const toggleIsActive = () => {
+    updateConversation({
+      conversationId: conversation.id,
+      isActive: !conversation.is_active,
+    }).then(() => {
+      window.location.reload();
+    });
+  };
 
   const toggleAllowComments = () => {
     updateConversation({
       conversationId: conversation.id,
-      allowComments: !allowComments,
+      allowComments: !conversation.allow_comments,
     }).then(() => {
-      setAllowComments(!allowComments);
+      window.location.reload();
     });
   };
 
   const toggleAllowVotes = () => {
     updateConversation({
       conversationId: conversation.id,
-      allowVotes: !allowVotes,
+      allowVotes: !conversation.allow_votes,
     }).then(() => {
-      setAllowVotes(!allowVotes);
+      window.location.reload();
     });
   };
 
   return (
-    <div className="[95%] max-w-4xl mx-auto flex flex-col items-start space-y-4 p-4">
-      <h2 className="text-2xl font-bold">Monitor Conversation</h2>
-      <div className="flex items-center space-x-4">
-        <Switch
-          checked={allowComments}
-          onChange={toggleAllowComments}
-          className={`${
-            allowComments ? "bg-blue-600" : "bg-gray-200"
-          } relative inline-flex h-6 w-11 items-center rounded-full`}
-        >
-          <span className="sr-only">Allow Comments</span>
-          <span
-            className={`${
-              allowComments ? "translate-x-6" : "translate-x-1"
-            } inline-block h-4 w-4 transform rounded-full bg-white transition`}
-          />
-        </Switch>
-        <span>Enable participants to comment</span>
-      </div>
-      <div className="flex items-center space-x-4">
-        <Switch
-          checked={allowVotes}
-          onChange={toggleAllowVotes}
-          className={`${
-            allowVotes ? "bg-blue-600" : "bg-gray-200"
-          } relative inline-flex h-6 w-11 items-center rounded-full`}
-        >
-          <span className="sr-only">Allow Votes</span>
-          <span
-            className={`${
-              allowVotes ? "translate-x-6" : "translate-x-1"
-            } inline-block h-4 w-4 transform rounded-full bg-white transition`}
-          />
-        </Switch>
-        <span>Enable participants to vote</span>
-      </div>
-      <h2 className="text-2xl font-bold">Conversation Analysis</h2>
-      <a
-        href={`/conversation/${conversation.id}/analysis`}
-        className="underline"
-      >
-        <button
-          type="button"
-          className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
-        >
-          View Analysis
-        </button>
-      </a>
+    <div className="w-[95%] max-w-4xl mx-auto p-5">
+      <section>
+        <h3 className="mb-2 text-sm font-semibold text-gray-900">
+          Participant Access
+        </h3>
+        <ToggleSetting
+          label="Conversation is live"
+          description="When off, participants cannot view or interact with this conversation."
+          checked={conversation.is_active}
+          onChange={toggleIsActive}
+        />
+        {conversation.is_active && (
+          <>
+            <ToggleSetting
+              label="Participants can comment"
+              description="Allow participants to submit new comments."
+              checked={conversation.allow_comments}
+              onChange={toggleAllowComments}
+            />
+
+            <ToggleSetting
+              label="Participants can vote"
+              description="Allow participants to vote on comments."
+              checked={conversation.allow_votes}
+              onChange={toggleAllowVotes}
+            />
+          </>
+        )}
+      </section>
+      <section className="mt-8">
+        <h3 className="mb-2 text-sm font-semibold text-gray-900">
+          Conversation Analysis
+        </h3>
+        <ViewConversationAnalysis conversationId={conversation.id} />
+      </section>
     </div>
   );
 }
