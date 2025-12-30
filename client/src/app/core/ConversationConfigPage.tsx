@@ -32,9 +32,7 @@ const ConversationConfigPage = () => {
       {editId ? (
         conversation.data ? (
           <>
-            <ManageConversation
-              editIdItem={conversation.data}
-            />
+            <ManageConversation editIdItem={conversation.data} />
             <Outlet context={{ conversation: conversation.data }} />
           </>
         ) : (
