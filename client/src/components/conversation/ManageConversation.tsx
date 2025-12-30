@@ -7,10 +7,8 @@ import BreadCrumb from "../ui/BreadCrumb";
 
 export default function ManageConversation({
   editIdItem,
-  refetch,
 }: {
   editIdItem: Conversation;
-  refetch: () => void;
 }) {
   const comments = useQuery<ModerationComment[]>({
     queryKey: [`comment-query-${editIdItem.id}`],
@@ -23,9 +21,6 @@ export default function ManageConversation({
       .length;
   }, [comments.data]);
 
-  const onFormComplete = () => {
-    if (refetch) refetch();
-  };
   return (
     <section className="w-[95%] max-w-4xl mx-auto">
       <BreadCrumb conversation={editIdItem.name} />

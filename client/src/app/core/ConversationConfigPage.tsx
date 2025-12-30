@@ -34,7 +34,6 @@ const ConversationConfigPage = () => {
           <>
             <ManageConversation
               editIdItem={conversation.data}
-              refetch={refetchData}
             />
             <Outlet context={{ conversation: conversation.data }} />
           </>
