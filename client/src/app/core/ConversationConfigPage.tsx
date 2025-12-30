@@ -31,10 +31,12 @@ const ConversationConfigPage = () => {
     <CoreBase requiresLogin={true}>
       {editId ? (
         conversation.data ? (
-          <>
+          <div className="max-h-full flex flex-col grow">
             <ManageConversation editIdItem={conversation.data} />
-            <Outlet context={{ conversation: conversation.data }} />
-          </>
+            <div className="w-[95%] max-w-4xl mx-auto p-5 grow overflow-y-auto">
+              <Outlet context={{ conversation: conversation.data }} />
+            </div>
+          </div>
         ) : (
           <section>Loading...</section>
         )
