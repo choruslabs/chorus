@@ -1,4 +1,4 @@
-import { getApi, postApi, putApi } from './base';
+import { getApi, postApi, putApi } from "./base";
 
 export const getConversation = async (conversationId: string) =>
   getApi(`/conversations/${conversationId}`);
@@ -26,7 +26,7 @@ export const createConversation = async ({
   allowComments: boolean;
   userFriendlyLink: string;
 }) =>
-  postApi('/conversations', {
+  postApi("/conversations", {
     name,
     description,
     display_unmoderated: displayUnmoderated,

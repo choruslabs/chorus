@@ -1,8 +1,9 @@
-import { useOutletContext } from 'react-router';
-import { useMemo } from 'react';
-import dayjs from 'dayjs';
-import type { Conversation } from '../../app/core/dashboard';
-import { EditableSetting, SettingRow } from './Settings';
+import dayjs from "dayjs";
+import { useMemo, useState } from "react";
+import { useOutletContext } from "react-router";
+import type { Conversation } from "../../app/core/dashboard";
+import { updateConversation } from "../api/conversation";
+import { EditableSetting, SettingRow } from "./Settings";
 
 function ConversationLink({
   label,
@@ -36,18 +37,38 @@ function ConversationLink({
 export default function ConversationOverview() {
   const { conversation } = useOutletContext<{ conversation: Conversation }>();
 
+  const [error, setError] = useState<string | null>(null);
+
   const conversationLink = useMemo(() => {
     return `${window.location.origin}/conversation/${
       conversation.user_friendly_link || conversation.id
     }`;
   }, [conversation]);
 
+  const updateConversationAttribute = (attribute: string) => (value: string) =>
+    updateConversation({
+      conversationId: conversation.id,
+      [attribute]: value,
+    })
+      .then(() => {
+        window.location.reload();
+      })
+      .catch((error) => {
+        setError(error.message);
+      });
+
   return (
     <div className="w-[95%] max-w-4xl mx-auto p-5">
-      <EditableSetting label="Conversation Name" value={conversation.name} />
+      {error && <p className="text-red-500">{error}</p>}
+      <EditableSetting
+        label="Conversation Name"
+        value={conversation.name}
+        onSave={updateConversationAttribute("name")}
+      />
       <EditableSetting
         label="Description"
-        value={conversation.description || 'No description provided.'}
+        value={conversation.description || "No description provided."}
+        onSave={updateConversationAttribute("description")}
       />
       <ConversationLink
         label="Participation Link"
@@ -56,12 +77,13 @@ export default function ConversationOverview() {
       />
       <EditableSetting
         label="User Friendly Link"
-        value={conversation.user_friendly_link || ''}
+        value={conversation.user_friendly_link || ""}
         description="Customize the URL for the participation link. Letters, numbers, and hyphens only."
+        onSave={updateConversationAttribute("userFriendlyLink")}
       />
       <EditableSetting
         label="Created At"
-        value={dayjs(conversation.created_at).format('MMMM D, YYYY h:mm A')}
+        value={dayjs(conversation.date_created).format("MMMM D, YYYY h:mm A")}
       />
     </div>
   );

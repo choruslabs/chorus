@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 export function SettingRow({
   label,
@@ -53,31 +53,37 @@ export function EditableSetting({
         onSave &&
         !isEditing && (
           <button
+            type="button"
             onClick={() => setIsEditing(true)}
-            className="rounded-md border border-gray-200 px-2 py-0.5 text-xs text-gray-600 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            className="rounded-md border border-gray-200 px-2 py-0.5 text-xs text-gray-600 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
             Edit
           </button>
         )
-      }>
+      }
+    >
       {isEditing ? (
         <div className="flex items-center gap-2">
           <input
             className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={draft}
             onChange={(e) => setDraft(e.target.value)}
-            autoFocus
           />
           <button
+            type="button"
             onClick={() => onSave?.(draft)}
-            className="text-sm text-blue-600 hover:underline">
+            className="text-sm text-blue-600 hover:underline"
+          >
             Save
           </button>
           <button
+            type="button"
             onClick={() => {
               setDraft(value);
               setIsEditing(false);
             }}
-            className="text-sm text-gray-500 hover:underline">
+            className="text-sm text-gray-500 hover:underline"
+          >
             Cancel
           </button>
         </div>
@@ -110,19 +116,20 @@ export function ToggleSetting({
           aria-checked={checked}
           onClick={() => onChange(!checked)}
           className={[
-            'relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500',
-            checked ? 'bg-blue-600' : 'bg-gray-200',
-          ].join(' ')}>
+            "relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500",
+            checked ? "bg-blue-600" : "bg-gray-200",
+          ].join(" ")}
+        >
           <span
             className={[
-              'inline-block h-5 w-5 transform rounded-full bg-white transition-transform',
-              checked ? 'translate-x-5' : 'translate-x-1',
-            ].join(' ')}
+              "inline-block h-5 w-5 transform rounded-full bg-white transition-transform",
+              checked ? "translate-x-5" : "translate-x-1",
+            ].join(" ")}
           />
         </button>
 
         <span className="ml-3 text-sm text-gray-700">
-          {checked ? 'Active' : 'Inactive'}
+          {checked ? "Active" : "Inactive"}
         </span>
       </div>
     </SettingRow>

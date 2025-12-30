@@ -1,8 +1,7 @@
-import { useState } from 'react';
-import { useOutletContext } from 'react-router';
-import type { Conversation } from '../../app/core/dashboard';
-import { updateConversation } from '../api/conversation';
-import { EditableSetting, SettingRow, ToggleSetting } from './Settings';
+import { useOutletContext } from "react-router";
+import type { Conversation } from "../../app/core/dashboard";
+import { updateConversation } from "../api/conversation";
+import { SettingRow, ToggleSetting } from "./Settings";
 
 function ViewConversationAnalysis({
   conversationId,
@@ -13,10 +12,12 @@ function ViewConversationAnalysis({
     <SettingRow label="Conversation Report">
       <a
         href={`/conversation/${conversationId}/analysis`}
-        className="underline">
+        className="underline"
+      >
         <button
           type="button"
-          className="bg-blue-500 text-sm md:text-base text-white px-2 py-1 rounded-xl hover:bg-blue-600">
+          className="bg-blue-500 text-sm md:text-base text-white px-2 py-1 rounded-xl hover:bg-blue-600"
+        >
           View Report
         </button>
       </a>

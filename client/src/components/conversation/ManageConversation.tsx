@@ -57,12 +57,6 @@ export default function ManageConversation({
         >
           Monitor
         </NavLink>
-        <NavLink
-          className="p-4 flex items-center gap-2 [&.active]:border-b-1"
-          to="distribute"
-        >
-          Distribute
-        </NavLink>
       </nav>
     </section>
   );
