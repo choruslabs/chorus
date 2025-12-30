@@ -39,18 +39,18 @@ export default function ManageConversation({
         </NavLink>
         <NavLink
           className="p-4 flex items-center gap-2 [&.active]:border-b-1"
+          to="monitor"
+        >
+          Monitor
+        </NavLink>
+        <NavLink
+          className="p-4 flex items-center gap-2 [&.active]:border-b-1"
           to="moderate"
         >
           Moderate
           <div className="px-3 py-1 rounded-full whitespace-nowrap font-semibold w-fit bg-gray-100">
             {unmoderatedCommentsCount}
           </div>
-        </NavLink>
-        <NavLink
-          className="p-4 flex items-center gap-2 [&.active]:border-b-1"
-          to="monitor"
-        >
-          Monitor
         </NavLink>
       </nav>
     </section>
