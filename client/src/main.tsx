@@ -10,6 +10,7 @@ import ConversationConfigPage from "./app/core/ConversationConfigPage";
 import ConversationPage from "./app/core/conversation";
 import DashboardPage from "./app/core/dashboard";
 import { AuthProvider } from "./components/context/AuthProvider";
+import ConversationOverview from "./components/conversation/ConversationOverview";
 import ManageComments from "./components/conversation/ManageComments";
 import ManageDistribution from "./components/conversation/ManageDistribution";
 import MonitorConversation from "./components/conversation/MonitorConversation";
@@ -42,7 +43,11 @@ const router = createBrowserRouter([
                 path: "edit",
                 Component: ConversationConfigPage,
                 children: [
-                  { index: true, Component: ManageComments },
+                  { index: true, Component: ConversationOverview },
+                  {
+                    path: "overview",
+                    Component: ConversationOverview,
+                  },
                   {
                     path: "monitor",
                     Component: MonitorConversation,
