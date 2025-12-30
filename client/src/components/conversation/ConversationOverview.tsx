@@ -54,7 +54,7 @@ export default function ConversationOverview() {
         window.location.reload();
       })
       .catch((error) => {
-        setError(error.message);
+        setError(error.message || "An error occurred while updating.");
       });
 
   return (
