@@ -49,6 +49,7 @@ export default function ConversationConfig({
     const newConversationRequestBody = {
       name: conversationName,
       description: conversationDescription,
+      isActive: true,
       // show_charts: conversationShowCharts,
       displayUnmoderated: conversationAllowUnmoderatedComments,
       allowVotes: conversationAllowVotes,
