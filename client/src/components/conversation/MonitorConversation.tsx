@@ -2,6 +2,7 @@ import { useOutletContext } from "react-router";
 import type { Conversation } from "../../app/core/dashboard";
 import { updateConversation } from "../api/conversation";
 import { SettingRow, ToggleSetting } from "./Settings";
+import { useState } from "react";
 
 function ViewConversationAnalysis({
   conversationId,
@@ -27,37 +28,27 @@ function ViewConversationAnalysis({
 
 export default function MonitorConversation() {
   const { conversation } = useOutletContext<{ conversation: Conversation }>();
+  
+  const [error, setError] = useState<string | null>(null);
 
-  const toggleIsActive = () => {
+  const toggleConversationAttribute = (key: string) => (value: boolean) =>
     updateConversation({
       conversationId: conversation.id,
-      isActive: !conversation.is_active,
+      [key]: value,
     }).then(() => {
       window.location.reload();
+    }).catch((error) => {
+      setError(error.message);
     });
-  };
-
-  const toggleAllowComments = () => {
-    updateConversation({
-      conversationId: conversation.id,
-      allowComments: !conversation.allow_comments,
-    }).then(() => {
-      window.location.reload();
-    });
-  };
-
-  const toggleAllowVotes = () => {
-    updateConversation({
-      conversationId: conversation.id,
-      allowVotes: !conversation.allow_votes,
-    }).then(() => {
-      window.location.reload();
-    });
-  };
 
   return (
-    <div className="w-[95%] max-w-4xl mx-auto p-5">
+    <>
       <section>
+        {error && (
+          <div className="mb-4 text-sm text-red-600">
+            {error}
+          </div>
+        )}
         <h3 className="mb-2 text-sm font-semibold text-gray-900">
           Participant Access
         </h3>
@@ -65,7 +56,7 @@ export default function MonitorConversation() {
           label="Conversation is live"
           description="When off, participants cannot view or interact with this conversation."
           checked={conversation.is_active}
-          onChange={toggleIsActive}
+          onChange={toggleConversationAttribute("isActive")}
         />
         {conversation.is_active && (
           <>
@@ -73,17 +64,26 @@ export default function MonitorConversation() {
               label="Participants can comment"
               description="Allow participants to submit new comments."
               checked={conversation.allow_comments}
-              onChange={toggleAllowComments}
+              onChange={toggleConversationAttribute("allowComments")}
             />
 
             <ToggleSetting
               label="Participants can vote"
               description="Allow participants to vote on comments."
               checked={conversation.allow_votes}
-              onChange={toggleAllowVotes}
+              onChange={toggleConversationAttribute("allowVotes")}
             />
           </>
         )}
+      </section>
+      <section className="mt-8">
+        <h3 className="mb-2 text-sm font-semibold text-gray-900">Moderation</h3>
+        <ToggleSetting
+          label="Unmoderated comments shown"
+          description="Allow participants to view and vote on comments that have not yet been moderated."
+          checked={conversation.display_unmoderated}
+          onChange={toggleConversationAttribute("displayUnmoderated")}
+        />
       </section>
       <section className="mt-8">
         <h3 className="mb-2 text-sm font-semibold text-gray-900">
@@ -91,6 +91,6 @@ export default function MonitorConversation() {
         </h3>
         <ViewConversationAnalysis conversationId={conversation.id} />
       </section>
-    </div>
+    </>
   );
 }

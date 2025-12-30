@@ -38,7 +38,7 @@ export const CommentsTableItem = ({
   });
 
   return (
-    <tr className="items-center">
+    <tr>
       <td className="p-5">
         <Input type="checkbox" className="h-5 w-5" />
       </td>
@@ -46,7 +46,7 @@ export const CommentsTableItem = ({
         <StatusPill moderationStatus={comment.approved} />
       </td>
       <td className="p-5 w-full">
-        <strong>{comment.id}</strong>
+        <span className="text-xs">{comment.id}</span>
         <br />
         {comment.content}
       </td>
