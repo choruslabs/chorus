@@ -58,7 +58,7 @@ export default function ConversationOverview() {
       });
 
   return (
-    <div className="w-[95%] max-w-4xl mx-auto p-5">
+    <>
       {error && <p className="text-red-500">{error}</p>}
       <EditableSetting
         label="Conversation Name"
@@ -85,6 +85,6 @@ export default function ConversationOverview() {
         label="Created At"
         value={dayjs(conversation.date_created).format("MMMM D, YYYY h:mm A")}
       />
-    </div>
+    </>
   );
 }

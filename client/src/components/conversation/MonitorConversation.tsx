@@ -37,7 +37,7 @@ export default function MonitorConversation() {
     });
 
   return (
-    <div className="w-[95%] max-w-4xl mx-auto p-5">
+    <>
       <section>
         <h3 className="mb-2 text-sm font-semibold text-gray-900">
           Participant Access
@@ -81,6 +81,6 @@ export default function MonitorConversation() {
         </h3>
         <ViewConversationAnalysis conversationId={conversation.id} />
       </section>
-    </div>
+    </>
   );
 }
