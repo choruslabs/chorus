@@ -132,4 +132,10 @@ const ConversationPage = () => {
   );
 };
 
+export type ConversationCustomization = {
+  theme_color: string;
+  header_name: string;
+  knowledge_base_content: string;
+};
+
 export default ConversationPage;

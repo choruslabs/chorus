@@ -1,8 +1,8 @@
+import { useState } from "react";
 import { useOutletContext } from "react-router";
 import type { Conversation } from "../../app/core/dashboard";
 import { updateConversation } from "../api/conversation";
-import { SettingRow, ToggleSetting } from "./Settings";
-import { useState } from "react";
+import { SettingRow, ToggleSetting } from "../admin/conversations/Settings";
 
 function ViewConversationAnalysis({
   conversationId,
@@ -28,27 +28,25 @@ function ViewConversationAnalysis({
 
 export default function MonitorConversation() {
   const { conversation } = useOutletContext<{ conversation: Conversation }>();
-  
+
   const [error, setError] = useState<string | null>(null);
 
   const toggleConversationAttribute = (key: string) => (value: boolean) =>
     updateConversation({
       conversationId: conversation.id,
       [key]: value,
-    }).then(() => {
-      window.location.reload();
-    }).catch((error) => {
-      setError(error.message);
-    });
+    })
+      .then(() => {
+        window.location.reload();
+      })
+      .catch((error) => {
+        setError(error.message);
+      });
 
   return (
     <>
       <section>
-        {error && (
-          <div className="mb-4 text-sm text-red-600">
-            {error}
-          </div>
-        )}
+        {error && <div className="mb-4 text-sm text-red-600">{error}</div>}
         <h3 className="mb-2 text-sm font-semibold text-gray-900">
           Participant Access
         </h3>

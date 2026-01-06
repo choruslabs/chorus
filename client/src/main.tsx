@@ -11,8 +11,8 @@ import ConversationPage from "./app/core/conversation";
 import DashboardPage from "./app/core/dashboard";
 import { AuthProvider } from "./components/context/AuthProvider";
 import ConversationOverview from "./components/conversation/ConversationOverview";
+import CustomizeConversation from "./components/conversation/CustomizeConversation";
 import ManageComments from "./components/conversation/ManageComments";
-import ManageDistribution from "./components/conversation/ManageDistribution";
 import MonitorConversation from "./components/conversation/MonitorConversation";
 import NotificationProvider from "./components/ui/NotificationProvider";
 
@@ -53,8 +53,8 @@ const router = createBrowserRouter([
                     Component: MonitorConversation,
                   },
                   {
-                    path: "distribute",
-                    Component: ManageDistribution,
+                    path: "customize",
+                    Component: CustomizeConversation,
                   },
                   {
                     path: "moderate",
