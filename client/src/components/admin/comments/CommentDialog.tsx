@@ -2,7 +2,7 @@ import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { PlusIcon } from "@heroicons/react/24/solid";
 import { useEffect, useState } from "react";
 import type { Conversation } from "../../../app/core/dashboard";
-import { isWhiteTextPreferred, ThemedButton } from "../../ui/luminance";
+import { ThemedButton } from "../../ui/luminance";
 import CommentConfig from "./CommentConfig";
 
 export function NewCommentDialog({

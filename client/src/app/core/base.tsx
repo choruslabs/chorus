@@ -1,7 +1,6 @@
 import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { AuthContext } from "../../components/context/AuthContext";
-import Logo from "../../components/ui/logo";
 import { isWhiteTextPreferred } from "../../components/ui/luminance";
 import { UserDropdown } from "../auth/UserDropdown";
 
