@@ -1,6 +1,13 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from chorus.routers import conversation, auth, moderation, analysis, imports
+from chorus.routers import (
+    conversation,
+    auth,
+    moderation,
+    analysis,
+    imports,
+    customization,
+)
 from chorus.settings import settings
 from chorus.database import db
 from chorus.models import *
@@ -28,5 +35,6 @@ def read_root():
 app.include_router(auth.router, tags=["auth"])
 app.include_router(conversation.router, tags=["conversation"])
 app.include_router(moderation.router, tags=["moderation"])
+app.include_router(customization.router, tags=["customization"])
 app.include_router(analysis.router, tags=["analysis"])
 app.include_router(imports.router, tags=["import"])

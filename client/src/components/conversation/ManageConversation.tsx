@@ -39,6 +39,12 @@ export default function ManageConversation({
         </NavLink>
         <NavLink
           className="p-4 flex items-center gap-2 [&.active]:border-b-1"
+          to="customize"
+        >
+          Customize
+        </NavLink>
+        <NavLink
+          className="p-4 flex items-center gap-2 [&.active]:border-b-1"
           to="monitor"
         >
           Monitor

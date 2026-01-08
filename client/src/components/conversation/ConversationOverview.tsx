@@ -3,7 +3,7 @@ import { useMemo, useState } from "react";
 import { useOutletContext } from "react-router";
 import type { Conversation } from "../../app/core/dashboard";
 import { updateConversation } from "../api/conversation";
-import { EditableSetting, SettingRow } from "./Settings";
+import { EditableSetting, SettingRow } from "../admin/conversations/Settings";
 
 function ConversationLink({
   label,
