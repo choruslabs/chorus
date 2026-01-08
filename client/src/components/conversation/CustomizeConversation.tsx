@@ -52,12 +52,13 @@ function ThemeColorPicker({
   setThemeColor: (color: string) => void;
 }) {
   const colors = [
-    '#FF5733',
-    '#33FF57',
-    '#3357FF',
-    '#F1C40F',
-    '#8E44AD',
-    '#E67E22',
+    '#DC2626',  // red
+    '#CA8A04',  // amber
+    '#16A34A',  // green
+    '#0EA5E9',  // sky blue
+    '#8B5CF6',  // violet
+    '#EC4899',  // pink
+    '#6B7280',  // gray
   ];
 
   return (
