@@ -1,13 +1,13 @@
-import { useOutletContext } from 'react-router';
-import { Conversation } from '../../app/core/dashboard';
-import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery } from "@tanstack/react-query";
+import MDEditor from "@uiw/react-md-editor";
+import { useState } from "react";
+import { useOutletContext } from "react-router";
+import type { ConversationCustomization } from "../../app/core/conversation";
+import type { Conversation } from "../../app/core/dashboard";
 import {
   getConversationCustomization,
   updateConversationCustomization,
-} from '../api/customization';
-import { ConversationCustomization } from '../../app/core/conversation';
-import MDEditor from '@uiw/react-md-editor';
+} from "../api/customization";
 
 function CustomizationSettingRow({
   label,
@@ -24,8 +24,9 @@ function CustomizationSettingRow({
     <dl className="grid grid-cols-1 lg:grid-cols-3 lg:gap-x-6 py-4 border-b border-gray-200">
       <dt
         className={`lg:col-span-1 ${
-          long ? '' : 'flex flex-col justify-center'
-        }`}>
+          long ? "" : "flex flex-col justify-center"
+        }`}
+      >
         <p className="text-sm md:text-base font-medium text-gray-900">
           {label}
         </p>
@@ -52,12 +53,13 @@ function ThemeColorPicker({
   setThemeColor: (color: string) => void;
 }) {
   const colors = [
-    '#FF5733',
-    '#33FF57',
-    '#3357FF',
-    '#F1C40F',
-    '#8E44AD',
-    '#E67E22',
+    "#DC2626", // red
+    "#CA8A04", // amber
+    "#16A34A", // green
+    "#0EA5E9", // sky blue
+    "#8B5CF6", // violet
+    "#EC4899", // pink
+    "#6B7280", // gray
   ];
 
   return (
@@ -67,7 +69,7 @@ function ThemeColorPicker({
           key={color}
           type="button"
           className={`w-10 h-10 rounded-full border-2 ${
-            themeColor === color ? 'border-black' : 'border-transparent'
+            themeColor === color ? "border-black" : "border-transparent"
           }`}
           style={{ backgroundColor: color }}
           onClick={() => setThemeColor(color)}
@@ -82,7 +84,8 @@ function ThemeColorPicker({
       <button
         type="button"
         className="px-3 py-1 bg-gray-200 rounded-xl hover:bg-gray-300"
-        onClick={() => setThemeColor('')}>
+        onClick={() => setThemeColor("")}
+      >
         Clear
       </button>
     </div>
@@ -145,7 +148,7 @@ function KnowledgeBaseContentSettingRow({
     <CustomizationSettingRow label={label} description={description} long>
       <MDEditor
         value={knowledgeBaseContent}
-        onChange={(value) => setKnowledgeBaseContent(value || '')}
+        onChange={(value) => setKnowledgeBaseContent(value || "")}
         height={200}
         data-color-mode="light"
       />
@@ -157,25 +160,25 @@ export default function CustomizeConversation() {
   const { conversation } = useOutletContext<{ conversation: Conversation }>();
 
   const customization = useQuery<ConversationCustomization>({
-    queryKey: ['conversation-customization', conversation.id],
+    queryKey: ["conversation-customization", conversation.id],
     queryFn: () => getConversationCustomization(conversation.id),
   });
 
   const [error, setError] = useState<string | null>(null);
   const [themeColor, setThemeColor] = useState(
-    customization?.data?.theme_color || ''
+    customization?.data?.theme_color || "",
   );
   const [headerName, setHeaderName] = useState(
-    customization?.data?.header_name || ''
+    customization?.data?.header_name || "",
   );
   const [knowledgeBaseContent, setKnowledgeBaseContent] = useState(
-    customization?.data?.knowledge_base_content || ''
+    customization?.data?.knowledge_base_content || "",
   );
 
   const changesMade =
-    themeColor.toLowerCase() !== (customization.data?.theme_color || '') ||
-    headerName !== (customization.data?.header_name || '') ||
-    knowledgeBaseContent !== (customization.data?.knowledge_base_content || '');
+    themeColor.toLowerCase() !== (customization.data?.theme_color || "") ||
+    headerName !== (customization.data?.header_name || "") ||
+    knowledgeBaseContent !== (customization.data?.knowledge_base_content || "");
 
   const saveConversationCustomization = () => {
     updateConversationCustomization({
@@ -189,7 +192,7 @@ export default function CustomizeConversation() {
         setError(null);
       })
       .catch((error) => {
-        setError(error.message || 'An error occurred while updating.');
+        setError(error.message || "An error occurred while updating.");
       });
   };
 
@@ -217,7 +220,8 @@ export default function CustomizeConversation() {
         type="button"
         onClick={saveConversationCustomization}
         className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-xl hover:bg-blue-600 disabled:bg-gray-400"
-        disabled={!changesMade}>
+        disabled={!changesMade}
+      >
         Save Changes
       </button>
     </>

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { Conversation } from "../../../app/core/dashboard";
 import { postApi } from "../../api/base";
+import { ThemedButton } from "../../ui/luminance";
 import { useNotification } from "../../ui/NotificationProvider";
 
 export default function CommentConfig({
@@ -8,11 +9,13 @@ export default function CommentConfig({
   editId,
   onComplete,
   onCancel,
+  themeColor,
 }: {
   conversation: Conversation;
   editId?: string;
   onComplete?: () => void;
   onCancel?: () => void;
+  themeColor?: string | null;
 }) {
   const [comment, setComment] = useState("");
   const [isHovering, setIsHovering] = useState(false);
@@ -86,15 +89,16 @@ export default function CommentConfig({
           Cancel
         </button>
         <div className="relative flex-1">
-          <button
+          <ThemedButton
             type="submit"
             onMouseEnter={() => setIsHovering(true)}
             onMouseLeave={() => setIsHovering(false)}
-            className={`px-2 py-1 bg-gray-500 text-white rounded-md w-full ${comment.trim() === "" ? "cursor-default" : "bg-secondary"}`}
+            className={`p-2 rounded-md w-full`}
             disabled={comment.trim() === ""}
+            themeColor={themeColor}
           >
             Add Comment
-          </button>
+          </ThemedButton>
         </div>
         {comment.trim() === "" && isHovering && (
           <div
