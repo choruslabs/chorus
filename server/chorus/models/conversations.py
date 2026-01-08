@@ -23,6 +23,10 @@ class Conversation(Base):
     allow_comments: Mapped[bool] = mapped_column(default=True)
     allow_votes: Mapped[bool] = mapped_column(default=True)
 
+    theme_color: Mapped[Optional[str]] = mapped_column(String(7), nullable=True)
+    header_name: Mapped[Optional[str]] = mapped_column(String(200), nullable=True)
+    knowledge_base_content: Mapped[Optional[str]] = mapped_column(nullable=True)
+
     author = relationship("User")
     comments = relationship("Comment", backref="conversation")
     pcas = relationship("UserPca", backref="conversation")
