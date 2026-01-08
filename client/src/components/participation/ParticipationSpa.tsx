@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import CoreBase from "../../app/core/base";
+import type { ConversationCustomization } from "../../app/core/conversation";
 import type {
   Comment,
   Conversation,
@@ -7,7 +8,6 @@ import type {
 } from "../../app/core/dashboard";
 import { NewCommentDialog } from "../admin/comments/CommentDialog";
 import { VotingSection } from "./VotingSection";
-import { ConversationCustomization } from "../../app/core/conversation";
 
 export const ParticipationSpa = ({
   conversation,
@@ -63,7 +63,10 @@ export const ParticipationSpa = ({
   };
 
   return (
-    <CoreBase themeColor={customization?.theme_color} headerName={customization?.header_name}>
+    <CoreBase
+      themeColor={customization?.theme_color}
+      headerName={customization?.header_name}
+    >
       <main className="w-[95%] min-h-full mx-auto flex flex-col">
         <section className="px-8 py-12">
           <h1 className="text-3xl font-bold mb-4">{conversation?.name}</h1>

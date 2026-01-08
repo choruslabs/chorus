@@ -1,10 +1,10 @@
 const getColorLuminance = (hexColor: string) => {
-  let hex = hexColor.replace('#', '');
+  let hex = hexColor.replace("#", "");
   if (hex.length === 3) {
     hex = hex
-      .split('')
+      .split("")
       .map((char) => char + char)
-      .join('');
+      .join("");
   }
 
   const r = parseInt(hex.slice(0, 2), 16);
@@ -30,19 +30,20 @@ export const ThemedButton = ({
 }) => (
   <button
     {...props}
-    className={`${props.className ? props.className + ' ' : ''}
+    className={`${props.className ? props.className + " " : ""}
           ${
             !props.disabled
               ? themeColor
                 ? isWhiteTextPreferred(themeColor)
-                  ? 'text-white'
-                  : 'text-black'
-                : 'bg-blue-500 text-white'
-              : 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                  ? "text-white"
+                  : "text-black"
+                : "bg-blue-500 text-white"
+              : "bg-gray-100 text-gray-400 cursor-not-allowed"
           }`}
     style={{
       backgroundColor: !props.disabled ? themeColor || undefined : undefined,
-    }}>
+    }}
+  >
     {children}
   </button>
 );

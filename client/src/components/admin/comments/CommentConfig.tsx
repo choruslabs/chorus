@@ -1,8 +1,8 @@
 import { useState } from "react";
 import type { Conversation } from "../../../app/core/dashboard";
 import { postApi } from "../../api/base";
-import { useNotification } from "../../ui/NotificationProvider";
 import { ThemedButton } from "../../ui/luminance";
+import { useNotification } from "../../ui/NotificationProvider";
 
 export default function CommentConfig({
   conversation,
