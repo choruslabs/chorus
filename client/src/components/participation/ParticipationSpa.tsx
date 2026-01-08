@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import CoreBase from "../../app/core/base";
+import type { ConversationCustomization } from "../../app/core/conversation";
 import type {
   Comment,
   Conversation,
@@ -10,6 +11,7 @@ import { VotingSection } from "./VotingSection";
 
 export const ParticipationSpa = ({
   conversation,
+  customization,
   currentComment,
   comments,
   onVoteComplete,
@@ -17,6 +19,7 @@ export const ParticipationSpa = ({
   isVotingDisabled,
 }: {
   conversation?: Conversation;
+  customization?: ConversationCustomization;
   currentComment?: {
     comment: ParticipationComment;
     num_votes: number;
@@ -60,9 +63,12 @@ export const ParticipationSpa = ({
   };
 
   return (
-    <CoreBase>
+    <CoreBase
+      themeColor={customization?.theme_color}
+      headerName={customization?.header_name}
+    >
       <main className="w-[95%] min-h-full mx-auto flex flex-col">
-        <section className="p-8">
+        <section className="px-8 py-12">
           <h1 className="text-3xl font-bold mb-4">{conversation?.name}</h1>
           <p className="mb-4">{conversation?.description}</p>
         </section>
@@ -90,6 +96,7 @@ export const ParticipationSpa = ({
                   <NewCommentDialog
                     conversation={conversation}
                     onComplete={onFormComplete}
+                    themeColor={customization?.theme_color}
                   />
                 )}
               </div>

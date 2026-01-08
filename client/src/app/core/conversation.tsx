@@ -39,6 +39,16 @@ const ConversationPage = () => {
       process.env.NODE_ENV === "test" ? false : autoRefetchInterval * 1000,
   });
 
+  const customization = useQuery<ConversationCustomization>({
+    queryKey: ["conversation-customization", conversationId],
+    queryFn: async () => {
+      return getApi(
+        `/conversations/${conversationId}/customization`,
+      ) as Promise<ConversationCustomization>;
+    },
+    retry: false,
+  });
+
   const currentComment = useQuery<{
     comment: ParticipationComment;
     num_votes: number;
@@ -123,6 +133,7 @@ const ConversationPage = () => {
   ) : (
     <ParticipationSpa
       conversation={conversation.data}
+      customization={customization.data}
       currentComment={allCommentsVoted ? undefined : currentComment.data}
       comments={comments.data}
       onVoteComplete={onVote}

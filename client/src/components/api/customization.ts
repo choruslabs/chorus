@@ -1,4 +1,4 @@
-import { getApi, putApi } from './base';
+import { getApi, putApi } from "./base";
 
 export const getConversationCustomization = async (conversationId: string) =>
   getApi(`/conversations/${conversationId}/customization`);
