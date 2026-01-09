@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import LoginPage from "./app/auth/login";
 import RegisterPage from "./app/auth/register";
+import ConversationAbout from "./app/core/ConversationAbout";
 import ConversationAnalysisPage from "./app/core/ConversationAnalysisPage";
 import ConversationConfigPage from "./app/core/ConversationConfigPage";
 import ConversationPage from "./app/core/conversation";
@@ -39,6 +40,7 @@ const router = createBrowserRouter([
             path: ":conversationId",
             children: [
               { index: true, Component: ConversationPage },
+              { path: "about", Component: ConversationAbout },
               {
                 path: "edit",
                 Component: ConversationConfigPage,

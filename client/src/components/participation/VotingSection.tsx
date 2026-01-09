@@ -14,7 +14,7 @@ export const VotingSection = ({
 }) => {
   return (
     comment && (
-      <div className="flex flex-col items-start gap-4 p-4 bg-white rounded-xl">
+      <div className="flex flex-col items-start gap-4 p-4 bg-white rounded-xl w-full">
         <div className="flex flex-col items-start gap-2 mb-2">
           <h3 className="font-semibold">Comment {commentNumber}</h3>
           <p className="text-gray-700 text-2xl font-bold">{comment.content}</p>
