@@ -39,10 +39,10 @@ export function NewCommentDialog({
         type="button"
         disabled={!conversation.allow_comments}
         onClick={() => handleEditClick(true)}
-        className="flex mb-4 px-3 py-2 w-min whitespace-nowrap items-center justify-center gap-x-2 rounded-xl"
+        className="flex px-3 py-2 w-min whitespace-nowrap items-center justify-center gap-x-2 rounded-xl"
         themeColor={themeColor}
       >
-        <PlusIcon height={24} width={24} /> Add Comment
+        <PlusIcon height={21} width={21} /> Add Comment
         {!conversation.allow_comments && (
           <span className="text-sm italic">(comments disabled)</span>
         )}

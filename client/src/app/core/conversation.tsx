@@ -8,6 +8,7 @@ import {
   getConversationIdByFriendlyName,
   getNextComment,
 } from "../../components/api/conversation";
+import { getConversationCustomization } from "../../components/api/customization";
 import { ConversationNotFound } from "../../components/participation/ConversationNotFound";
 import { ParticipationSpa } from "../../components/participation/ParticipationSpa";
 import type { Conversation, ParticipationComment } from "./dashboard";
@@ -41,11 +42,7 @@ const ConversationPage = () => {
 
   const customization = useQuery<ConversationCustomization>({
     queryKey: ["conversation-customization", conversationId],
-    queryFn: async () => {
-      return getApi(
-        `/conversations/${conversationId}/customization`,
-      ) as Promise<ConversationCustomization>;
-    },
+    queryFn: () => getConversationCustomization(conversationId ?? ""),
     retry: false,
   });
 
