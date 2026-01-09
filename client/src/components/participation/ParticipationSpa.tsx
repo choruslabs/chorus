@@ -7,6 +7,7 @@ import type {
   ParticipationComment,
 } from "../../app/core/dashboard";
 import { NewCommentDialog } from "../admin/comments/CommentDialog";
+import { ConversationTabs } from "./ParticipationTabs";
 import { VotingSection } from "./VotingSection";
 
 export const ParticipationSpa = ({
@@ -64,13 +65,24 @@ export const ParticipationSpa = ({
 
   return (
     <CoreBase
-      themeColor={customization?.theme_color}
       headerName={customization?.header_name}
+      tabs={
+        conversation?.id && (
+          <ConversationTabs
+            conversationId={conversation?.id}
+            currentTab="participate"
+          />
+        )
+      }
     >
       <main className="w-[95%] min-h-full mx-auto flex flex-col">
         <section className="px-8 py-12">
-          <h1 className="text-3xl font-bold mb-4">{conversation?.name}</h1>
-          <p className="mb-4">{conversation?.description}</p>
+          <h1 className="text-3xl font-bold mb-2">{conversation?.name}</h1>
+          <div
+            className="h-0.5 w-12 mb-4"
+            style={{ backgroundColor: customization?.theme_color }}
+          />
+          <p className="mb-4 text-gray-700">{conversation?.description}</p>
         </section>
         <div className="flex flex-col grow items-center mb-4">
           {conversation?.is_active === false ? (
@@ -82,16 +94,24 @@ export const ParticipationSpa = ({
             </div>
           ) : (
             <section
-              className="p-8 bg-gray-100 w-full xl:w-1/2 flex flex-col gap-4"
-              aria-labelledby="active-comment-header"
+              className="
+                w-full xl:w-1/2
+                rounded-2xl
+                border-2 border-gray-200
+                bg-gray-50
+                p-6
+                flex flex-col
+                gap-6
+              "
             >
-              <div className="flex justify-between items-center">
+              <div className="flex items-center justify-between">
                 <h2
                   id="active-comment-header"
-                  className="font-semibold text-primary mb-4"
+                  className="text-base font-semibold text-gray-800"
                 >
-                  Active Comments
+                  Active comments
                 </h2>
+
                 {!!conversation && (
                   <NewCommentDialog
                     conversation={conversation}
@@ -100,7 +120,7 @@ export const ParticipationSpa = ({
                   />
                 )}
               </div>
-              <div className="grow flex flex-col justify-center">
+              <div className="flex grow items-center justify-center">
                 {currentComment ? (
                   <VotingSection
                     comment={currentComment.comment}
@@ -109,14 +129,15 @@ export const ParticipationSpa = ({
                     isVotingDisabled={isVotingDisabled}
                   />
                 ) : (
-                  <div className="flex flex-col items-center justify-center p-4 bg-white rounded-xl">
-                    <p className="text-gray-500">No more comments to review.</p>
-                  </div>
+                  <p className="text-base text-gray-600 text-center">
+                    No more comments to review.
+                  </p>
                 )}
               </div>
               {!!currentComment && (
-                <p className="text-center pt-6">
+                <p className="pt-4 text-sm text-gray-500 text-center">
                   {amountOfVotedComments + 1} of {comments?.length} comments
+                  reviewed
                 </p>
               )}
             </section>
