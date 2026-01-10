@@ -9,10 +9,10 @@ import {
   getNextComment,
 } from "../../components/api/conversation";
 import { getConversationCustomization } from "../../components/api/customization";
+import { AuthContext } from "../../components/context/AuthContext";
 import { ConversationNotFound } from "../../components/participation/ConversationNotFound";
 import { ParticipationSpa } from "../../components/participation/ParticipationSpa";
 import type { Conversation, ParticipationComment } from "./dashboard";
-import { AuthContext } from "../../components/context/AuthContext";
 
 const ConversationPage = () => {
   const { userStatus, loginAsAnonymous } = useContext(AuthContext);
