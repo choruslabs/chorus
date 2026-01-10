@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useContext, useEffect, useMemo } from "react";
 import { useParams } from "react-router";
 import { getApi } from "../../components/api/base";
 import {
@@ -9,11 +9,19 @@ import {
   getNextComment,
 } from "../../components/api/conversation";
 import { getConversationCustomization } from "../../components/api/customization";
+import { AuthContext } from "../../components/context/AuthContext";
 import { ConversationNotFound } from "../../components/participation/ConversationNotFound";
 import { ParticipationSpa } from "../../components/participation/ParticipationSpa";
 import type { Conversation, ParticipationComment } from "./dashboard";
 
 const ConversationPage = () => {
+  const { userStatus, loginAsAnonymous } = useContext(AuthContext);
+  useEffect(() => {
+    if (userStatus && userStatus.data === undefined) {
+      loginAsAnonymous();
+    }
+  }, [userStatus, loginAsAnonymous]);
+
   const params = useParams<{ conversationId: string }>();
   const conversationIdOrName = params.conversationId;
   // This controls max. time (in s) the user need to wait before they can see the new comment(s)

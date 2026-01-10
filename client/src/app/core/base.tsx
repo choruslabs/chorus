@@ -20,6 +20,7 @@ const AppBar = ({
     px-5
     grid
     grid-cols-[auto_1fr_auto]
+    md:grid-cols-[0.2fr_1fr_0.2fr]
     items-center
     bg-white
     border-b border-gray-200
@@ -30,7 +31,7 @@ const AppBar = ({
         {headerName || "Chorus"}
       </h1>
     </div>
-    <div className="flex invisible md:visible justify-center">{tabs}</div>
+    <div className="flex hidden md:grid justify-center">{tabs}</div>
     <div className="flex items-center justify-end gap-2">{children}</div>
   </div>
 );
