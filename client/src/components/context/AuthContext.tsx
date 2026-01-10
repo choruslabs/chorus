@@ -6,8 +6,10 @@ export const AuthContext = createContext<{
   userStatus: UseQueryResult<User, Error> | null;
   login: (username: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
+  loginAsAnonymous: () => Promise<void>;
 }>({
   userStatus: null,
   login: async () => {},
   logout: async () => {},
+  loginAsAnonymous: async () => {},
 });

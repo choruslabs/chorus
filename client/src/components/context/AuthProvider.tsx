@@ -1,6 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import type { ReactNode } from "react";
-import { getUserMe, postLogin, postLogout } from "../api/auth";
+import {
+  getUserMe,
+  postLogin,
+  postLogout,
+  postRegisterAnonymous,
+} from "../api/auth";
 import { AuthContext } from "./AuthContext";
 
 export type User = {
@@ -25,12 +30,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     window.location.href = "/login";
   };
 
+  const loginAsAnonymous = async () => {
+    await postRegisterAnonymous();
+    await userStatus.refetch();
+  };
+
   return (
     <AuthContext.Provider
       value={{
         userStatus,
         login,
         logout,
+        loginAsAnonymous,
       }}
     >
       {children}
