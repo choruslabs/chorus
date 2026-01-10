@@ -18,6 +18,8 @@ export const postRegister = (username: string, password: string) =>
     password,
   });
 
+export const postRegisterAnonymous = () => postApi("/register/anonymous");
+
 export const getUserMe = () => getApi("/users/me");
 
 export const postLogout = () => postApi("/logout");
