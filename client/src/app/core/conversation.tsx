@@ -134,7 +134,11 @@ const ConversationPage = () => {
     queryFn: () => getApi(`/conversations/${conversationId}/comments`),
   });
   return conversation.data === undefined ? (
-    <ConversationNotFound />
+    conversation.isLoading ? (
+      <div>Loading...</div>
+    ) : (
+      <ConversationNotFound />
+    )
   ) : (
     <ParticipationSpa
       conversation={conversation.data}
