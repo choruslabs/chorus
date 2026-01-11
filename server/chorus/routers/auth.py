@@ -108,11 +108,7 @@ async def register(user: User, db: Database):
 
 
 @router.post("/register/anonymous")
-async def register_anonymous(
-  db: Database, 
-  settings: SettingsDep, 
-  response: Response
-):
+async def register_anonymous(db: Database, settings: SettingsDep, response: Response):
     anonymous_user = models.User(is_anonymous=True, session_id=uuid4())
     db.add(anonymous_user)
     db.commit()
@@ -128,16 +124,16 @@ async def register_anonymous(
         secure=settings.cookie_secure,
         samesite="none",
     )
-    
-    return {
-      "message": "Anonymous user created",
-      "username": anonymous_user.session_id
-    }
+
+    return {"message": "Anonymous user created", "username": anonymous_user.session_id}
 
 
 @router.get("/users/me")
 async def read_users_me(current_user: CurrentUser):
-    return {"username": current_user.username}
+    return {
+        "username": current_user.username,
+        "is_anonymous": current_user.is_anonymous,
+    }
 
 
 @router.post("/logout")
