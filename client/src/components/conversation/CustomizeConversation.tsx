@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import MDEditor from "@uiw/react-md-editor";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useOutletContext } from "react-router";
 import type { ConversationCustomization } from "../../app/core/conversation";
 import type { Conversation } from "../../app/core/dashboard";
@@ -53,7 +53,14 @@ function ThemeColorPicker({
   setThemeColor: (color: string) => void;
 }) {
   // from USWDS
-  const colors = ["#ffbe2e", "#538200", "#04c585", "#0076d6", "#676cc8", "#d72d79"];
+  const colors = [
+    "#ffbe2e",
+    "#538200",
+    "#04c585",
+    "#0076d6",
+    "#676cc8",
+    "#d72d79",
+  ];
 
   return (
     <div className="flex gap-4 items-center">
@@ -167,6 +174,14 @@ export default function CustomizeConversation() {
   const [knowledgeBaseContent, setKnowledgeBaseContent] = useState(
     customization?.data?.knowledge_base_content || "",
   );
+
+  useEffect(() => {
+    if (customization.data) {
+      setThemeColor(customization.data.theme_color || "");
+      setHeaderName(customization.data.header_name || "");
+      setKnowledgeBaseContent(customization.data.knowledge_base_content || "");
+    }
+  }, [customization.data]);
 
   const changesMade =
     themeColor.toLowerCase() !== (customization.data?.theme_color || "") ||
