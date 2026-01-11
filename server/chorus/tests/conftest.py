@@ -16,8 +16,11 @@ import logging
 
 logging.basicConfig(level=logging.INFO)
 
-test_engine = create_engine("sqlite:///./test.db" , connect_args={"check_same_thread": False})
+test_engine = create_engine(
+    "sqlite:///./test.db", connect_args={"check_same_thread": False}
+)
 TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=test_engine)
+
 
 @pytest.fixture(scope="function")
 def db():
@@ -28,6 +31,7 @@ def db():
     finally:
         db.close()
         Base.metadata.drop_all(bind=test_engine)
+
 
 @pytest.fixture(scope="function")
 def client(db):
@@ -42,6 +46,7 @@ def client(db):
     yield client
     app.dependency_overrides.clear()
 
+
 @pytest.fixture(scope="function")
 def register_user(client: TestClient):
     def _register(username: str, password: str):
@@ -51,11 +56,14 @@ def register_user(client: TestClient):
         }
         response = client.post("/register", json=payload)
         return response
+
     return _register
+
 
 @pytest.fixture(scope="function", autouse=True)
 def test_settings(monkeypatch):
     monkeypatch.setattr(settings, "cookie_secure", False)
+
 
 @pytest.fixture(scope="function")
 def authenticated_client(client: TestClient):
@@ -78,6 +86,7 @@ def anonymous_client(client: TestClient):
     assert response.status_code == 200
     yield client
 
+
 @pytest.fixture(scope="function")
 def authenticated_clients(db):
     def _create_clients(num_users):
@@ -96,22 +105,28 @@ def authenticated_clients(db):
             password = "securepassword"
 
             test_client = TestClient(app)
-            
-            test_client.post("/register", json={"username": username, "password": password})
-            test_client.post("/token", data={"username": username, "password": password})
+
+            test_client.post(
+                "/register", json={"username": username, "password": password}
+            )
+            test_client.post(
+                "/token", data={"username": username, "password": password}
+            )
 
             clients[username] = test_client
-        
+
         return clients
+
     yield _create_clients
+
 
 @pytest.fixture(scope="function")
 def valid_conversation_data(
-    name=f"Test Conversation {uuid4()}", 
-    description="This is a test conversation.", 
+    name=f"Test Conversation {uuid4()}",
+    description="This is a test conversation.",
     user_friendly_link=None,
     is_active=True,
-    display_unmoderated=True
+    display_unmoderated=True,
 ):
     return {
         "name": name,
@@ -121,75 +136,71 @@ def valid_conversation_data(
         "display_unmoderated": display_unmoderated,
     }
 
+
 @pytest.fixture(scope="function")
-def create_conversation( 
+def create_conversation(
     valid_conversation_data,
     authenticated_clients,
 ):
     default_client = authenticated_clients(1)["user1"]
-    
-    def _create(
-        authenticated_client: TestClient = None,
-        extra_data: dict = None
-    ):
+
+    def _create(authenticated_client: TestClient = None, extra_data: dict = None):
         client = authenticated_client or default_client
 
         data = valid_conversation_data.copy()
         if extra_data:
             data.update(extra_data)
-            
-        response = client.post("/conversations",json=data,)
+
+        response = client.post(
+            "/conversations",
+            json=data,
+        )
         return response
+
     return _create
+
 
 @pytest.fixture(scope="function")
 def create_comment():
     def _create(
-        client: TestClient, 
-        conversation_id: str, 
-        content: str = "This is a test comment."
+        client: TestClient,
+        conversation_id: str,
+        content: str = "This is a test comment.",
     ):
         response = client.post(
             f"/conversations/{conversation_id}/comments",
             json={"content": content},
         )
         return response
+
     return _create
+
 
 @pytest.fixture(scope="function")
 def approve_comment():
-    def _approve(
-        client: TestClient, 
-        comment_id: str
-    ):
-        response = client.put(
-            f"/moderation/comments/{comment_id}/approve"
-        )
+    def _approve(client: TestClient, comment_id: str):
+        response = client.put(f"/moderation/comments/{comment_id}/approve")
         return response
+
     return _approve
+
 
 @pytest.fixture(scope="function")
 def reject_comment():
-    def _reject(
-        client: TestClient, 
-        comment_id: str
-    ):
-        response = client.put(
-            f"/moderation/comments/{comment_id}/reject"
-        )
+    def _reject(client: TestClient, comment_id: str):
+        response = client.put(f"/moderation/comments/{comment_id}/reject")
         return response
+
     return _reject
+
 
 @pytest.fixture(scope="function")
 def vote_on_comment():
-    def _vote(
-        client: TestClient, 
-        comment_id: str, 
-        value: int
-    ):
+    def _vote(client: TestClient, comment_id: str, value: int):
         response = client.post(
             f"/comments/{comment_id}/vote",
             json={"value": value},
         )
         return response
+
     return _vote

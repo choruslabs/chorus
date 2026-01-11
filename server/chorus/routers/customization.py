@@ -60,11 +60,13 @@ def update_conversation_customization(
 
     for field, value in customization.model_dump().items():
         if field == "theme_color" and value is not None:
-            if value == '':
+            if value == "":
                 value = None
             else:
                 if not re.match(r"^#[0-9A-Fa-f]{6}$", value):
-                    raise HTTPException(status_code=422, detail="Invalid hex color code")
+                    raise HTTPException(
+                        status_code=422, detail="Invalid hex color code"
+                    )
                 value = value.lower()
 
         setattr(conversation_db, field, value)
