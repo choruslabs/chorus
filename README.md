@@ -2,7 +2,7 @@
 
 Chorus is an open-source web application for large-scale deliberation. It provides tools to help groups voice opinions and find common ground in the midst of complexity.
 
-Chorus implements a [pol.is](https://pol.is/home)-like process to collect statements and votes from large numbers of people and analyze it with statistics tools. It can be used to understand common threads of opinion present in a conversation, as well as points of consensus and divergence.
+Chorus implements a [pol.is](https://pol.is/home)-like process to collect statements and votes from large numbers of people and analyze it with statistical tools. It can be used to understand common threads of opinion present in a conversation, as well as points of consensus and divergence.
 
 The Chorus project is under active development on a fully volunteer basis by [Chorus Labs](https://github.com/choruslabs), a team of people who met at [Civic Tech Toronto](https://civictech.ca/). This is not a finished product! Expect many rough edges.
 
