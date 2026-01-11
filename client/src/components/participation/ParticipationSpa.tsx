@@ -74,6 +74,7 @@ export const ParticipationSpa = ({
           />
         )
       }
+      requiresLogin={false}
     >
       <main className="w-[95%] min-h-full mx-auto flex flex-col">
         <section className="px-8 py-12">

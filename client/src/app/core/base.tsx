@@ -52,10 +52,10 @@ const CoreBase = ({
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (userStatus?.isError && requiresLogin) {
+    if ((userStatus?.isError || userStatus?.data?.is_anonymous) && requiresLogin) {
       navigate("/login");
     }
-  }, [navigate, requiresLogin, userStatus?.isError]);
+  }, [navigate, requiresLogin, userStatus?.isError, userStatus?.data]);
 
   return (
     <div

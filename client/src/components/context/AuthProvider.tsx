@@ -10,6 +10,7 @@ import { AuthContext } from "./AuthContext";
 
 export type User = {
   username: string;
+  is_anonymous: boolean;
 };
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
