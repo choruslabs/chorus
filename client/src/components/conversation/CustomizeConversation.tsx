@@ -52,15 +52,8 @@ function ThemeColorPicker({
   themeColor: string;
   setThemeColor: (color: string) => void;
 }) {
-  const colors = [
-    "#DC2626", // red
-    "#CA8A04", // amber
-    "#16A34A", // green
-    "#0EA5E9", // sky blue
-    "#8B5CF6", // violet
-    "#EC4899", // pink
-    "#6B7280", // gray
-  ];
+  // from USWDS
+  const colors = ["#ffbe2e", "#538200", "#04c585", "#0076d6", "#676cc8", "#d72d79"];
 
   return (
     <div className="flex gap-4 items-center">

@@ -158,7 +158,7 @@ class TestUsersMe:
         
         response = authenticated_client.get("/users/me")
         assert response.status_code == 200
-        assert response.json() == {"username": "user1"}
+        assert response.json() == {"username": "user1", "is_anonymous": False}
 
 
     def test_read_users_me_no_token(self, client):

@@ -1,24 +1,35 @@
-const getColorLuminance = (hexColor: string) => {
+const getRelativeLuminance = (hexColor: string): number => {
   let hex = hexColor.replace("#", "");
   if (hex.length === 3) {
     hex = hex
       .split("")
-      .map((char) => char + char)
+      .map((c) => c + c)
       .join("");
   }
 
-  const r = parseInt(hex.slice(0, 2), 16);
-  const g = parseInt(hex.slice(2, 4), 16);
-  const b = parseInt(hex.slice(4, 6), 16);
+  const rgb = [
+    parseInt(hex.slice(0, 2), 16),
+    parseInt(hex.slice(2, 4), 16),
+    parseInt(hex.slice(4, 6), 16),
+  ].map((v) => {
+    const s = v / 255;
+    return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
+  });
 
-  const l = 0.2126 * r + 0.7152 * g + 0.0722 * b;
-
-  return l;
+  return 0.2126 * rgb[0] + 0.7152 * rgb[1] + 0.0722 * rgb[2];
 };
 
-export const isWhiteTextPreferred = (hexColor: string) => {
-  const luminance = getColorLuminance(hexColor);
-  return luminance < 140;
+const getContrastRatio = (l1: number, l2: number): number => {
+  return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
+};
+
+export const isWhiteTextPreferred = (backgroundHex: string): boolean => {
+  const bgLuminance = getRelativeLuminance(backgroundHex);
+
+  const whiteContrast = getContrastRatio(bgLuminance, 1); // white
+  const blackContrast = getContrastRatio(bgLuminance, 0); // black
+
+  return whiteContrast >= blackContrast;
 };
 
 export const ThemedButton = ({
