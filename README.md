@@ -1,6 +1,6 @@
 # Chorus
 
-Chorus is an open-source web application for large-scale deliberation. It provides tools to help groups voice opinions and find common ground in midst of complexity.
+Chorus is an open-source web application for large-scale deliberation. It provides tools to help groups voice opinions and find common ground in the midst of complexity.
 
 Chorus implements a [pol.is](https://pol.is/home)-like process to collect statements and votes from large numbers of people and analyze it with statistics tools. It can be used to understand common threads of opinion present in a conversation, as well as points of consensus and divergence.
 
