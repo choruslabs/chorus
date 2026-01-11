@@ -3,9 +3,10 @@ import string
 import uuid
 from chorus.models import User
 
+
 def generate_random_username(length=8):
     # Generate a random string of letters and digits of the given length
-    return ''.join(random.choices(string.ascii_letters + string.digits, k=length))
+    return "".join(random.choices(string.ascii_letters + string.digits, k=length))
 
 
 class TestRegister:
@@ -18,16 +19,17 @@ class TestRegister:
         - The user should be stored in the database with a hashed password
         """
         username = generate_random_username()
-        response = client.post("/register", json={"username": username, "password": "securepass"})
-        
+        response = client.post(
+            "/register", json={"username": username, "password": "securepass"}
+        )
+
         assert response.status_code == 200
         assert response.json() == {"username": username}
 
         # Verify that the user is actually in the database
         user = db.query(User).filter_by(username=username).first()
         assert user is not None
-        assert user.hashed_password != "securepass" 
-
+        assert user.hashed_password != "securepass"
 
     def test_register_duplicate_username(self, client, db):
         """
@@ -37,14 +39,17 @@ class TestRegister:
         - The response should indicate that the username already exists
         """
         # Setup: register the first user
-        response1 = client.post("/register", json={"username": "user1", "password": "pass"})
+        response1 = client.post(
+            "/register", json={"username": "user1", "password": "pass"}
+        )
         assert response1.status_code == 200
-        
+
         # Test: register same username again
-        response2 = client.post("/register", json={"username": "user1", "password": "pass2"})
+        response2 = client.post(
+            "/register", json={"username": "user1", "password": "pass2"}
+        )
         assert response2.status_code == 409
         assert response2.json()["detail"] == "Username already exists"
-
 
     def test_register_missing_username(self, client):
         """
@@ -54,7 +59,6 @@ class TestRegister:
         """
         response = client.post("/register", json={"password": "securepass"})
         assert response.status_code == 422
-
 
     def test_register_missing_password(self, client):
         """
@@ -82,7 +86,9 @@ class TestToken:
         register_user(username, password)
 
         # Log in
-        response = client.post("/token", data={"username": username, "password": password})       
+        response = client.post(
+            "/token", data={"username": username, "password": password}
+        )
         assert response.status_code == 200
         assert response.json() == {"message": "Login successful"}
 
@@ -90,7 +96,6 @@ class TestToken:
         me_response = client.get("/users/me")
         assert me_response.status_code == 200
         assert me_response.json() == {"username": username, "is_anonymous": False}
-
 
     def test_token_nonexistent_user(self, client):
         """
@@ -101,11 +106,12 @@ class TestToken:
         """
         username = "nonexistentuser"
         password = "wrongpassword"
-        
-        response = client.post("/token", data={"username": username, "password": password})
+
+        response = client.post(
+            "/token", data={"username": username, "password": password}
+        )
         assert response.status_code == 401
         assert response.json() == {"detail": "Incorrect username or password"}
-
 
     def test_token_incorrect_password(self, client, register_user):
         """
@@ -118,9 +124,10 @@ class TestToken:
         password = "securepassword"
         register_user(username, password)
 
-        response = client.post("/token", data={"username": username, "password": "wrongpassword"})        
+        response = client.post(
+            "/token", data={"username": username, "password": "wrongpassword"}
+        )
         assert response.status_code == 401
-    
 
     def test_login_missing_username(self, client):
         """
@@ -131,7 +138,6 @@ class TestToken:
 
         response = client.post("/token", data={"password": "securepassword"})
         assert response.status_code == 422
-
 
     def test_login_missing_password(self, client):
         """
@@ -155,11 +161,10 @@ class TestUsersMe:
         """
         clients = authenticated_clients(1)
         authenticated_client = clients["user1"]
-        
+
         response = authenticated_client.get("/users/me")
         assert response.status_code == 200
         assert response.json() == {"username": "user1", "is_anonymous": False}
-
 
     def test_read_users_me_no_token(self, client):
         """
@@ -170,7 +175,6 @@ class TestUsersMe:
         client.cookies.clear()
         response = client.get("/users/me")
         assert response.status_code == 422
-    
 
     def test_read_users_me_invalid_token(self, client):
         """
@@ -194,12 +198,11 @@ class TestLogOut:
         authenticated_client = authenticated_clients(1)["user1"]
         response = authenticated_client.get("/users/me")
         assert response.status_code == 200
-        
+
         response = authenticated_client.post("/logout")
         assert response.status_code == 200
         assert response.json() == {"message": "Logged out"}
         assert "access_token" not in response.cookies
-    
 
     def test_logout_no_token(self, client):
         """
@@ -227,7 +230,7 @@ class TestAnonymousUser:
         """
         response = client.post("/register/anonymous")
         assert response.status_code == 200
-        
+
         data = response.json()
         assert "username" in data
         uuid_obj = uuid.UUID(data["username"])
