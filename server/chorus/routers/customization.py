@@ -5,7 +5,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 
 from chorus import models
-from chorus.auth.user import RegisteredUser
+from chorus.auth.user import CurrentUser, RegisteredUser
 from chorus.database import Database
 
 
@@ -23,7 +23,7 @@ router = APIRouter()
     response_model=ConversationCustomization,
 )
 def get_conversation_customization(
-    conversation_id: UUID, db: Database, current_user: RegisteredUser
+    conversation_id: UUID, db: Database, current_user: CurrentUser
 ):
     conversation_db = (
         db.query(models.Conversation)

@@ -89,7 +89,7 @@ class TestToken:
         # Verify that the token works by accessing a protected endpoint
         me_response = client.get("/users/me")
         assert me_response.status_code == 200
-        assert me_response.json() == {"username": username}
+        assert me_response.json() == {"username": username, "is_anonymous": False}
 
 
     def test_token_nonexistent_user(self, client):
@@ -158,7 +158,7 @@ class TestUsersMe:
         
         response = authenticated_client.get("/users/me")
         assert response.status_code == 200
-        assert response.json() == {"username": "user1"}
+        assert response.json() == {"username": "user1", "is_anonymous": False}
 
 
     def test_read_users_me_no_token(self, client):
