@@ -53,7 +53,14 @@ function ThemeColorPicker({
   setThemeColor: (color: string) => void;
 }) {
   // from USWDS
-  const colors = ["#ffbe2e", "#538200", "#04c585", "#0076d6", "#676cc8", "#d72d79"];
+  const colors = [
+    "#ffbe2e",
+    "#538200",
+    "#04c585",
+    "#0076d6",
+    "#676cc8",
+    "#d72d79",
+  ];
 
   return (
     <div className="flex gap-4 items-center">
@@ -172,9 +179,7 @@ export default function CustomizeConversation() {
     if (customization.data) {
       setThemeColor(customization.data.theme_color || "");
       setHeaderName(customization.data.header_name || "");
-      setKnowledgeBaseContent(
-        customization.data.knowledge_base_content || "",
-      );
+      setKnowledgeBaseContent(customization.data.knowledge_base_content || "");
     }
   }, [customization.data]);
 
