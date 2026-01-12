@@ -48,6 +48,9 @@ const ConversationPage = () => {
       process.env.NODE_ENV === "test" ? false : autoRefetchInterval * 1000,
   });
 
+  const isConversationLoading =
+    (friendlyId.isLoading || conversation.isLoading) && !conversation.data;
+
   const customization = useQuery<ConversationCustomization>({
     queryKey: ["conversation-customization", conversationId],
     queryFn: () => getConversationCustomization(conversationId ?? ""),
@@ -133,12 +136,10 @@ const ConversationPage = () => {
     queryKey: [`comment-query-${conversationId}`],
     queryFn: () => getApi(`/conversations/${conversationId}/comments`),
   });
-  return conversation.data === undefined ? (
-    conversation.isLoading ? (
-      <div>Loading...</div>
-    ) : (
-      <ConversationNotFound />
-    )
+  return isConversationLoading ? (
+    <div>Loading...</div>
+  ) : !conversation.data ? (
+    <ConversationNotFound />
   ) : (
     <ParticipationSpa
       conversation={conversation.data}
