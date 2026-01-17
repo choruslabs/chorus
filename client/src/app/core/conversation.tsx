@@ -17,7 +17,7 @@ import type { Conversation, ParticipationComment } from "./dashboard";
 const ConversationPage = () => {
   const { userStatus, loginAsAnonymous } = useContext(AuthContext);
   useEffect(() => {
-    if (userStatus && userStatus.data === undefined) {
+    if (userStatus?.isSuccess && !userStatus.data) {
       loginAsAnonymous();
     }
   }, [userStatus, loginAsAnonymous]);
