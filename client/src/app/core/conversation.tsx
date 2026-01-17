@@ -33,7 +33,7 @@ const ConversationPage = () => {
     queryKey: ["conversation-id-name", conversationIdOrName || ""],
     queryFn: () => getConversationIdByFriendlyName(conversationIdOrName || ""),
     retry: false,
-    enabled: !!conversationIdOrName,
+    enabled: !!conversationIdOrName && !!userStatus?.data,
   });
 
   const conversationId = useMemo(() => {
@@ -44,6 +44,7 @@ const ConversationPage = () => {
     queryKey: ["current-conversation", conversationId],
     queryFn: () => getConversation(conversationId ?? ""),
     retry: false,
+    enabled: !!conversationId && !!userStatus?.data,
     refetchInterval:
       process.env.NODE_ENV === "test" ? false : autoRefetchInterval * 1000,
   });
