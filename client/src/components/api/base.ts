@@ -2,13 +2,13 @@ export const baseApiUrl =
   (import.meta.env.VITE_API_URL as string) || "http://localhost:8000";
 
 class ApiError extends Error {
-  status: number
-  body?: any
+  status: number;
+  body?: any;
 
   constructor(status: number, message: string, body?: any) {
-    super(message)
-    this.status = status
-    this.body = body
+    super(message);
+    this.status = status;
+    this.body = body;
   }
 }
 
@@ -22,7 +22,11 @@ export const fetchApi = async (url: string, options: RequestInit = {}) => {
   if (!res.ok) {
     const errorBody = await res.json();
     const errorCode = res.status;
-    throw new ApiError(errorCode, errorBody.detail ?? "unknown error", errorBody);
+    throw new ApiError(
+      errorCode,
+      errorBody.detail ?? "unknown error",
+      errorBody,
+    );
   }
 
   return res.json();
