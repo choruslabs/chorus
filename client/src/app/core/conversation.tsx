@@ -33,7 +33,7 @@ const ConversationPage = () => {
     queryKey: ["conversation-id-name", conversationIdOrName || ""],
     queryFn: () => getConversationIdByFriendlyName(conversationIdOrName || ""),
     retry: false,
-    enabled: !!conversationIdOrName,
+    enabled: !!conversationIdOrName && !!userStatus?.data,
   });
 
   const conversationId = useMemo(() => {
@@ -44,9 +44,13 @@ const ConversationPage = () => {
     queryKey: ["current-conversation", conversationId],
     queryFn: () => getConversation(conversationId ?? ""),
     retry: false,
+    enabled: !!conversationId && !!userStatus?.data,
     refetchInterval:
       process.env.NODE_ENV === "test" ? false : autoRefetchInterval * 1000,
   });
+
+  const isConversationLoading =
+    (friendlyId.isLoading || conversation.isLoading) && !conversation.data;
 
   const customization = useQuery<ConversationCustomization>({
     queryKey: ["conversation-customization", conversationId],
@@ -133,12 +137,10 @@ const ConversationPage = () => {
     queryKey: [`comment-query-${conversationId}`],
     queryFn: () => getApi(`/conversations/${conversationId}/comments`),
   });
-  return conversation.data === undefined ? (
-    conversation.isLoading ? (
-      <div>Loading...</div>
-    ) : (
-      <ConversationNotFound />
-    )
+  return isConversationLoading ? (
+    <div>Loading...</div>
+  ) : !conversation.data ? (
+    <ConversationNotFound />
   ) : (
     <ParticipationSpa
       conversation={conversation.data}
