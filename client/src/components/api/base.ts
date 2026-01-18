@@ -1,7 +1,7 @@
 export const baseApiUrl =
   (import.meta.env.VITE_API_URL as string) || "http://localhost:8000";
 
-class ApiError extends Error {
+export class ApiError extends Error {
   status: number;
   body?: any;
 

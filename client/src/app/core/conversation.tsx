@@ -13,12 +13,16 @@ import { AuthContext } from "../../components/context/AuthContext";
 import { ConversationNotFound } from "../../components/participation/ConversationNotFound";
 import { ParticipationSpa } from "../../components/participation/ParticipationSpa";
 import type { Conversation, ParticipationComment } from "./dashboard";
+import type { ApiError } from "../../components/api/base";
 
 const ConversationPage = () => {
   const { userStatus, loginAsAnonymous } = useContext(AuthContext);
   useEffect(() => {
-    if (userStatus?.isSuccess && !userStatus.data) {
-      loginAsAnonymous();
+    if (userStatus?.isError) {
+      const error = userStatus.error as ApiError;
+      if (error.status === 401 || error.status === 422) {
+        loginAsAnonymous();
+      }
     }
   }, [userStatus, loginAsAnonymous]);
 
