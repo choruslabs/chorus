@@ -11,7 +11,8 @@ export const UserDropdown = ({
   const isLoggedIn = !!user?.username;
   return (
     <div className="flex items-center h-full gap-2">
-      {!isLoggedIn && (
+      {/* Hiding for now, might remove later */}
+      {/* {!isLoggedIn && (
         <>
           <a
             href="/register"
@@ -26,7 +27,7 @@ export const UserDropdown = ({
             Log In
           </a>
         </>
-      )}
+      )} */}
       {isLoggedIn && (
         <details className="relative">
           <summary className="px-2 py-2 rounded-xl flex flex-row gap-x-2 w-min cursor-pointer">
