@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const logout = async () => {
     await postLogout();
     await userStatus.refetch();
-    window.location.href = "/login";
+    window.location.reload();
   };
 
   const loginAsAnonymous = async () => {
