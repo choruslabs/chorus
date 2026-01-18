@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useCallback, useContext, useEffect, useMemo } from "react";
 import { useParams } from "react-router";
+import type { ApiError } from "../../components/api/base";
 import { getApi } from "../../components/api/base";
 import {
   createVote,
@@ -17,8 +18,11 @@ import type { Conversation, ParticipationComment } from "./dashboard";
 const ConversationPage = () => {
   const { userStatus, loginAsAnonymous } = useContext(AuthContext);
   useEffect(() => {
-    if (userStatus?.isSuccess && !userStatus.data) {
-      loginAsAnonymous();
+    if (userStatus?.isError) {
+      const error = userStatus.error as ApiError;
+      if (error.status === 401 || error.status === 422) {
+        loginAsAnonymous();
+      }
     }
   }, [userStatus, loginAsAnonymous]);
 
