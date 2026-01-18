@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useCallback, useContext, useEffect, useMemo } from "react";
 import { useParams } from "react-router";
+import type { ApiError } from "../../components/api/base";
 import { getApi } from "../../components/api/base";
 import {
   createVote,
@@ -13,7 +14,6 @@ import { AuthContext } from "../../components/context/AuthContext";
 import { ConversationNotFound } from "../../components/participation/ConversationNotFound";
 import { ParticipationSpa } from "../../components/participation/ParticipationSpa";
 import type { Conversation, ParticipationComment } from "./dashboard";
-import type { ApiError } from "../../components/api/base";
 
 const ConversationPage = () => {
   const { userStatus, loginAsAnonymous } = useContext(AuthContext);
