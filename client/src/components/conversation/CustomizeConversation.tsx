@@ -217,7 +217,10 @@ export default function CustomizeConversation() {
     headerName !== (customization.data?.header_name || "") ||
     knowledgeBaseContent !== (customization.data?.knowledge_base_content || "");
 
-  const saveConversationCustomization = () => {
+  const saveConversationCustomization = (
+    event: React.ChangeEvent<HTMLFormElement>,
+  ) => {
+    event.preventDefault();
     updateConversationCustomization({
       conversationId: conversation.id,
       themeColor: themeColor || null,
@@ -234,7 +237,7 @@ export default function CustomizeConversation() {
   };
 
   return (
-    <>
+    <form onSubmit={saveConversationCustomization}>
       {error && <p className="text-red-500">{error}</p>}
       <ThemeColorSettingRow
         label="Theme Color"
@@ -262,13 +265,12 @@ export default function CustomizeConversation() {
         setKnowledgeBaseContent={setKnowledgeBaseContent}
       />
       <button
-        type="button"
-        onClick={saveConversationCustomization}
+        type="submit"
         className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-xl hover:bg-blue-600 disabled:bg-gray-400"
         disabled={!changesMade}
       >
         Save Changes
       </button>
-    </>
+    </form>
   );
 }
