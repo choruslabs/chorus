@@ -3,11 +3,13 @@ import { useState } from "react";
 export function SettingRow({
   label,
   description,
+  unsaved = false,
   action,
   children,
 }: {
   label: string;
   description?: string;
+  unsaved?: boolean;
   action?: React.ReactNode;
   children: React.ReactNode;
 }) {
@@ -24,6 +26,11 @@ export function SettingRow({
             {description}
           </p>
         )}
+        <span
+          className={`${unsaved ? "bg-amber-300" : "hidden"} px-2 py-0.5 text-sm rounded-sm w-fit`}
+        >
+          Unsaved
+        </span>
       </dt>
 
       <dd className="mt-2 lg:mt-0 lg:col-span-2">{children}</dd>

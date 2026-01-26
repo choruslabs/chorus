@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import MDEditor from "@uiw/react-md-editor";
+import DOMPurify from "dompurify";
 import { useEffect, useState } from "react";
 import { useOutletContext } from "react-router";
 import type { ConversationCustomization } from "../../app/core/conversation";
@@ -13,11 +14,13 @@ function CustomizationSettingRow({
   label,
   description,
   children,
+  unsaved = false,
   long = false,
 }: {
   label: string;
   description?: string;
   children: React.ReactNode;
+  unsaved?: boolean;
   long?: boolean;
 }) {
   return (
@@ -36,6 +39,11 @@ function CustomizationSettingRow({
             {description}
           </p>
         )}
+        <span
+          className={`${unsaved ? "bg-amber-300" : "hidden"} px-2 py-0.5 text-sm rounded-sm w-fit`}
+        >
+          Unsaved
+        </span>
       </dt>
 
       <dd className="mt-2 lg:mt-0 lg:col-span-2 flex flex-col justify-center">
@@ -79,7 +87,7 @@ function ThemeColorPicker({
         type="text"
         value={themeColor}
         onChange={(e) => setThemeColor(e.target.value)}
-        className="border-1 border-gray-500 rounded-xl px-3 py-1 w-32 h-8"
+        className="border border-gray-500 rounded-xl px-3 py-1 w-32 h-8"
       />
       <button
         type="button"
@@ -95,16 +103,22 @@ function ThemeColorPicker({
 function ThemeColorSettingRow({
   label,
   description,
+  unsaved,
   themeColor,
   setThemeColor,
 }: {
   label: string;
   description?: string;
+  unsaved?: boolean;
   themeColor: string;
   setThemeColor: (color: string) => void;
 }) {
   return (
-    <CustomizationSettingRow label={label} description={description}>
+    <CustomizationSettingRow
+      unsaved={unsaved}
+      label={label}
+      description={description}
+    >
       <ThemeColorPicker themeColor={themeColor} setThemeColor={setThemeColor} />
     </CustomizationSettingRow>
   );
@@ -113,21 +127,27 @@ function ThemeColorSettingRow({
 function HeaderNameSettingRow({
   label,
   description,
+  unsaved,
   headerName,
   setHeaderName,
 }: {
   label: string;
   description?: string;
+  unsaved?: boolean;
   headerName: string;
   setHeaderName: (name: string) => void;
 }) {
   return (
-    <CustomizationSettingRow label={label} description={description}>
+    <CustomizationSettingRow
+      unsaved={unsaved}
+      label={label}
+      description={description}
+    >
       <input
         type="text"
         value={headerName}
         onChange={(e) => setHeaderName(e.target.value)}
-        className="border-1 border-gray-500 rounded-xl px-3 py-1 w-64 h-8"
+        className="border border-gray-500 rounded-xl px-3 py-1 w-64 h-8"
       />
     </CustomizationSettingRow>
   );
@@ -136,19 +156,28 @@ function HeaderNameSettingRow({
 function KnowledgeBaseContentSettingRow({
   label,
   description,
+  unsaved,
   knowledgeBaseContent,
   setKnowledgeBaseContent,
 }: {
   label: string;
   description?: string;
+  unsaved?: boolean;
   knowledgeBaseContent: string;
   setKnowledgeBaseContent: (content: string) => void;
 }) {
   return (
-    <CustomizationSettingRow label={label} description={description} long>
+    <CustomizationSettingRow
+      label={label}
+      description={description}
+      unsaved={unsaved}
+      long
+    >
       <MDEditor
         value={knowledgeBaseContent}
-        onChange={(value) => setKnowledgeBaseContent(value || "")}
+        onChange={(value) =>
+          setKnowledgeBaseContent(DOMPurify.sanitize(value || ""))
+        }
         height={200}
         data-color-mode="light"
       />
@@ -188,7 +217,10 @@ export default function CustomizeConversation() {
     headerName !== (customization.data?.header_name || "") ||
     knowledgeBaseContent !== (customization.data?.knowledge_base_content || "");
 
-  const saveConversationCustomization = () => {
+  const saveConversationCustomization = (
+    event: React.ChangeEvent<HTMLFormElement>,
+  ) => {
+    event.preventDefault();
     updateConversationCustomization({
       conversationId: conversation.id,
       themeColor: themeColor || null,
@@ -205,33 +237,40 @@ export default function CustomizeConversation() {
   };
 
   return (
-    <>
+    <form onSubmit={saveConversationCustomization}>
       {error && <p className="text-red-500">{error}</p>}
       <ThemeColorSettingRow
         label="Theme Color"
+        unsaved={
+          themeColor.toLowerCase() !== (customization.data?.theme_color || "")
+        }
         themeColor={themeColor}
         setThemeColor={setThemeColor}
       />
       <HeaderNameSettingRow
         label="Header Name"
         description="This will appear instead of 'Chorus'."
+        unsaved={headerName !== (customization.data?.header_name || "")}
         headerName={headerName}
         setHeaderName={setHeaderName}
       />
       <KnowledgeBaseContentSettingRow
         label="Conversation Knowledge Base"
         description="Enter markdown content to be rendered and shown in the 'About' tab to participants."
+        unsaved={
+          knowledgeBaseContent !==
+          (customization.data?.knowledge_base_content || "")
+        }
         knowledgeBaseContent={knowledgeBaseContent}
         setKnowledgeBaseContent={setKnowledgeBaseContent}
       />
       <button
-        type="button"
-        onClick={saveConversationCustomization}
+        type="submit"
         className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-xl hover:bg-blue-600 disabled:bg-gray-400"
         disabled={!changesMade}
       >
         Save Changes
       </button>
-    </>
+    </form>
   );
 }
