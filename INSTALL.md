@@ -1,14 +1,14 @@
-## Installation
+# Installation
 
 To run Chorus locally, you need to set up both the web API (backend) and the frontend.
 
-### Web API
+## Web API
 
-#### Local (without Docker)
+### Local (without Docker)
 
 The web API is written in [FastAPI](https://fastapi.tiangolo.com/), a web framework for Python. You need to install Python before running the API.
 
-You also need to install [Poetry](https://python-poetry.org/) for Python, which is used for dependency management. Find installation instructions at https://python-poetry.org/docs/.
+You also need to install [Poetry](https://python-poetry.org/) for Python, which is used for dependency management. Find installation instructions at <https://python-poetry.org/docs/>.
 
 After installing poetry, install the project.
 
@@ -32,7 +32,7 @@ poetry run uvicorn chorus.main:app --reload
 
 Go to `http://localhost:8000/docs` to check if it works: you should see a Swagger page.
 
-#### Using Docker
+### Using Docker
 
 To build & run locally via docker compose:
 
@@ -56,7 +56,7 @@ docker run -p 8000:8000 chorus.server
 
 Go to `http://localhost:8000/docs` to check if it works: you should see a Swagger page.
 
-### Frontend
+## Frontend
 
 The frontend requires [https://nodejs.org/en](https://nodejs.org/en) to run and is written in [Vite](https://vite.dev/).
 
@@ -79,4 +79,4 @@ To run in storybook mode:
 npm run storybook
 ```
 
-There is also an online storybook instance at https://choruslabs.github.io/chorus.
+There is also an online storybook instance at <https://choruslabs.github.io/chorus>.
