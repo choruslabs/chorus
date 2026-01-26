@@ -41,7 +41,7 @@ export const ThemedButton = ({
 }) => (
   <button
     {...props}
-    className={`${props.className ? props.className + " " : ""}
+    className={`${props.className ? `${props.className} ` : ""}
           ${
             !props.disabled
               ? themeColor

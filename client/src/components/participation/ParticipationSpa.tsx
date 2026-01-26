@@ -7,6 +7,7 @@ import type {
   ParticipationComment,
 } from "../../app/core/dashboard";
 import { NewCommentDialog } from "../admin/comments/CommentDialog";
+import { KnowledgeBaseDialog } from "../KnowledgeBaseDialog";
 import { ConversationTabs } from "./ParticipationTabs";
 import { VotingSection } from "./VotingSection";
 
@@ -84,6 +85,11 @@ export const ParticipationSpa = ({
             style={{ backgroundColor: customization?.theme_color }}
           />
           <p className="mb-4 text-gray-700">{conversation?.description}</p>
+          {customization?.knowledge_base_content && (
+            <KnowledgeBaseDialog
+              markdownContent={customization?.knowledge_base_content}
+            />
+          )}
         </section>
         <div className="flex flex-col grow items-center mb-4">
           {conversation?.is_active === false ? (

@@ -47,15 +47,14 @@ export default function ConversationAbout() {
   });
 
   const contentHtml = useMemo(() => {
-    const parsed = marked.parse(
-      customization.data?.knowledge_base_content ||
-        "No about content provided.",
+    const sanitized = DOMPurify.sanitize(
+      customization.data?.knowledge_base_content ?? "",
     );
+    const parsed = marked.parse(sanitized || "No about content provided.");
     if (typeof parsed !== "string") {
       return "Error parsing content.";
     }
-    const sanitized = DOMPurify.sanitize(parsed);
-    return sanitized;
+    return parsed;
   }, [customization.data]);
 
   return (
