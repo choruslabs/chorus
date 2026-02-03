@@ -78,5 +78,6 @@ export const ActiveConversation: Story = {
     onVoteComplete: () => {},
     onComplete: () => {},
     isVotingDisabled: false,
+    pendingVote: null,
   },
 };

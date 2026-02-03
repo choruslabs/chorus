@@ -19,6 +19,7 @@ export const ParticipationSpa = ({
   onVoteComplete,
   onComplete,
   isVotingDisabled,
+  pendingVote,
 }: {
   conversation?: Conversation;
   customization?: ConversationCustomization;
@@ -33,6 +34,7 @@ export const ParticipationSpa = ({
   ) => void;
   onComplete: (event?: React.FormEvent<HTMLFormElement>) => void;
   isVotingDisabled: boolean;
+  pendingVote: "agree" | "disagree" | "skip" | null;
 }) => {
   // storing an HTML dialog element in state
   const [dialog, setDialog] = useState<HTMLDialogElement | null>(null);
@@ -134,6 +136,7 @@ export const ParticipationSpa = ({
                     commentNumber={amountOfVotedComments + 1}
                     onVote={onVote}
                     isVotingDisabled={isVotingDisabled}
+                    pendingVote={pendingVote}
                   />
                 ) : (
                   <p className="text-base text-gray-600 text-center">
