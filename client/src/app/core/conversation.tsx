@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useCallback, useContext, useEffect, useMemo } from "react";
+import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router";
 import type { ApiError } from "../../components/api/base";
 import { getApi } from "../../components/api/base";
@@ -25,6 +25,10 @@ const ConversationPage = () => {
       }
     }
   }, [userStatus, loginAsAnonymous]);
+
+  const [pendingVote, setPendingVote] = useState<
+    "agree" | "disagree" | "skip" | null
+  >(null);
 
   const params = useParams<{ conversationId: string }>();
   const conversationIdOrName = params.conversationId;
@@ -127,6 +131,7 @@ const ConversationPage = () => {
   ) => {
     if (!conversationId) return;
 
+    setPendingVote(vote);
     await voteMutation.mutateAsync({ commentId, vote });
   };
 
@@ -154,6 +159,7 @@ const ConversationPage = () => {
       onVoteComplete={onVote}
       onComplete={onFormComplete}
       isVotingDisabled={isVotingDisabled}
+      pendingVote={pendingVote}
     />
   );
 };

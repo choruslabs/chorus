@@ -32,7 +32,9 @@ const AppBar = ({
       </h1>
     </div>
     <div className="flex hidden md:grid justify-center">{tabs}</div>
-    <div className="flex items-center justify-end gap-2">{children}</div>
+    <div className="flex items-center justify-end-safe gap-2 grow">
+      {children}
+    </div>
   </div>
 );
 

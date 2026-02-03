@@ -36,6 +36,17 @@ export const createConversation = async ({
     user_friendly_link: userFriendlyLink,
   });
 
+export interface UpdateConversationPayload {
+  conversationId: string;
+  name?: string | null;
+  description?: string | null;
+  isActive?: boolean | null;
+  displayUnmoderated?: boolean | null;
+  allowComments?: boolean | null;
+  allowVotes?: boolean | null;
+  userFriendlyLink?: string | null;
+}
+
 export const updateConversation = async ({
   conversationId,
   name,
@@ -45,16 +56,7 @@ export const updateConversation = async ({
   allowComments,
   allowVotes,
   userFriendlyLink,
-}: {
-  conversationId: string;
-  name?: string | null;
-  description?: string | null;
-  isActive?: boolean | null;
-  displayUnmoderated?: boolean | null;
-  allowComments?: boolean | null;
-  allowVotes?: boolean | null;
-  userFriendlyLink?: string | null;
-}) =>
+}: UpdateConversationPayload) =>
   putApi(`/conversations/${conversationId}`, {
     name,
     description,

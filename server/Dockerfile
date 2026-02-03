@@ -22,7 +22,7 @@ EXPOSE 8000
 RUN chmod +x /app/entrypoint.sh
 
 # Set the entrypoint script
-ENTRYPOINT ["/bin/sh", "/app/entrypoint.sh"]
+ENTRYPOINT ["/bin/bash", "/app/entrypoint.sh"]
 
 # Run uvicorn server
 CMD ["uvicorn", "chorus.main:app", "--host", "0.0.0.0", "--port", "8000"]
