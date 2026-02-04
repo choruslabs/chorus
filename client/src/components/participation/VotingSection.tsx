@@ -1,13 +1,14 @@
-import { CheckIcon, ForwardIcon, XMarkIcon } from '@heroicons/react/24/solid';
-import type { ReactNode } from 'react';
-import type { ParticipationComment } from '../../app/core/dashboard';
+import { CheckIcon, ForwardIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import type { ReactNode } from "react";
+import type { ParticipationComment } from "../../app/core/dashboard";
 
-const Spinner = ({ className = '' }: { className?: string }) => (
+const Spinner = ({ className = "" }: { className?: string }) => (
   <svg
     className={`animate-spin h-4 w-4 ${className}`}
     viewBox="0 0 24 24"
     fill="none"
-    aria-hidden="true">
+    aria-hidden="true"
+  >
     <circle
       className="opacity-25"
       cx="12"
@@ -24,33 +25,33 @@ const Spinner = ({ className = '' }: { className?: string }) => (
   </svg>
 );
 
-type VoteButtonState = 'idle' | 'loading' | 'disabled';
+type VoteButtonState = "idle" | "loading" | "disabled";
 
 type VoteButtonProps = {
   label: string;
   icon: ReactNode;
   onClick: () => void;
   state?: VoteButtonState;
-  variant?: 'default' | 'secondary';
+  variant?: "default" | "secondary";
 };
 
 export const VoteButton = ({
   label,
   icon,
   onClick,
-  state = 'idle',
-  variant = 'default',
+  state = "idle",
+  variant = "default",
 }: VoteButtonProps) => {
-  const isDisabled = state !== 'idle';
-  const isLoading = state === 'loading';
+  const isDisabled = state !== "idle";
+  const isLoading = state === "loading";
 
   const baseStyles =
-    'relative inline-flex items-center gap-2 px-3 py-2 rounded-xl border font-medium transition-colors duration-150';
+    "relative inline-flex items-center gap-2 px-3 py-2 rounded-xl border font-medium transition-colors duration-150";
 
   const variantStyles =
-    variant === 'secondary'
-      ? 'border-gray-300 text-gray-700 hover:bg-primary hover:text-white'
-      : 'border-gray-300 hover:bg-primary hover:text-white';
+    variant === "secondary"
+      ? "border-gray-300 text-gray-700 hover:bg-primary hover:text-white"
+      : "border-gray-300 hover:bg-primary hover:text-white";
 
   return (
     <button
@@ -59,8 +60,9 @@ export const VoteButton = ({
       onClick={onClick}
       aria-busy={isLoading}
       className={`${baseStyles} ${variantStyles} ${
-        isDisabled ? 'opacity-60 cursor-not-allowed' : ''
-      }`}>
+        isDisabled ? "opacity-60 cursor-not-allowed" : ""
+      }`}
+    >
       {isLoading ? <Spinner /> : icon}
       <span>{label}</span>
     </button>
@@ -76,9 +78,9 @@ export const VotingSection = ({
 }: {
   comment: ParticipationComment | null;
   commentNumber?: number;
-  onVote: (commentId: string, vote: 'agree' | 'disagree' | 'skip') => void;
+  onVote: (commentId: string, vote: "agree" | "disagree" | "skip") => void;
   isVotingDisabled: boolean;
-  pendingVote: 'agree' | 'disagree' | 'skip' | null;
+  pendingVote: "agree" | "disagree" | "skip" | null;
 }) => {
   return (
     comment && (
@@ -94,26 +96,26 @@ export const VotingSection = ({
             <VoteButton
               label="Agree"
               icon={<CheckIcon className="h-5 w-5" />}
-              onClick={() => onVote(comment.id, 'agree')}
+              onClick={() => onVote(comment.id, "agree")}
               state={
                 isVotingDisabled
-                  ? pendingVote === 'agree'
-                    ? 'loading'
-                    : 'disabled'
-                  : 'idle'
+                  ? pendingVote === "agree"
+                    ? "loading"
+                    : "disabled"
+                  : "idle"
               }
             />
 
             <VoteButton
               label="Disagree"
               icon={<XMarkIcon className="h-5 w-5" />}
-              onClick={() => onVote(comment.id, 'disagree')}
+              onClick={() => onVote(comment.id, "disagree")}
               state={
                 isVotingDisabled
-                  ? pendingVote === 'disagree'
-                    ? 'loading'
-                    : 'disabled'
-                  : 'idle'
+                  ? pendingVote === "disagree"
+                    ? "loading"
+                    : "disabled"
+                  : "idle"
               }
             />
           </div>
@@ -122,14 +124,14 @@ export const VotingSection = ({
             <VoteButton
               label="Skip"
               icon={<ForwardIcon className="h-5 w-5" />}
-              onClick={() => onVote(comment.id, 'skip')}
+              onClick={() => onVote(comment.id, "skip")}
               variant="secondary"
               state={
                 isVotingDisabled
-                  ? pendingVote === 'skip'
-                    ? 'loading'
-                    : 'disabled'
-                  : 'idle'
+                  ? pendingVote === "skip"
+                    ? "loading"
+                    : "disabled"
+                  : "idle"
               }
             />
           </div>
