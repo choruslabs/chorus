@@ -91,8 +91,8 @@ export const VotingSection = ({
           {/* <time className="text-gray-500">(time here)</time> */}
         </div>
 
-        <div className="flex items-center gap-2 w-full flex-wrap">
-          <div className="flex items-center gap-2 w-full flex-wrap">
+        <div className="flex flex-col sm:flex-row sm:items-center w-full gap-2">
+          <div className="flex gap-2">
             <VoteButton
               label="Agree"
               icon={<CheckIcon className="h-5 w-5" />}
@@ -118,7 +118,9 @@ export const VotingSection = ({
                   : "idle"
               }
             />
+          </div>
 
+          <div className="sm:ml-auto">
             <VoteButton
               label="Skip"
               icon={<ForwardIcon className="h-5 w-5" />}
