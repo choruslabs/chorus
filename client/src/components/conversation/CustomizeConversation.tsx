@@ -231,10 +231,7 @@ export default function CustomizeConversation() {
       .then(() => {
         customization.refetch();
         setError(null);
-        notify({
-          type: "success",
-          message: "Changes saved successfully",
-        });
+        notify("Changes saved successfully", "success");
       })
       .catch((error) => {
         setError(error.message || "An error occurred while updating.");
