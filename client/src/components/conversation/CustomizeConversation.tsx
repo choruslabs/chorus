@@ -9,6 +9,7 @@ import {
   getConversationCustomization,
   updateConversationCustomization,
 } from "../api/customization";
+import { useNotification } from "../ui/NotificationProvider";
 
 function CustomizationSettingRow({
   label,
@@ -60,7 +61,6 @@ function ThemeColorPicker({
   themeColor: string;
   setThemeColor: (color: string) => void;
 }) {
-  // from USWDS
   const colors = [
     "#ffbe2e",
     "#538200",
@@ -187,6 +187,7 @@ function KnowledgeBaseContentSettingRow({
 
 export default function CustomizeConversation() {
   const { conversation } = useOutletContext<{ conversation: Conversation }>();
+  const { notify } = useNotification();
 
   const customization = useQuery<ConversationCustomization>({
     queryKey: ["conversation-customization", conversation.id],
@@ -230,6 +231,7 @@ export default function CustomizeConversation() {
       .then(() => {
         customization.refetch();
         setError(null);
+        notify("Changes saved successfully", "success");
       })
       .catch((error) => {
         setError(error.message || "An error occurred while updating.");
