@@ -2,10 +2,13 @@ services:
   engine:
     build: engine/
     image: chorus-engine:latest
+    container_name: chorus-engine
     hostname: chorus-engine
 
   server:
     build: server/
+    container_name: chorus-server
+    hostname: chorus-server
     environment:
       - DATABASE_URL=postgresql://user:password@db:5432/chorus
       - SECRET_KEY=your_secret_key
@@ -15,12 +18,12 @@ services:
         restart: true
       engine:
         condition: service_started
-    hostname: chorus-engine
     ports:
       - "8000:8000"
 
   db:
     image: postgres:latest
+    container_name: chorus-db
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
@@ -36,17 +39,18 @@ services:
 
   frontend:
     build:
-      context: ./client                  # Build from the client folder
+      context: ./client
       dockerfile: Dockerfile
-    container_name: react-frontend
+    container_name: chorus-frontend
+    hostname: chorus-frontend
     ports:
-      - "5173:5173"                      # Map host port 5173 to container
+      - "5173:5173"
     volumes:
-      - ./client:/app                    # Live code reload
-      # - /app/node_modules                # Prevent host node_modules override
+      - ./client:/app
+      - /app/node_modules                # Prevent host node_modules override
     stdin_open: true
     tty: true
     environment:
       - NODE_ENV=development
-      - VITE_API_URL=http://chorus-engine:8000
+      - VITE_API_URL=http://localhost:8000
     restart: unless-stopped
