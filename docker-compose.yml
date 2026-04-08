@@ -2,6 +2,7 @@ services:
   engine:
     build: engine/
     image: chorus-engine:latest
+    hostname: chorus-engine
 
   server:
     build: server/
@@ -14,6 +15,7 @@ services:
         restart: true
       engine:
         condition: service_started
+    hostname: chorus-engine
     ports:
       - "8000:8000"
 
@@ -31,3 +33,20 @@ services:
       retries: 5
       start_period: 30s
       timeout: 10s
+
+  frontend:
+    build:
+      context: ./client                  # Build from the client folder
+      dockerfile: Dockerfile
+    container_name: react-frontend
+    ports:
+      - "5173:5173"                      # Map host port 5173 to container
+    volumes:
+      - ./client:/app                    # Live code reload
+      - /app/node_modules                # Prevent host node_modules override
+    stdin_open: true
+    tty: true
+    environment:
+      - NODE_ENV=development
+      - VITE_API_URL=http://chorus-engine:8000
+    restart: unless-stopped
