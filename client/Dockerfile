@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 5173
 
 # Start development server
-CMD ["npm", "run", "dev"]
+CMD ["npm", "run", "dev-docker"]

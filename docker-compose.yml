@@ -43,7 +43,7 @@ services:
       - "5173:5173"                      # Map host port 5173 to container
     volumes:
       - ./client:/app                    # Live code reload
-      - /app/node_modules                # Prevent host node_modules override
+      # - /app/node_modules                # Prevent host node_modules override
     stdin_open: true
     tty: true
     environment:
