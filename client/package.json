@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev-docker": "vite --host",
     "build": "tsc -b && vite build",
     "lint": "biome check  --write",
     "lint:ci": "biome ci",

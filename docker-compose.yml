@@ -2,9 +2,13 @@ services:
   engine:
     build: engine/
     image: chorus-engine:latest
+    container_name: chorus-engine
+    hostname: chorus-engine
 
   server:
     build: server/
+    container_name: chorus-server
+    hostname: chorus-server
     environment:
       - DATABASE_URL=postgresql://user:password@db:5432/chorus
       - SECRET_KEY=your_secret_key
@@ -19,6 +23,7 @@ services:
 
   db:
     image: postgres:latest
+    container_name: chorus-db
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
@@ -31,3 +36,21 @@ services:
       retries: 5
       start_period: 30s
       timeout: 10s
+
+  frontend:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: chorus-frontend
+    hostname: chorus-frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./client:/app
+      - /app/node_modules                # Prevent host node_modules override
+    stdin_open: true
+    tty: true
+    environment:
+      - NODE_ENV=development
+      - VITE_API_URL=http://localhost:8000
+    restart: unless-stopped
