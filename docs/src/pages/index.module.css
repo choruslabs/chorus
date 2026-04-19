@@ -1,0 +1,242 @@
+/* ─── Tokens ──────────────────────────────────────────────────────
+   Wired to Infima variables from custom.css wherever possible,
+   so light/dark mode just works without extra overrides.
+   ─────────────────────────────────────────────────────────────── */
+:root {
+  --ch-hero-bg: var(--ifm-color-primary-darkest); /* #0d1526 */
+  --ch-hero-border: var(--ifm-color-primary-dark); /* #293c78 */
+  --ch-accent: var(--ifm-color-primary); /* #4481b3 */
+  --ch-accent-light: var(--ifm-color-primary-light); /* #5a9bd8 */
+  --ch-step-num: var(--ifm-color-primary-lightest); /* #a0d1eb */
+  --ch-warning-bg: #fffbeb;
+  --ch-warning-border: #d4a017;
+  --ch-warning-text: #7a5a00;
+}
+
+[data-theme='dark'] {
+  --ch-warning-bg: #2a2200;
+  --ch-warning-border: #a07800;
+  --ch-warning-text: #f0c84a;
+}
+
+/* ─── Hero ───────────────────────────────────────────────────── */
+.hero {
+  background: var(--ch-hero-bg);
+  border-bottom: 3px solid var(--ch-hero-border);
+  padding: 4rem 2rem 4.5rem;
+}
+
+.heroInner {
+  max-width: 720px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.heroBadge {
+  font-size: 0.85rem;
+  color: var(--ch-step-num);
+  margin: 0;
+}
+
+.heroBadge a {
+  color: var(--ch-accent-light);
+}
+
+.heroHeadline {
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.heroSubtitle {
+  font-size: 1.1rem;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.72);
+  margin: 0;
+  max-width: 600px;
+}
+
+.heroWarning {
+  font-size: 0.875rem;
+  background: var(--ch-warning-bg);
+  border: 1px solid var(--ch-warning-border);
+  color: var(--ch-warning-text);
+  border-radius: 4px;
+  padding: 0.6rem 1rem;
+  margin: 0;
+  max-width: fit-content;
+}
+
+.heroActions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  padding-top: 0.25rem;
+}
+
+/* ─── Buttons ────────────────────────────────────────────────── */
+.btnPrimary {
+  display: inline-block;
+  padding: 0.6rem 1.25rem;
+  background: var(--ch-accent);
+  color: #fff !important;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 4px;
+  text-decoration: none !important;
+  transition: background 0.15s;
+}
+
+.btnPrimary:hover {
+  background: var(--ifm-color-primary-dark);
+}
+
+.btnSecondary {
+  display: inline-block;
+  padding: 0.6rem 1.25rem;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.8) !important;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 4px;
+  text-decoration: none !important;
+  transition: border-color 0.15s;
+}
+
+.btnSecondary:hover {
+  border-color: rgba(255, 255, 255, 0.7);
+  color: #fff !important;
+}
+
+/* ─── Sections ───────────────────────────────────────────────── */
+.section {
+  padding: 4rem 2rem;
+}
+
+.sectionAlt {
+  background: var(--ifm-color-emphasis-100);
+  border-top: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.sectionInner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.sectionTitle {
+  font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+  font-weight: 700;
+  margin: 0 0 0.75rem;
+}
+
+.sectionLead {
+  font-size: 1rem;
+  color: var(--ifm-color-emphasis-700);
+  line-height: 1.7;
+  max-width: 620px;
+  margin: 0 0 2.5rem;
+}
+
+/* ─── Steps ──────────────────────────────────────────────────── */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.5rem;
+}
+
+@media (max-width: 640px) {
+  .steps {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+.step {
+  border-top: 2px solid var(--ch-accent);
+  padding-top: 1.25rem;
+}
+
+.stepNumber {
+  display: block;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--ch-step-num);
+  line-height: 1;
+  margin-bottom: 0.6rem;
+}
+
+[data-theme='dark'] .stepNumber {
+  color: var(--ifm-color-primary-dark);
+}
+
+.stepTitle {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--ifm-color-emphasis-800);
+  margin: 0 0 0.6rem;
+}
+
+.stepBody {
+  font-size: 0.95rem;
+  color: var(--ifm-color-emphasis-700);
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* ─── Get Involved ───────────────────────────────────────────── */
+.involvedGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .involvedGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.involvedCard {
+  background: var(--ifm-background-surface-color);
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 6px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.involvedCard h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin: 0;
+  color: var(--ifm-color-emphasis-900);
+}
+
+.involvedCard p {
+  font-size: 0.9rem;
+  color: var(--ifm-color-emphasis-700);
+  line-height: 1.6;
+  margin: 0;
+  flex: 1;
+}
+
+.involvedCard a {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--ch-accent);
+  text-decoration: none;
+  margin-top: 0.25rem;
+}
+
+.involvedCard a:hover {
+  text-decoration: underline;
+}
