@@ -1,7 +1,0 @@
-{
-  "name": "Chorus server",
-  "dockerComposeFile": ["../../docker-compose.yml"],
-  "service": "server",
-  "forwardPorts": [8000, 5432],
-  "workspaceFolder": "/app"
-}

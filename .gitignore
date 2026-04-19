@@ -1,9 +1,0 @@
-venv/
-.env
-*.pyc
-*.pyo
-*.pyd
-__pycache__/
-node_modules/
-server/test.db
-.DS_Store
