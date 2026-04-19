@@ -17,7 +17,7 @@ const config: Config = {
   url: 'https://choruslabs.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/chorus/docs/',
+  baseUrl: '/chorus/',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
@@ -69,6 +69,11 @@ const config: Config = {
           sidebarId: 'docsSidebar',
           position: 'left',
           label: 'Docs',
+        },
+        {
+          href: '/storybook/',
+          label: 'Storybook',
+          position: 'right',
         },
       ],
     },
