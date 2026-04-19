@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkchorus_docs=self.webpackChunkchorus_docs||[]).push([["485"],{38(o){o.exports=JSON.parse('{"metadata":{"permalink":"/chorus/blog","page":1,"postsPerPage":10,"totalPages":1,"totalCount":0,"blogDescription":"Blog","blogTitle":"Blog"}}')}}]);
