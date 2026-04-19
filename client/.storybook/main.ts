@@ -15,11 +15,5 @@ const config: StorybookConfig = {
     options: {},
   },
   staticDirs: ["../public"],
-  viteFinal: (config) => {
-    return {
-      ...config,
-      base: "/chorus/storybook/",
-    };
-  }
 };
 export default config;
