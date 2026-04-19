@@ -70,11 +70,6 @@ const config: Config = {
           position: 'left',
           label: 'Docs',
         },
-        {
-          href: '/storybook/',
-          label: 'Storybook',
-          position: 'right',
-        },
       ],
     },
     footer: {
