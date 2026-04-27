@@ -97,7 +97,7 @@ export default function CommentConfig({
             disabled={comment.trim() === ""}
             themeColor={themeColor}
           >
-            Add Comment
+            Add Statement
           </ThemedButton>
         </div>
         {comment.trim() === "" && isHovering && (
@@ -106,7 +106,7 @@ export default function CommentConfig({
             role="tooltip"
             aria-live="polite"
           >
-            Comment is empty
+            Statement is empty
           </div>
         )}
       </div>
