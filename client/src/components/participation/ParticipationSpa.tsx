@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import CoreBase from '../../app/core/base';
 import type { ConversationCustomization } from '../../app/core/conversation';
 import type {
@@ -36,8 +36,17 @@ export const ParticipationSpa = ({
   isVotingDisabled: boolean;
   pendingVote: 'agree' | 'disagree' | 'skip' | null;
 }) => {
-  const [comment, setComment] = useState('');
   const { notify } = useNotification();
+
+  const [comment, setComment] = useState('');
+  const [isCommenting, setIsCommenting] = useState(false);
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+
+  useEffect(() => {
+    if (isCommenting) {
+      textareaRef.current?.focus();
+    }
+  }, [isCommenting]);
 
   const amountOfVotedComments = useMemo(() => {
     return currentComment?.num_votes ?? 0;
@@ -89,7 +98,7 @@ export const ParticipationSpa = ({
         )
       }
       requiresLogin={false}>
-      <main className="w-[95%] min-h-full mx-auto flex flex-col">
+      <main className="w-[95%] min-h-full mx-auto flex flex-col overflow-anchor-none">
         <section className="px-8 py-12">
           <h1 className="text-3xl font-bold mb-2">{conversation?.name}</h1>
           <div
@@ -140,18 +149,13 @@ export const ParticipationSpa = ({
                 </div>
                 <div className="flex grow flex-col justify-center gap-3">
                   {currentComment ? (
-                    <>
-                      <p className="text-sm text-gray-500">
-                        Do you agree or disagree with this statement?
-                      </p>
-                      <VotingSection
-                        comment={currentComment.comment}
-                        commentNumber={amountOfVotedComments + 1}
-                        onVote={onVote}
-                        isVotingDisabled={isVotingDisabled}
-                        pendingVote={pendingVote}
-                      />
-                    </>
+                    <VotingSection
+                      comment={currentComment.comment}
+                      commentNumber={amountOfVotedComments + 1}
+                      onVote={onVote}
+                      isVotingDisabled={isVotingDisabled}
+                      pendingVote={pendingVote}
+                    />
                   ) : (
                     <p className="text-base text-gray-600 text-center">
                       No more statements to review.
@@ -159,67 +163,96 @@ export const ParticipationSpa = ({
                   )}
                 </div>
               </section>
-              <section
-                className="
-                  w-full xl:w-1/2
-                  border border-gray-100 bg-gray-50/50
-                  p-6
-                  flex flex-col
-                  gap-3
-                ">
-                <h3 className="text-base font-semibold text-gray-800">
-                  Add your own statement
-                </h3>
-
-                <p className="text-sm text-gray-600">
-                  Write a clear opinion that others can agree or disagree with.
-                </p>
-
-                <form
-                  onSubmit={onSubmitComment}
-                  className="flex flex-col gap-3"
-                  aria-label="Add your own statement form">
-                  <textarea
-                    name="newComment"
-                    id="newComment"
-                    value={comment}
-                    onChange={(event) => setComment(event.target.value)}
-                    required
-                    placeholder="Write your statement here..."
+              <div className="w-full xl:w-1/2 mb-6">
+                {!isCommenting ? (
+                  <button
+                    type="button"
+                    onClick={() => setIsCommenting(true)}
+                    aria-expanded={isCommenting}
+                    aria-controls="comment-form"
                     className="
                       w-full
-                      min-h-[96px]
-                      p-3
-                      border border-gray-300
+                      px-4 py-3
+                      border border-gray-200
                       rounded-lg
-                      focus:outline-none
-                      focus:ring-2 focus:ring-blue-500
+                      text-left
+                      text-gray-600
                       bg-white
-                      resize-y
-                    "
-                    aria-describedby="comment-help comment-count"
-                  />
-
-                  <button
-                    type="submit"
-                    disabled={comment.trim() === ''}
-                    className={`
-                      self-start
-                      px-4 py-2
-                      ${
-                        !customization?.theme_color &&
-                        'bg-blue-600 hover:bg-blue-700'
-                      }
-                      text-white
-                      rounded-lg
-                      disabled:bg-gray-300 disabled:cursor-not-allowed
-                      transition-colors
-                    `}
-                    style={{ backgroundColor: customization?.theme_color }}>
-                    Add statement
+                      hover:border-gray-300
+                      hover:text-gray-800
+                      transition
+                    ">
+                    Write your own statement…
                   </button>
-                </form>
-              </section>
+                ) : (
+                  <div
+                    id="comment-form"
+                    className="mt-3 p-6 border border-gray-200 rounded-lg bg-white">
+                    <h3 className="text-xl font-semibold text-gray-800 mb-1">
+                      Add your own statement
+                    </h3>
+
+                    <p className="text-base text-gray-600 mb-4">
+                      Write a clear opinion that others can agree or disagree
+                      with. Your statement will be shown to other participants
+                      for voting.
+                    </p>
+
+                    <form
+                      onSubmit={onSubmitComment}
+                      className="flex flex-col gap-3">
+                      <textarea
+                        ref={textareaRef}
+                        name="newComment"
+                        id="newComment"
+                        value={comment}
+                        onChange={(event) => setComment(event.target.value)}
+                        required
+                        className="
+                          w-full
+                          min-h-[96px]
+                          p-3
+                          border border-gray-300
+                          rounded-lg
+                          focus:outline-none
+                          focus:ring-2 focus:ring-blue-500
+                          resize-y
+                        "
+                        aria-label="Your statement"
+                      />
+
+                      <div className="flex items-center gap-2">
+                        <button
+                          type="submit"
+                          disabled={comment.trim() === ''}
+                          className={`
+                            px-4 py-2
+                            ${
+                              !customization?.theme_color &&
+                              'bg-blue-600 hover:bg-blue-700'
+                            }
+                            text-white
+                            rounded-lg
+                            disabled:bg-gray-300 disabled:cursor-not-allowed
+                            transition-colors
+                          `}
+                          style={{
+                            backgroundColor: customization?.theme_color,
+                          }}>
+                          Add statement
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={() => setIsCommenting(false)}
+                          className="text-base text-gray-500 hover:text-gray-700">
+                          Cancel
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                )}
+              </div>
             </>
           )}
         </div>
