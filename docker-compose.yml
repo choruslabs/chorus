@@ -24,6 +24,8 @@ services:
   db:
     image: postgres:latest
     container_name: chorus-db
+    volumes:
+      - pg_data:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
@@ -54,3 +56,6 @@ services:
       - NODE_ENV=development
       - VITE_API_URL=http://localhost:8000
     restart: unless-stopped
+
+volumes:
+  pg_data:
