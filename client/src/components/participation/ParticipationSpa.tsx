@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import CoreBase from '../../app/core/base';
 import type { ConversationCustomization } from '../../app/core/conversation';
 import type {
