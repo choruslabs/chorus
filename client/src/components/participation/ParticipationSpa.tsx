@@ -118,7 +118,7 @@ export const ParticipationSpa = ({
                   id="active-comment-header"
                   className="text-base font-semibold text-gray-800"
                 >
-                  Active comments
+                  Active statements
                 </h2>
 
                 {!!conversation && (
@@ -140,13 +140,13 @@ export const ParticipationSpa = ({
                   />
                 ) : (
                   <p className="text-base text-gray-600 text-center">
-                    No more comments to review.
+                    No more statements to review.
                   </p>
                 )}
               </div>
               {!!currentComment && (
                 <p className="pt-4 text-sm text-gray-500 text-center">
-                  {amountOfVotedComments + 1} of {comments?.length} comments
+                  {amountOfVotedComments + 1} of {comments?.length} statements
                   reviewed
                 </p>
               )}

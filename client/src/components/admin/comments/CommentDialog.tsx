@@ -42,7 +42,7 @@ export function NewCommentDialog({
         className="flex px-3 py-2 w-min whitespace-nowrap items-center justify-center gap-x-2 rounded-xl"
         themeColor={themeColor}
       >
-        <PlusIcon height={21} width={21} /> Add Comment
+        <PlusIcon height={21} width={21} /> Add Statement
         {!conversation.allow_comments && (
           <span className="text-sm italic">(comments disabled)</span>
         )}
