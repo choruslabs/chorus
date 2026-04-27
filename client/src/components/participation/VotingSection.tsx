@@ -122,7 +122,7 @@ export const VotingSection = ({
 
           <div className="sm:ml-auto">
             <VoteButton
-              label="Skip"
+              label="Unsure"
               icon={<ForwardIcon className="h-5 w-5" />}
               onClick={() => onVote(comment.id, "skip")}
               variant="secondary"
